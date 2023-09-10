@@ -7,7 +7,7 @@ class Config {
   static double? screenHeight;
 
 
-  void int(BuildContext context){
+  void init(BuildContext context){
     mediaqueryData = MediaQuery.of(context);
     screenWidth = mediaqueryData?.size.width;
     screenHeight = mediaqueryData?.size.height;
@@ -46,4 +46,6 @@ class Config {
       )
 
   );
+
+  static const primaryColor = Colors.greenAccent;
 }
