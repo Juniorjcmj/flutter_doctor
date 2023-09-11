@@ -42,14 +42,14 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       'Amanda',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                         child: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('lib/assets/profile.jpg'),
-                    )
-                    )
+                      backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/smiling-medical-doctor-woman-stethoscope-isolated-over-white-background-35552912.jpg'),
+                    ))
                   ],
                 ),
                 Config.spaceMedium,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Config.spaceSmall,
-          
+
                 SizedBox(
                   height: Config.height * 0.05,
                   child: ListView(
@@ -72,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
                             child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   FaIcon(
                                     medCat[index]['icon'],
@@ -82,38 +83,32 @@ class _HomePageState extends State<HomePage> {
                                     width: 20,
                                   ),
                                   Text(
-                                     medCat[index]['category'],
+                                    medCat[index]['category'],
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white),
+                                        fontSize: 16, color: Colors.white),
                                   ),
                                 ]),
                           ),
                         );
-                      }
-                      )
-                      ),
+                      })),
                 ),
                 Config.spaceSmall,
                 Text(
                   'Consultas',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                 Config.spaceSmall,
-          
-                 AppoimentCard(),
-          
-                 Config.spaceSmall,
-          
-                  Text(
+                Config.spaceSmall,
+                AppoimentCard(),
+                Config.spaceSmall,
+                Text(
                   'Top Especialistas',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 //list de top especialistas
-                  Config.spaceSmall,
-                  Column(
-                    children: List.generate(10, (index) => DoctorCard()),
-                  )
+                Config.spaceSmall,
+                Column(
+                  children: List.generate(10, (index) => DoctorCard()),
+                )
               ],
             ),
           ),

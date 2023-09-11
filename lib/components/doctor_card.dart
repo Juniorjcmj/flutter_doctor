@@ -24,7 +24,7 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Row(children: [
             SizedBox(
               width: Config.widtSize * 0.33,
-              child: Image.asset('lib/assets/doctor1.png', fit: BoxFit.fill,),
+              child: Image.asset('assets/doctor_1.png', fit: BoxFit.fill,),
             ),
             const Flexible(child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),

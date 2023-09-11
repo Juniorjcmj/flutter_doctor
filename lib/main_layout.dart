@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainLayout extends StatefulWidget {
 
-static final String routName = "/main";
+ static final String routName = "/main";
 
   const MainLayout({ super.key });
 

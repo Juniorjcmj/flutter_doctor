@@ -37,44 +37,40 @@ class _LoginFormState extends State<LoginForm> {
             ),
             Config.spaceSmall,
             TextFormField(
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: obscurePass,
-                cursorColor: Config.primaryColor,
-                decoration: InputDecoration(
-                    hintText: 'Password',
-                    labelText: 'Password',
-                    alignLabelWithHint: true,
-                    prefixIcon: const Icon(Icons.lock_clock_outlined),
-                    prefixIconColor: Config.primaryColor,
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                         setState(() {
-                            obscurePass = !obscurePass;
-                         });
-                        },
-                        icon: obscurePass
-                            ? const Icon(
-                                Icons.visibility_off_outlined,
-                                color: Colors.black38,
-                              )
-                            : const Icon(
-                                Icons.visibility_off_outlined,
-                                color: Colors.black38,
-                              )
-                              )
-                         ),
-              ),
-              Config.spaceSmall,
-
-              Button(
-                width: double.infinity, 
-                title: 'Entrar', 
-                disable: false, 
-                onPressed: (){
+              controller: _passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: obscurePass,
+              cursorColor: Config.primaryColor,
+              decoration: InputDecoration(
+                  hintText: 'Password',
+                  labelText: 'Password',
+                  alignLabelWithHint: true,
+                  prefixIcon: const Icon(Icons.lock_clock_outlined),
+                  prefixIconColor: Config.primaryColor,
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obscurePass = !obscurePass;
+                        });
+                      },
+                      icon: obscurePass
+                          ? const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.black38,
+                            )
+                          : const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.black38,
+                            ))),
+            ),
+            Config.spaceSmall,
+            Button(
+                width: double.infinity,
+                title: 'Entrar',
+                disable: false,
+                onPressed: () {
                   Navigator.of(context).pushNamed(MainLayout.routName);
-                }
-                )
+                })
           ],
         ));
   }

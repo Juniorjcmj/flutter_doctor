@@ -26,7 +26,7 @@ class _AppoimentCardState extends State<AppoimentCard> {
             Row(
               children: [
                 CircleAvatar(                 
-                  backgroundImage: AssetImage('lib/assets/doctor1.png'),
+                  backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/smiling-medical-doctor-woman-stethoscope-isolated-over-white-background-35552912.jpg'),
                 ),
                 SizedBox(
                   width: 10,

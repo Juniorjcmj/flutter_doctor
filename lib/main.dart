@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         type: BottomNavigationBarType.fixed
         )
       ),
-      initialRoute: '/',
+      initialRoute: AuthPage.routName,
       routes: {
         AuthPage.routName:(context) => const AuthPage(),
         MainLayout.routName:(context) =>const  MainLayout()
