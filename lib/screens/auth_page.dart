@@ -38,8 +38,8 @@ class _AuthPageState extends State<AuthPage> {
               AppText.enText['singIn_text']!,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            Config.spaceSmall,
-            LoginForm(),
+            Config.spaceSmall,  
+            LoginForm(),           
             Config.spaceSmall,
             Center(
               child: TextButton(
@@ -54,24 +54,24 @@ class _AuthPageState extends State<AuthPage> {
               ),
             ),
             const Spacer(),
-            Center(
-              child: Text(
-                AppText.enText['social-login']!,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.grey.shade500,
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Text(
+            //     AppText.enText['social-login']!,
+            //     style: TextStyle(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.normal,
+            //       color: Colors.grey.shade500,
+            //     ),
+            //   ),
+            // ),
             Config.spaceSmall,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SocialButton(social: 'google'),
-                SocialButton(social: 'facebook'),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     SocialButton(social: 'google'),
+            //     SocialButton(social: 'facebook'),
+            //   ],
+            // ),
             Config.spaceSmall,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

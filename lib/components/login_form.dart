@@ -72,6 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.of(context).pushNamed(MainLayout.routName);
                 })
           ],
-        ));
+        )
+        );
   }
 }
