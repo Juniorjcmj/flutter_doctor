@@ -3,6 +3,8 @@ import 'package:flutter_doctor/model/pessoa.dart';
 import 'package:flutter_doctor/services/paciente_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 
+import 'autocomplete_widget.dart';
+
 class ConsultaForm extends StatefulWidget {
   @override
   _ConsultaFormState createState() => _ConsultaFormState();
@@ -76,60 +78,20 @@ class _ConsultaFormState extends State<ConsultaForm> {
               child: Form(
                 key: _formKey,
                 child: ListView(
-                  children: <Widget>[                   
-
-                    Autocomplete<Paciente>(
-                      optionsBuilder: (TextEditingValue textEditingValue) {
-                        return getSuggestions(textEditingValue.text);
-                       
+                  children: <Widget>[
+                    AutocompleteWidget<Paciente>(
+                      options: pacientes,
+                      displayStringForOption: (Paciente paciente) =>
+                          paciente.nome!,
+                      onSelected: (Paciente paciente) {
+                        pacienteSelecionado = paciente;
                       },
-
-                      displayStringForOption: (option) => option.nome!,
-                      onSelected: (Paciente selection) {
-                        pacienteSelecionado = selection;
-                        
-                      },
-                      fieldViewBuilder: (BuildContext context,
-                          TextEditingController textEditingController,
-                          FocusNode focusNode,
-                          VoidCallback onFieldSubmitted) {
-                        // Este é o TextFormField personalizado                        
-                        return TextFormField(
-                          controller: textEditingController,
-                          focusNode: focusNode,
-                          onFieldSubmitted: (value) {                           
-                            onFieldSubmitted();
-                          },
-                          decoration: const InputDecoration(labelText: 'Paciente'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Campo obrigatório';
-                            }
-                            return null;
-                          },
-                        );
-                      },
-                      optionsViewBuilder: (BuildContext context,
-                          AutocompleteOnSelected<Paciente> onSelected,
-                          Iterable<Paciente> options) {
-                        // Construa a visualização das opções do autocomplete aqui
-                        return Material(
-                          child: ListView(
-                            children: options
-                                .map((Paciente option) => GestureDetector(
-                                      onTap: () {
-                                        onSelected(option);
-                                      },
-                                      child: ListTile(
-                                        title: Text(option.nome!),
-                                      ),
-                                    ))
-                                .toList(),
-                          ),
-                        );
-                      },
+                      buildListTile: (Paciente paciente) => ListTile(
+                        leading: const Icon(Icons.person),
+                        title: Text(paciente.nome!),
+                        subtitle: Text(paciente.email ?? ""),
+                      ),
                     ),
-
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: dentistaController,
@@ -188,7 +150,8 @@ class _ConsultaFormState extends State<ConsultaForm> {
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: observacaoController,
-                      decoration: const InputDecoration(labelText: 'Observação'),
+                      decoration:
+                          const InputDecoration(labelText: 'Observação'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Campo obrigatório';
@@ -210,4 +173,3 @@ class _ConsultaFormState extends State<ConsultaForm> {
     );
   }
 }
-
