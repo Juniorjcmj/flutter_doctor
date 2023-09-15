@@ -1,7 +1,14 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/main_layout.dart';
+import 'package:flutter_doctor/model/consulta.dart';
+import 'package:flutter_doctor/screens/atendimento_page.dart';
 import 'package:flutter_doctor/screens/auth_page.dart';
+import 'package:flutter_doctor/screens/calendar_app.dart';
+import 'package:flutter_doctor/screens/calendar_page.dart';
 import 'package:flutter_doctor/utils/config.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,8 +51,19 @@ class MyApp extends StatelessWidget {
       initialRoute: AuthPage.routName,
       routes: {
         AuthPage.routName:(context) => const AuthPage(),
-        MainLayout.routName:(context) =>const  MainLayout()
-      },     
+        MainLayout.routName:(context) =>const  MainLayout(),
+        AtendimentoPage.routName:(context) => AtendimentoPage(),
+        TableCalendarPage.routName:(context) => TableCalendarPage(),
+        CalendarApp.routNamd:(context) => CalendarApp()
+      },   
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale('pt', 'BR')
+      ],  
     );
   }
 }

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/components/login_form.dart';
-import 'package:flutter_doctor/components/social_button.dart';
 
 import '../utils/config.dart';
 import '../utils/text.dart';

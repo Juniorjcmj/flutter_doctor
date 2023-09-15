@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/components/appoiment_card.dart';
 import 'package:flutter_doctor/components/doctor_card.dart';
+import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../utils/config.dart';
@@ -15,6 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  initState(){
+    super.initState();
+     _getNome();
+  }
+
   List<Map<String, dynamic>> medCat = [
     {"icon": FontAwesomeIcons.userDoctor, "category": "Geral"},
     {"icon": FontAwesomeIcons.heartPulse, "category": "Cardiologia"},
@@ -23,6 +30,18 @@ class _HomePageState extends State<HomePage> {
     {"icon": FontAwesomeIcons.personPregnant, "category": "Ginecologia"},
     {"icon": FontAwesomeIcons.teeth, "category": "Dentista"}
   ];
+
+   late String _nome = 'Funcionário';
+   LocalStorageService _storage = new LocalStorageService();
+
+   _getNome(){
+    _storage.getNome().then((value) {
+         setState(() {
+           _nome = value.toString();
+
+         });
+    });
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +60,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Amanda',
+                      _nome,
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                         child: CircleAvatar(
@@ -90,7 +109,9 @@ class _HomePageState extends State<HomePage> {
                                 ]),
                           ),
                         );
-                      })),
+                      }
+                      )
+                      ),
                 ),
                 Config.spaceSmall,
                 Text(
@@ -98,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Config.spaceSmall,
-                AppoimentCard(),
+               // AppoimentCard(),
                 Config.spaceSmall,
                 Text(
                   'Top Especialistas',

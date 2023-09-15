@@ -5,12 +5,13 @@ class Config {
   static MediaQueryData? mediaqueryData;
   static double? screenWidth;
   static double? screenHeight;
+  static String? apiUrl = 'https://api-sec-virtual-production.up.railway.app';
 
 
   void init(BuildContext context){
     mediaqueryData = MediaQuery.of(context);
     screenWidth = mediaqueryData?.size.width;
-    screenHeight = mediaqueryData?.size.height;
+    screenHeight = mediaqueryData?.size.height;    
   }
 
   static get widtSize{
@@ -19,6 +20,7 @@ class Config {
   static get height{
     return screenHeight;
   }
+ 
 
   static const spaceSmall = SizedBox(height: 25,);
   static final spaceMedium = SizedBox(height: screenHeight! * 0.05,);
@@ -48,4 +50,5 @@ class Config {
   );
 
   static const primaryColor = Colors.greenAccent;
+  static const secundColor = Colors.grey;
 }

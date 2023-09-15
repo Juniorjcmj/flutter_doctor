@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/screens/appoinmentt_page.dart';
+import 'package:flutter_doctor/screens/calendar_app.dart';
+import 'package:flutter_doctor/screens/calendar_page.dart';
+import 'package:flutter_doctor/screens/grade_eventos.dart';
 import 'package:flutter_doctor/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -32,7 +35,7 @@ class _MainLayoutState extends State<MainLayout> {
             }),
             children: [
               const HomePage(),
-              const AppoinmenttPage()              
+               TableCalendarPage(),                       
             ],            
            ),
            bottomNavigationBar: BottomNavigationBar(
@@ -52,9 +55,9 @@ class _MainLayoutState extends State<MainLayout> {
                   label: 'Home'
                   ),
                    BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.solidCalendarCheck),
-                  label: 'Appoiment'
-                  ),
+                  icon: FaIcon(FontAwesomeIcons.solidCalendarDays),
+                  label: 'Agenda'
+                  )
             ]
             ),
        );

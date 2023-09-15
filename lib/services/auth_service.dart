@@ -1,12 +1,13 @@
+import 'package:flutter_doctor/utils/config.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
 class AuthService{
 
-    static String apiUrl = 'https://api-sec-virtual-production.up.railway.app/api/v1/auth/authenticate';
+    static String apiUrl = Config.apiUrl!+'/api/v1/auth/authenticate';
 
-  static Future<String> generateToken(String username, String password) async {
+   static Future<Map<String, dynamic>> generateToken(String username, String password) async {
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({'email': username, 'password': password});
 
@@ -17,13 +18,10 @@ class AuthService{
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-     
-      String token = responseData['access_token'];
-       print("Login realizado com sucesso token é $token");
-      return token;
+      final Map<String, dynamic> responseData = json.decode(response.body);    
+      return responseData;
     } else {
-      print( json.decode(response.body));
+      
       throw Exception('Failed to generate token');
     }
 
