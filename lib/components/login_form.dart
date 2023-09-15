@@ -91,7 +91,9 @@ class _LoginFormState extends State<LoginForm> {
                           : const Icon(
                               Icons.visibility_off_outlined,
                               color: Colors.black38,
-                            ))),
+                            ),
+                            ),
+                            ),
             ),
             Config.spaceSmall,
             Button(

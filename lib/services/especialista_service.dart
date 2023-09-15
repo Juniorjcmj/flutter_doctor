@@ -1,31 +1,33 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_doctor/model/paciente.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import '../interceptor/http_interceptor.dart';
+import '../model/especialista.dart';
 
-class PacienteService {
-  static String apiUrl = '${Config.apiUrl!}/api/v1/api-paciente';
+class EspecialistaService {
+  static String apiUrl = '${Config.apiUrl!}/api/v1/api-doctors';
 
   static final Dio _dio = DioInterceptor().dioInstance;
 
-  static Future<List<Paciente>> getPacientes() async {
-    List<Paciente> pacientes = [];
+  static Future<List<Especialista>> getPorProfissional() async {
+    List<Especialista> result = [];
     try {
       Response response = await _dio.get(apiUrl);
 
       if (response.statusCode == 200) {
+        //print(response.data);
         List data = response.data;
         for (dynamic registro in data) {
-          pacientes.add(Paciente.fromJson(registro));
+          result.add(Especialista.fromJson(registro));
         }
-        return pacientes;
+        return result;
       }
     } on DioError catch (e) {
-      log(e.message);
+      print(e);
     }
 
-    return pacientes;
+    return result;
   }
+
+  
 }

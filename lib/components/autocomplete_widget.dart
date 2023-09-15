@@ -5,12 +5,15 @@ class AutocompleteWidget<T extends Object> extends StatelessWidget {
   final String Function(T option) displayStringForOption;
   final Widget Function(T option) buildListTile;
   final T? Function(T option) onSelected;
+  InputDecoration inputDecoration;
 
   AutocompleteWidget({
+    super.key, 
     required this.options,
     required this.displayStringForOption,
     required this.buildListTile,
     required this.onSelected,
+    this.inputDecoration = const InputDecoration(labelText: "Buscar")
   });
 
   @override
@@ -32,7 +35,7 @@ class AutocompleteWidget<T extends Object> extends StatelessWidget {
         return TextField(
           controller: textEditingController,
           focusNode: focusNode,
-          decoration: InputDecoration(labelText: 'Search'),
+          decoration: inputDecoration,
           onSubmitted: (String value) {
             onFieldSubmitted();
           },

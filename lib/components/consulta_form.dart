@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/model/pessoa.dart';
+import 'package:flutter_doctor/model/paciente.dart';
 import 'package:flutter_doctor/services/paciente_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 
+import '../model/especialista.dart';
+import '../services/especialista_service.dart';
 import 'autocomplete_widget.dart';
 
 class ConsultaForm extends StatefulWidget {
@@ -15,11 +17,23 @@ class _ConsultaFormState extends State<ConsultaForm> {
   void initState() {
     super.initState();
     getPacientes();
+    getEspecialistas();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+  //Buscando lista de especialistas
+  List<Especialista> especialistas = List.empty();
+  Future<void> getEspecialistas() async {
+    await EspecialistaService.getPorProfissional().then((value) {
+      setState(() {
+        especialistas = value;
+      });
+    }).catchError((onError) {
+      return;
+    });
   }
 
   //Buscando lista de pacientes
@@ -44,6 +58,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
   TextEditingController observacaoController = TextEditingController();
 
   late Paciente pacienteSelecionado;
+   late Especialista especialistaSelecionado;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -79,6 +94,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                 key: _formKey,
                 child: ListView(
                   children: <Widget>[
+                    const SizedBox(height: 10,),
                     AutocompleteWidget<Paciente>(
                       options: pacientes,
                       displayStringForOption: (Paciente paciente) =>
@@ -91,18 +107,57 @@ class _ConsultaFormState extends State<ConsultaForm> {
                         title: Text(paciente.nome!),
                         subtitle: Text(paciente.email ?? ""),
                       ),
+                      inputDecoration: InputDecoration(
+                  hintText: 'Buscar',
+                  labelText: 'Buscar',
+                  alignLabelWithHint: true,                 
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {                         
+                        });
+                      },
+                      icon: const Icon(
+                              Icons.person_add_rounded,
+                              color: Config.secundColor,
+                              size: 35,
+                            )
+                          
+                            ),
+                            ),
+                    ),
+                    const SizedBox(height: 10,),
+                     AutocompleteWidget<Especialista>(
+                      options: especialistas,
+                      displayStringForOption: (Especialista especialista) =>
+                          especialista.nome!,
+                      onSelected: (Especialista especialista) {
+                        especialistaSelecionado = especialista;
+                      },
+                      buildListTile: (Especialista especialista) => ListTile(
+                        leading: const Icon(Icons.person),
+                        title: Text(especialista.nome!),
+                        subtitle: Text(especialista.email ?? ""),
+                      ),
+                      inputDecoration: InputDecoration(
+                  hintText: 'Buscar',
+                  labelText: 'Buscar',
+                  alignLabelWithHint: true,                 
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {                         
+                        });
+                      },
+                      icon: const Icon(
+                              Icons.person_add_rounded,
+                              color: Config.secundColor,
+                              size: 35,
+                            )
+                          
+                            ),
+                            ),
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      controller: dentistaController,
-                      decoration: const InputDecoration(labelText: 'Dentista'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
+                   
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: tipoController,

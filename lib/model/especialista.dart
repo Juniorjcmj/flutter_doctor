@@ -1,39 +1,73 @@
+class Especialista {
+  int? id;
+  String? nome;
+  String? cro;
+  String? especialidade;
+  String? cpf;
+  int? idade;
+  String? email;
+  String? senha;
+  String? celular;
+  String? whatsapp;
+  bool? ativo;
+  String? rua;
+  String? bairro;
+  String? cidade;
+  String? uf;
+  String? cep;
+  String? dataCriacao;
+  String? dataAtualizacao;
+  String? cor;
+ 
 
-class Especialista{
-
- String? _nome;
- String? _cargo;
- double? _salario;
-
- Especialista();
-
- Especialista.cheio( this._nome,this._cargo, this._salario);
-
- Especialista.fromJson(Map<String, dynamic> json){
-  nome = json["nome"];
-  cargo = json["cargo"];
-  salario = json["salario"];
- }
-
- Map<String, dynamic> tojson(){
-  final Map<String, dynamic> map = {};
-  map["nome"]= nome;
-  map["cargo"] = cargo;
-  map["salario"]= salario;
-  return map;
- }
-
- String get nome => this._nome!;
- String get cargo => this._cargo!;
- double get salario => this._salario!;
-
- set nome(String nome) => this._nome = nome;
- set cargo(String cargo) => this._cargo = cargo;
- set salario(double salario) => this._salario = salario;
-
- @override
-  String toString() {
-   
-    return "${nome}, ${cargo}, ${salario}";
+   Especialista.fromJson(Map<String, dynamic> json) {
+    id = json["id"];
+    nome = json["nome"];
+    cro = json["cro"];
+    especialidade = json["especialidade"];
+    cpf = json["cpf"];
+    idade = json["idade"];
+    email = json["email"];
+    senha = json["senha"];
+    celular = json["celular"];
+    whatsapp = json["whatsapp"];
+    ativo = json["ativo"];
+    rua = json["rua"];
+    bairro = json["bairro"];
+    cidade = json["cidade"];
+    uf = json["uf"];
+    cep = json["cep"];
+    dataCriacao = json["dataCriacao"];
+    dataAtualizacao = json["dataAtualizacao"];
+    cor = json["cor"];
+    
   }
+
+  Especialista(
+      this.id,
+      this.nome,
+      this.especialidade,
+      this.cpf,
+      this.idade,
+      this.email,
+      this.senha,
+      this.celular,
+      this.whatsapp,
+      this.ativo,
+      this.rua,
+      this.bairro,
+      this.cidade,
+      this.uf,
+      this.cep,
+      this.dataCriacao,
+      this.dataAtualizacao,
+      this.cor,
+     );     
+
+
+   @override
+  String toString() {   
+    return super.toString();
+  }
+ 
 }
