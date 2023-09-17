@@ -9,9 +9,11 @@ class DioInterceptor {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
        String? token = await LocalStorageService().getToken();
-
+       
+           if(token != null && token.isNotEmpty){
               options.headers['Authorization'] = 'Bearer $token';
-        return handler.next(options); // Continua com a requisição
+           }
+           return handler.next(options); // Continua com a requisição
       },
     ));
   }

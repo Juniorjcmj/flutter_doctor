@@ -12,12 +12,8 @@ class LocalStorageService {
     
      await prefs.setString('token', dados['access_token']);
      await prefs.setString('nome',  dados['empresa']);
-     await prefs.setString('empresa', dados['nome']);
-
-     
+     await prefs.setString('empresa', dados['nome']);     
   }
-
- 
 
    Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

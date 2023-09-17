@@ -1,29 +1,25 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_doctor/model/consulta.dart';
-import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
-import 'package:http/http.dart' as http;
 
-import 'dart:convert';
 
 import '../interceptor/http_interceptor.dart';
 
 class ConsultaService {
-  static String apiUrl = Config.apiUrl! + '/api/v1/api-consulta';
+  static String apiUrl = '${Config.apiUrl!}/api/v1/api-consulta';
 
   static final Dio _dio = DioInterceptor().dioInstance;
 
   static Future<List<Consulta>> getConsultas1() async {
 
-  String url = apiUrl+'/json';
+  String url = '$apiUrl/json';
     List<Consulta> consultas = [];
     try {
       Response response = await _dio.get(url);
 
       if (response.statusCode == 200) {
-        //print(response.data);
+        
         List data = response.data;
         for (dynamic registro in data) {
           consultas.add(Consulta.fromJson(registro));

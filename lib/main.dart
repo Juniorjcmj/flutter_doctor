@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/main_layout.dart';
-import 'package:flutter_doctor/model/consulta.dart';
 import 'package:flutter_doctor/screens/atendimento_page.dart';
 import 'package:flutter_doctor/screens/auth_page.dart';
 import 'package:flutter_doctor/screens/calendar_app.dart';
 import 'package:flutter_doctor/screens/calendar_page.dart';
+import 'package:flutter_doctor/screens/esqueci_senha_page.dart';
+import 'package:flutter_doctor/screens/login_auth.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -50,11 +51,12 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AuthPage.routName,
       routes: {
-        AuthPage.routName:(context) => const AuthPage(),
+        '/':(context) =>  LoginPage(),
         MainLayout.routName:(context) =>const  MainLayout(),
-        AtendimentoPage.routName:(context) => AtendimentoPage(),
-        TableCalendarPage.routName:(context) => TableCalendarPage(),
-        CalendarApp.routNamd:(context) => CalendarApp()
+        AtendimentoPage.routName:(context) => const AtendimentoPage(),
+        TableCalendarPage.routName:(context) => const TableCalendarPage(),
+        CalendarApp.routNamd:(context) => CalendarApp(),
+        RecuperarSenha.routNamed:(context) =>  RecuperarSenha()
       },   
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
