@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/components/login_form.dart';
+import 'package:flutter_doctor/components/descontinuado/login_form.dart';
 
-import '../utils/config.dart';
-import '../utils/text.dart';
+import '../../utils/config.dart';
+import '../../utils/text.dart';
 
 class AuthPage extends StatefulWidget {
   static final String routName = "/";

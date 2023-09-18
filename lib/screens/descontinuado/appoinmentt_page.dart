@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/components/appoiment_card.dart';
 import 'package:flutter_doctor/components/consultas_card.dart';
 import 'package:flutter_doctor/services/consulta_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 
-import '../components/doctor_card.dart';
-import '../model/consulta.dart';
+import '../../model/consulta.dart';
 
 class AppoinmenttPage extends StatefulWidget {
   const AppoinmenttPage({super.key});

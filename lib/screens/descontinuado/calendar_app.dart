@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/screens/grade_eventos.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -7,7 +6,9 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 /// The app which hosts the home page which contains the calendar on it.
 class CalendarApp extends StatelessWidget {
 
-static final String routNamd = '/calendarapp';
+static const String routNamd = '/calendarapp';
+
+  const CalendarApp({super.key});
 
   @override
   Widget build(BuildContext context) {

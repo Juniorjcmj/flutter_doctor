@@ -5,8 +5,8 @@ import 'package:flutter_doctor/main_layout.dart';
 import 'package:flutter_doctor/screens/alterar_email.dart';
 import 'package:flutter_doctor/screens/alterar_senha.dart';
 import 'package:flutter_doctor/screens/atendimento_page.dart';
-import 'package:flutter_doctor/screens/auth_page.dart';
-import 'package:flutter_doctor/screens/calendar_app.dart';
+import 'package:flutter_doctor/screens/descontinuado/auth_page.dart';
+import 'package:flutter_doctor/screens/descontinuado/calendar_app.dart';
 import 'package:flutter_doctor/screens/calendar_page.dart';
 import 'package:flutter_doctor/screens/esqueci_senha_page.dart';
 import 'package:flutter_doctor/screens/login_auth.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         MainLayout.routName:(context) =>const  MainLayout(),
         AtendimentoPage.routName:(context) => const AtendimentoPage(),
         TableCalendarPage.routName:(context) => const TableCalendarPage(),
-        CalendarApp.routNamd:(context) => CalendarApp(),
+        CalendarApp.routNamd:(context) => const CalendarApp(),
         RecuperarSenha.routNamed:(context) =>  RecuperarSenha(),
         AlterarSenha.routNamed:(context) => AlterarSenha(),
         Perfil.routNamed:(context) => Perfil(),

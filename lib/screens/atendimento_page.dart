@@ -7,7 +7,7 @@ import '../model/consulta.dart';
 import '../utils/config.dart';
 
 class AtendimentoPage extends StatefulWidget {
-  static final String routName = "/atendimento";
+  static const String routName = "/atendimento";
 
 
   const AtendimentoPage({ super.key });
@@ -80,7 +80,7 @@ class _AtendimentoPageState extends State<AtendimentoPage> {
                               
                               ),
                             ),
-                            SizedBox(width: 5,),
+                            const SizedBox(width: 5,),
                              Text(
                            'Pcte ' + consulta.nomePaciente,
                             style: const TextStyle(
