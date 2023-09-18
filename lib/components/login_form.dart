@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/components/button.dart';
 import 'package:flutter_doctor/main_layout.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../services/auth_service.dart';
 import '../services/local_storage_service.dart';
 import '../utils/config.dart';
-import '../utils/custom_message.dart';
-import '../utils/desafio_matematico.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

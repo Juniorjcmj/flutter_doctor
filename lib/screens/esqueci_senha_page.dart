@@ -14,23 +14,8 @@ class RecuperarSenha extends StatelessWidget {
 
   //text editing controller
   final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+ 
 
-  //sing user in method
-  Future<void> singUserIn( BuildContext context) async {
-  //   bool? resposta = await DesafioMatematica.questionMath(context);
-  //  if(resposta!){
-  //    MessageCustom.showToast("Resposta certa", MessageType.success, gravity: ToastGravity.TOP);
-
-  //  }else{
-  //     MessageCustom.showToast("Resposta errada", MessageType.error, gravity: ToastGravity.TOP);
-  //  };
-    AuthService.recuperarSenha(usernameController.text)
-        .then((value) async {
-          await Navigator.pushNamed(context, "/");
-        });
-        
-  }
   @override
   Widget build(BuildContext context) {
     Config().init(context);
@@ -77,10 +62,29 @@ class RecuperarSenha extends StatelessWidget {
                  //sign in button
                  CustomButtom(
                   texto: "Enviar email ",
-                   onTap: ()
-                   {
-                     singUserIn(context);
-                     },
+                  //  onTap: ()
+                  //  {
+                  //    singUserIn(context);
+                  //    },
+                  onTap: () async{
+                    final sucess = await  AuthService.recuperarSenha(usernameController.text);
+                     if(sucess){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email de recuperação enviado, verifique seu email!'),
+                      ),
+                    );
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                     }else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Erro ao enviar email de recuperação'),
+                      ),
+                    );
+                  }
+                  },
+                 
                  ),
 
                  const SizedBox(height: 35),

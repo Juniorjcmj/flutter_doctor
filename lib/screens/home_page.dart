@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/components/appoiment_card.dart';
 import 'package:flutter_doctor/components/doctor_card.dart';
+import 'package:flutter_doctor/screens/alterar_senha.dart';
+import 'package:flutter_doctor/screens/perfil_page.dart';
 import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -59,15 +61,26 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      _nome,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Perfil.routNamed);
+                      },
+                      child: Text(
+                        _nome,
+                        style:
+                            TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    SizedBox(
-                        child: CircleAvatar(
+                    IconButton(
+                      iconSize: 80,
+                       onPressed: () {
+                        Navigator.pushNamed(context, Perfil.routNamed);
+                      },
+                      icon: CircleAvatar(
+                         
                       radius: 30,
                       backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/smiling-medical-doctor-woman-stethoscope-isolated-over-white-background-35552912.jpg'),
+
                     ))
                   ],
                 ),
