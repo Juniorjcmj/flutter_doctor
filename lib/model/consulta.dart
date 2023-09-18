@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 class Consulta {
   String? _id;
@@ -18,11 +17,7 @@ class Consulta {
   String? _nomeDentista;
   String? _nomePaciente;
   String? _corDentista;
-  String? _corPaciente;
-
-  String? _nome;
-  String? _cargo;
-  String? _salario;
+  String? _corPaciente;  
 
   Consulta();
   Consulta.pacienteVazio(String nomePaciente){
@@ -112,15 +107,8 @@ class Consulta {
 
   @override
   String toString() {
-    return "${id}, ${start}, ${end},${tipo}, ${valor}, ${confirmado},"+
-    "${ausencia}, ${observacao}, ${dataCriacao},${dataAtualizacao}, ${status}, ${formaPagamento},${pacienteId}, ${dentistaId}, ${nomeDentista},${nomePaciente}, ${corDentista}, ${corPaciente}";
+    return "$id, $start, $end,$tipo, $valor, $confirmado,"+
+    "$ausencia, $observacao, $dataCriacao,$dataAtualizacao, $status, $formaPagamento,$pacienteId, $dentistaId, $nomeDentista,$nomePaciente, $corDentista, $corPaciente";
   }
 
-  // Map<String, dynamic> tojson() {
-  //   final Map<String, dynamic> map = {};
-  //   map["id"] = id;
-  //   map["start"] = start;
-  //   map["end"] = end;
-  //   return map;
-  // }
 }

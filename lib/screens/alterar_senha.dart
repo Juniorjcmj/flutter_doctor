@@ -22,7 +22,8 @@ class _AlterarSenhaState extends State<AlterarSenha> {
 
   final senhaController = TextEditingController();
   final novaSenhaController = TextEditingController();
-   bool obscurePass = true;
+   bool obscurePass = true;    
+  bool obscurePassConf = true;
 
   @override
   void initState() {
@@ -62,7 +63,30 @@ class _AlterarSenhaState extends State<AlterarSenha> {
                   CustomTextField(
                       controller: senhaController,
                       hintText: 'Nova Senha',
-                      obscureText: true
+                      obscureText: obscurePass,
+                      decorator: InputDecoration(
+                    hintText: 'Nova Senha',
+                    labelText: 'Nova Senha',
+                    alignLabelWithHint: true,
+                    prefixIcon: const Icon(Icons.lock_clock_outlined),
+                    prefixIconColor: Config.primaryColor,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obscurePass = !obscurePass;
+                        });
+                      },
+                      icon: !obscurePass
+                          ? const Icon(
+                              Icons.visibility_outlined,
+                              color: Colors.black38,
+                            )
+                          : const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.black38,
+                            ),
+                    ),
+                  ), 
                       
                   ),
 
@@ -71,7 +95,30 @@ class _AlterarSenhaState extends State<AlterarSenha> {
                   CustomTextField(
                       controller: novaSenhaController,
                       hintText: 'Confirmar Nova senha',
-                      obscureText: true,                    
+                      obscureText: obscurePassConf,   
+                      decorator: InputDecoration(
+                    hintText: 'Confirmar Senha',
+                    labelText: 'Confirmar Senha',
+                    alignLabelWithHint: true,
+                    prefixIcon: const Icon(Icons.lock_clock_outlined),
+                    prefixIconColor: Config.primaryColor,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obscurePassConf = !obscurePassConf;
+                        });
+                      },
+                      icon: !obscurePass
+                          ? const Icon(
+                              Icons.visibility_outlined,
+                              color: Colors.black38,
+                            )
+                          : const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.black38,
+                            ),
+                    ),
+                  ),                 
                   ),
 
                   const SizedBox(height: 35),

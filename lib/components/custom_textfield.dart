@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import '../utils/config.dart';
@@ -7,12 +9,15 @@ class CustomTextField extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obscureText;
+  
+  final InputDecoration? decorator;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
-    required this.obscureText
+    required this.obscureText,
+    this.decorator
   });
 
   @override
@@ -23,7 +28,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: obscureText,
-        decoration: InputDecoration(
+        decoration: decorator ?? InputDecoration(
           enabledBorder:const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),

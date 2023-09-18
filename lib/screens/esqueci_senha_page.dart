@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -62,10 +64,6 @@ class RecuperarSenha extends StatelessWidget {
                  //sign in button
                  CustomButtom(
                   texto: "Enviar email ",
-                  //  onTap: ()
-                  //  {
-                  //    singUserIn(context);
-                  //    },
                   onTap: () async{
                     final sucess = await  AuthService.recuperarSenha(usernameController.text);
                      if(sucess){
@@ -74,7 +72,7 @@ class RecuperarSenha extends StatelessWidget {
                         content: Text('Email de recuperação enviado, verifique seu email!'),
                       ),
                     );
-                    // ignore: use_build_context_synchronously
+                   
                     Navigator.pop(context);
                      }else {
                     ScaffoldMessenger.of(context).showSnackBar(

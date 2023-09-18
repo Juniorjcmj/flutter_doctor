@@ -39,8 +39,7 @@ class _LoginFormState extends State<LoginForm> {
                     )
                 )
                 ),
-    )
-        .catchError((onError)=> print(onError));
+    );
   }
   
 
@@ -69,15 +68,15 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: obscurePass,
               cursorColor: Config.primaryColor,
               decoration: InputDecoration(
-                  hintText: 'Password',
-                  labelText: 'Password',
+                  hintText: 'Senha',
+                  labelText: 'Senha',
                   alignLabelWithHint: true,
                   prefixIcon: const Icon(Icons.lock_clock_outlined),
                   prefixIconColor: Config.primaryColor,
                   suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
-                          obscurePass = !obscurePass;
+                          obscurePass = !obscurePass;                          
                         });
                       },
                       icon: obscurePass
