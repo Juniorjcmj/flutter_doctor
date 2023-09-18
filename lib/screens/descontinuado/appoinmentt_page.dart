@@ -50,14 +50,14 @@ class _AppoinmenttPageState extends State<AppoinmenttPage> {
       setState(() {
         consultas = value;
       });
-    }).catchError((onError) => print(onError));
+    });
   }
 
  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: consultas.length == 0
+        child: consultas.isEmpty
             ? Center(
                 child: CircularProgressIndicator(),
               )

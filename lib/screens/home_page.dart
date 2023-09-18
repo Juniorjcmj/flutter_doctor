@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/components/appoiment_card.dart';
 import 'package:flutter_doctor/components/doctor_card.dart';
-import 'package:flutter_doctor/screens/alterar_senha.dart';
 import 'package:flutter_doctor/screens/perfil_page.dart';
 import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

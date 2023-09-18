@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 class Consulta {
@@ -18,10 +20,10 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       appBar: AppBar(
-        title: Text('Grade de Horários'),
+        title: const Text('Grade de Horários'),
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4, // Número de colunas
         ),
         itemCount: 48, // Total de células (15 minutos * 4 células por hora * 16 horas)

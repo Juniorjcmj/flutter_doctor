@@ -1,16 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/screens/descontinuado/appoinmentt_page.dart';
-import 'package:flutter_doctor/screens/descontinuado/calendar_app.dart';
 import 'package:flutter_doctor/screens/calendar_page.dart';
-import 'package:flutter_doctor/screens/descontinuado/grade_eventos.dart';
 import 'package:flutter_doctor/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainLayout extends StatefulWidget {
 
- static final String routName = "/main";
+ static const String routName = "/main";
 
   const MainLayout({ super.key });
 
