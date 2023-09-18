@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   bool obscurePass = true;
- 
 
   //sing user in method
   Future<void> singUserIn(BuildContext context) async {
@@ -35,12 +34,10 @@ class _LoginPageState extends State<LoginPage> {
     //  };
     AuthService.generateToken(usernameController.text, passwordController.text)
         .then(
-          (value) => LocalStorageService().saveDados(value).then((value) =>
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => const MainLayout())))),
-        );
+      (value) => LocalStorageService().saveDados(value).then((value) =>
+          Navigator.push(context,
+              MaterialPageRoute(builder: ((context) => const MainLayout())))),
+    );
   }
 
   @override
@@ -74,18 +71,28 @@ class _LoginPageState extends State<LoginPage> {
 
                 //username textField
                 CustomTextField(
-                    controller: usernameController,
+                  controller: usernameController,
+                  hintText: 'Usuário',
+                  obscureText: false,
+                  decorator: const InputDecoration(
                     hintText: 'Usuário',
-                    obscureText: false
-                    
+                    labelText: 'Usuário',
+                    alignLabelWithHint: true,
+                    prefixIcon: Icon(Icons.lock_person_outlined),
+                    prefixIconColor: Config.primaryColor,
+                    suffixIcon: Icon(
+                      Icons.person_2_outlined,
+                      color: Colors.black38,
                     ),
+                  ),
+                ),
 
                 const SizedBox(height: 10),
                 //password textField
                 CustomTextField(
                   controller: passwordController,
                   hintText: 'Senha',
-                  obscureText: obscurePass, 
+                  obscureText: obscurePass,
                   decorator: InputDecoration(
                     hintText: 'Password',
                     labelText: 'Password',
@@ -109,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                     ),
                   ),
-                 
                 ),
 
                 //ForgotPassword

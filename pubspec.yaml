@@ -42,6 +42,7 @@ dependencies:
   flutter_svg: ^2.0.7
   http_interceptor: ^2.0.0-beta.7
   flutter_localization: ^0.1.13
+  get: ^4.6.5
 
   
 

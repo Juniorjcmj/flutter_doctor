@@ -158,7 +158,9 @@ class _ConsultaFormState extends State<ConsultaForm> {
                     ),
                     const SizedBox(height: 10),
                    
-                    const SizedBox(height: 10),
+                   
+                         // Tipo
+                              const SizedBox(height: 10),
                     TextFormField(
                       controller: tipoController,
                       decoration: const InputDecoration(labelText: 'Tipo'),
@@ -169,6 +171,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                         return null;
                       },
                     ),
+           
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: dataController,
