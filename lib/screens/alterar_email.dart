@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
@@ -81,14 +82,16 @@ class _AlterarEmailState extends State<AlterarEmail> {
                       }else{
                             final sucess = await  AuthService.trocarEmail(novaEmailController.text);
                       if(sucess){
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             backgroundColor: Config.primaryColor,
                             content: Text('Email alterado com sucesso'),
                           ),
                         );
-                        Navigator.pop(context);
+                        Get.back();
                       }else {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Erro ao alterar email'),

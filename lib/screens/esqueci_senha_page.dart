@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
 import '../services/auth_service.dart';
@@ -71,9 +72,8 @@ class RecuperarSenha extends StatelessWidget {
                       const SnackBar(
                         content: Text('Email de recuperação enviado, verifique seu email!'),
                       ),
-                    );
-                   
-                    Navigator.pop(context);
+                    );                   
+                    Get.back();
                      }else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

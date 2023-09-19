@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
 import '../main_layout.dart';
@@ -126,8 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, RecuperarSenha.routNamed);
+                           Get.to(RecuperarSenha());
                         },
                         child: Text(
                           'Esqueceu a senha?',

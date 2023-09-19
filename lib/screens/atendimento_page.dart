@@ -64,7 +64,7 @@ class _AtendimentoPageState extends State<AtendimentoPage> {
                      Container(
                       width: double.infinity,
                       height: Config.height * 0.1,
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       decoration: const BoxDecoration(
                         color: Config.primaryColor,    
                         borderRadius: BorderRadius.all(Radius.circular(5)),                   

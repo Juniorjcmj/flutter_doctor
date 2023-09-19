@@ -5,6 +5,7 @@ import 'package:flutter_doctor/components/doctor_card.dart';
 import 'package:flutter_doctor/screens/perfil_page.dart';
 import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import '../utils/config.dart';
 
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  @override
   initState(){
     super.initState();
      _getNome();
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
    late String _nome = 'Funcionário';
-   LocalStorageService _storage = new LocalStorageService();
+   final LocalStorageService _storage = LocalStorageService();
 
    _getNome(){
     _storage.getNome().then((value) {
@@ -60,8 +62,8 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Perfil.routNamed);
+                      onPressed: () {                       
+                        Get.to(Perfil());
                       },
                       child: Text(
                         _nome,
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       iconSize: 80,
                        onPressed: () {
-                        Navigator.pushNamed(context, Perfil.routNamed);
+                        Get.to(Perfil());
                       },
                       icon: CircleAvatar(
                          

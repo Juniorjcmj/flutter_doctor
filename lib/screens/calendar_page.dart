@@ -101,8 +101,6 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
   //cadastrar com dialog
   
 
-  final _formKey = GlobalKey<FormState>();
-  final Consulta _novaConsulta = Consulta();
   @override
   Widget build(BuildContext context) {
     Config().init(context);

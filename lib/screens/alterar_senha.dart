@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_doctor/services/auth_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
@@ -144,7 +145,7 @@ class _AlterarSenhaState extends State<AlterarSenha> {
                             content: Text('Senha alterada com sucesso'),
                           ),
                         );
-                        Navigator.pop(context);
+                        Get.back();
                       }else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

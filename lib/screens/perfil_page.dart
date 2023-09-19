@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
+import 'package:get/get.dart';
 
 import '../services/local_storage_service.dart';
 import 'alterar_email.dart';
@@ -78,8 +79,8 @@ class _PerfilState extends State<Perfil> {
                   //Botão para alterar a senha
                   TextButton(
                     onPressed: (){
-                      Navigator.pushNamed(context, AlterarSenha.routNamed);
-                    },
+                      Get.to(AlterarSenha());
+                      },
                     child: Text(
                       'Alterar senha',
                       style: TextStyle(
@@ -91,8 +92,8 @@ class _PerfilState extends State<Perfil> {
 
                   //Botão para alterar o email
                   TextButton(
-                    onPressed: (){
-                      Navigator.pushNamed(context, AlterarEmail.rounNamed);
+                    onPressed: (){                     
+                      Get.to(AlterarSenha());
                     },
                     child: Text(
                       'Alterar email',
@@ -106,8 +107,8 @@ class _PerfilState extends State<Perfil> {
                   const SizedBox(height: 20,),
                  IconButton(
                   iconSize: 60,
-                  onPressed: (){
-                     Navigator.pop(context);
+                  onPressed: (){                    
+                     Get.back();
                   }, 
                   icon: const Icon(Icons.arrow_back,color: Config.secundColor),
                   )
