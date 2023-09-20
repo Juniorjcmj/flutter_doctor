@@ -8,7 +8,6 @@ import 'package:flutter_doctor/main_layout.dart';
 import 'package:flutter_doctor/screens/alterar_email.dart';
 import 'package:flutter_doctor/screens/atendimento_page.dart';
 import 'package:flutter_doctor/screens/calendar_page.dart';
-import 'package:flutter_doctor/screens/descontinuado/auth_page.dart';
 import 'package:flutter_doctor/screens/descontinuado/calendar_app.dart';
 import 'package:flutter_doctor/screens/esqueci_senha_page.dart';
 import 'package:flutter_doctor/screens/login_auth.dart';
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
         type: BottomNavigationBarType.fixed
         )
       ),
-      initialRoute: AuthPage.routName,
+      initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const  LoginPage()),
         GetPage(name:  MainLayout.routName, page: () =>const  MainLayout()),
