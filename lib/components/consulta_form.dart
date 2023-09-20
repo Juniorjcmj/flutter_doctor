@@ -8,7 +8,10 @@ import '../services/especialista_service.dart';
 import 'autocomplete_widget.dart';
 
 class ConsultaForm extends StatefulWidget {
+  const ConsultaForm({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ConsultaFormState createState() => _ConsultaFormState();
 }
 

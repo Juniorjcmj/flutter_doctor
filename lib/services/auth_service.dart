@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../interceptor/http_interceptor.dart';
+import 'local_storage_service.dart';
 
 class AuthService{
 
@@ -13,23 +14,31 @@ class AuthService{
 
   static final Dio _dio = DioInterceptor().dioInstance;
 
-   static Future<Map<String, dynamic>> generateToken(String username, String password) async {
+   static Future<dynamic> generateToken(String username, String password) async {
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({'email': username, 'password': password});
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
-      body: body,
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);    
-      return responseData;
+    try{
+        final response = await http.post(
+          Uri.parse(apiUrl),
+          headers: headers,
+          body: body,
+        // ignore: argument_type_not_assignable_to_error_handler
+        );     
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> responseData = json.decode(response.body);  
+          LocalStorageService().saveDados  (responseData);
+          return true;    
+        }else{
+          return false;
+        }
+    }catch (e) {
+    if (e is DioError) {
+           return false;
     } else {
-      
-      throw Exception('Failed to generate token');
+      return false;
     }
+  }
 
   }
   /// Retorna `true` se a solicitação de recuperação de senha foi bem-sucedida, ou `false` se falhou.

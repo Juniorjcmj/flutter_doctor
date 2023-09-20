@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding:const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
-        controller: controller,
+        controller: controller,        
         obscureText: obscureText,
         decoration: decorator ?? InputDecoration(
           enabledBorder:const OutlineInputBorder(
@@ -37,6 +37,7 @@ class CustomTextField extends StatelessWidget {
           ),
           fillColor: Colors.grey.shade100,
           filled: true,
+          
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey[500])
         ),

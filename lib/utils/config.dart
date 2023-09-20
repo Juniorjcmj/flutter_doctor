@@ -51,4 +51,5 @@ class Config {
 
   static const primaryColor = Colors.greenAccent;
   static const secundColor = Colors.grey;
+  static const terciaryColor = Colors.amber;
 }

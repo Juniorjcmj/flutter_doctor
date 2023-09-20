@@ -6,7 +6,6 @@ import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
 import '../main_layout.dart';
 import '../services/auth_service.dart';
-import '../services/local_storage_service.dart';
 import 'esqueci_senha_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,6 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+   bool _isLoading = false; // Variável para controlar se o login está em andamento
   //text editing controller
   final usernameController = TextEditingController();
 
@@ -24,30 +24,16 @@ class _LoginPageState extends State<LoginPage> {
 
   bool obscurePass = true;
 
-  //sing user in method
-  Future<void> singUserIn(BuildContext context) async {
-    //   bool? resposta = await DesafioMatematica.questionMath(context);
-    //  if(resposta!){
-    //    MessageCustom.showToast("Resposta certa", MessageType.success, gravity: ToastGravity.TOP);
-
-    //  }else{
-    //     MessageCustom.showToast("Resposta errada", MessageType.error, gravity: ToastGravity.TOP);
-    //  };
-    AuthService.generateToken(usernameController.text, passwordController.text)
-        .then(
-      (value) => LocalStorageService().saveDados(value).then((value) =>
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const MainLayout())))),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Config().init(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body:_isLoading
+            ? const Center(
+              child: CircularProgressIndicator()) // Mostra o indicador de carregamento enquanto o login está em andamento
+            :  SafeArea(
           child: SingleChildScrollView(
         child: Container(
           padding:
@@ -92,9 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                 //password textField
                 CustomTextField(
                   controller: passwordController,
+
                   hintText: 'Senha',
                   obscureText: obscurePass,
-                  decorator: InputDecoration(
+                  decorator: InputDecoration(                    
                     hintText: 'Password',
                     labelText: 'Password',
                     alignLabelWithHint: true,
@@ -143,8 +130,40 @@ class _LoginPageState extends State<LoginPage> {
                 //sign in button
                 CustomButtom(
                   texto: "Entrar",
-                  onTap: () {
-                    singUserIn(context);
+                  onTap: () async { 
+                    setState(() {
+                          _isLoading = true; // Inicia o indicador de carregamento
+                        });
+                    if(usernameController.text.isNotEmpty &&  passwordController.text.isNotEmpty){
+                         final success = await AuthService
+                        .generateToken(usernameController.text, passwordController.text);                      
+                          if(success){
+                            setState(() {
+                               _isLoading = false; // Inicia o indicador de carregamento
+                              });
+                        Get.toNamed(MainLayout.routName);
+                          }else{
+                            setState(() {
+                               _isLoading = false; // Inicia o indicador de carregamento
+                              });
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+
+                                  backgroundColor: Config.terciaryColor,
+                                  content: Text('Login ou senha Inválido!'),
+                                ),
+                              );
+                          }
+                    }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Config.terciaryColor,
+                                  content: Text('Login e senha devem ser preenchidos !'),
+                                ),
+                              );
+                    }                   
+                  
                   },
                 ),
 

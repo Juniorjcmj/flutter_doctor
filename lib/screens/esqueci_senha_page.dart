@@ -70,13 +70,17 @@ class RecuperarSenha extends StatelessWidget {
                      if(sucess){
                       ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Email de recuperação enviado, verifique seu email!'),
+                        backgroundColor: Config.terciaryColor,
+                        content: Text('Email de recuperação enviado, verifique seu email!',
+                        
+                        ),
                       ),
                     );                   
                     Get.back();
                      }else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
+                        backgroundColor: Config.terciaryColor,
                         content: Text('Erro ao enviar email de recuperação'),
                       ),
                     );

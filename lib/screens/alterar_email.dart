@@ -8,7 +8,7 @@ import '../services/auth_service.dart';
 import '../utils/config.dart';
 
 class AlterarEmail extends StatefulWidget {
- static const String rounNamed = "alterar-email";
+ static const String rounNamed = "/alterar-email";
   const AlterarEmail({ super.key });
 
   @override
