@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/components/especialista_form.dart';
+import 'package:flutter_doctor/components/paciente_form.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +33,16 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Fluter Doctor Demo',
-      theme: ThemeData(       
+      theme: ThemeData(  
+        // ignore: prefer_const_constructors
+        datePickerTheme:  DatePickerThemeData(
+          backgroundColor: Colors.white,         
+        ), 
+        timePickerTheme: const TimePickerThemeData(
+        backgroundColor: Colors.white, // Cor de fundo do seletor de tempo
+       // Cor do texto AM/PM
+        // Peso da fonte do AM/PM
+      ),    
        inputDecorationTheme: const InputDecorationTheme(
         focusColor: Config.primaryColor,
         border: Config.outlineBorder,
@@ -40,6 +51,7 @@ class MyApp extends StatelessWidget {
         enabledBorder: Config.outlineBorder,
         floatingLabelStyle: TextStyle(color: Config.primaryColor),
         prefixIconColor: Colors.black38,
+        
        ),
        scaffoldBackgroundColor: Colors.white,
        bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -61,7 +73,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: CalendarApp.routNamd, page: () => const CalendarApp(),),
         GetPage(name: RecuperarSenha.routNamed, page: () => RecuperarSenha()),
         GetPage(name: Perfil.routNamed, page: () =>  Perfil()),
-        GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),)        
+        GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),),
+        GetPage(name: PacienteForm.routNamed, page: ()=> const PacienteForm()) ,
+        GetPage(name: EspecialistaForm.routNamed, page: ()=> const EspecialistaForm())       
       ],   
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

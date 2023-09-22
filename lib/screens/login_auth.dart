@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
 import '../main_layout.dart';
@@ -31,8 +32,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:_isLoading
-            ? const Center(
-              child: CircularProgressIndicator()) // Mostra o indicador de carregamento enquanto o login está em andamento
+            ?  Center(
+              child: LoadingAnimationWidget.staggeredDotsWave(                   
+                   color: Config.primaryColor,
+                   size: 100
+                ),
+                ) // Mostra o indicador de carregamento enquanto o login está em andamento
             :  SafeArea(
           child: SingleChildScrollView(
         child: Container(
@@ -141,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                                _isLoading = false; // Inicia o indicador de carregamento
                               });
-                        Get.toNamed(MainLayout.routName);
+                        Get.to(const MainLayout());
                           }else{
                             setState(() {
                                _isLoading = false; // Inicia o indicador de carregamento
@@ -156,6 +161,9 @@ class _LoginPageState extends State<LoginPage> {
                               );
                           }
                     }else{
+                      setState(() {
+                               _isLoading = false; // Inicia o indicador de carregamento
+                              });
                         ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   backgroundColor: Config.terciaryColor,

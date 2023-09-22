@@ -42,8 +42,9 @@ class Especialista {
     cor = json["cor"];
     
   }
+  Especialista();
 
-  Especialista(
+  Especialista.cheio(
       this.id,
       this.nome,
       this.especialidade,

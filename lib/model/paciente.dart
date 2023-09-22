@@ -40,8 +40,8 @@ class Paciente {
     cor = json["cor"];
     carteirinha = json["carteirinha"];
   }
-
-  Paciente(
+ Paciente(){}
+  Paciente.cheio(
       this.id,
       this.nome,
       this.convenio,

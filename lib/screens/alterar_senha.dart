@@ -5,6 +5,7 @@ import 'package:flutter_doctor/services/auth_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../components/custom_button.dart';
 import '../components/custom_textfield.dart';
@@ -20,6 +21,7 @@ class AlterarSenha extends StatefulWidget {
 }
 
 class _AlterarSenhaState extends State<AlterarSenha> {
+   bool _isLoading = false;
 
   final senhaController = TextEditingController();
   final novaSenhaController = TextEditingController();
@@ -35,7 +37,14 @@ class _AlterarSenhaState extends State<AlterarSenha> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: _isLoading
+            ?  Center(
+              child: LoadingAnimationWidget.staggeredDotsWave(                   
+                   color: Config.primaryColor,
+                   size: 100
+                ),
+                ) // Mostra o indicador de carregamento enquanto o login está em andamento
+            :SafeArea(
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -137,9 +146,15 @@ class _AlterarSenhaState extends State<AlterarSenha> {
                           ),
                         );
                       }else{
+                         setState(() {
+                               _isLoading = true; // Inicia o indicador de carregamento
+                              });
                             final sucess = await  AuthService.alterarSenha(novaSenhaController.text);
                       if(sucess){
-                        ScaffoldMessenger.of(context).showSnackBar(
+                         setState(() {
+                               _isLoading = false; // Inicia o indicador de carregamento
+                              });
+                        ScaffoldMessenger.of(context).showSnackBar(                          
                           const SnackBar(
                             backgroundColor: Config.primaryColor,
                             content: Text('Senha alterada com sucesso'),
@@ -147,6 +162,9 @@ class _AlterarSenhaState extends State<AlterarSenha> {
                         );
                         Get.back();
                       }else {
+                         setState(() {
+                               _isLoading = false; // Inicia o indicador de carregamento
+                              });
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Erro ao alterar senha'),

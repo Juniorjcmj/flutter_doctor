@@ -1,14 +1,35 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/model/consulta.dart';
+import 'package:flutter_doctor/screens/calendar_page.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import 'package:flutter_doctor/components/especialista_form.dart';
+import 'package:flutter_doctor/components/paciente_form.dart';
 import 'package:flutter_doctor/model/paciente.dart';
 import 'package:flutter_doctor/services/paciente_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
 
 import '../model/especialista.dart';
+import '../services/consulta_service.dart';
 import '../services/especialista_service.dart';
+import '../utils/util.dart';
 import 'autocomplete_widget.dart';
 
 class ConsultaForm extends StatefulWidget {
-  const ConsultaForm({super.key});
+
+  late DateTime? dataConsulta;
+  late  TimeOfDay? horaConsulta; 
+  late Consulta? consulta;
+
+   ConsultaForm({
+    super.key,
+    this.dataConsulta,
+    this.horaConsulta,
+    this.consulta
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,17 +37,39 @@ class ConsultaForm extends StatefulWidget {
 }
 
 class _ConsultaFormState extends State<ConsultaForm> {
+
+Consulta consultaForm = Consulta();
+  bool _isLoading = false;
+
+  Paciente pacienteSelecionado = Paciente();
+  Especialista especialistaSelecionado = Especialista();
+
   @override
   void initState() {
     super.initState();
-    getPacientes();
-    getEspecialistas();
+    getPacientes();   
+    getEspecialistas();  
+    dataController.text = widget.dataConsulta != null ? DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(widget.dataConsulta!): "";
+    inicioController.text = '${widget.horaConsulta!.hour.toString().padLeft(2, '0')}:${widget.horaConsulta!.minute.toString().padLeft(2, '0')}'; 
+    tipoController.text = "Primeira vez";
+   
+    if(widget.consulta != null && widget.consulta!.id != null){
+      pacienteController.text = widget.consulta!.nomePaciente;      
+      dentistaController.text = widget.consulta!.nomeDentista;
+      pacienteSelecionado.id = int.parse(widget.consulta!.pacienteId);
+      especialistaSelecionado.id = int.parse(widget.consulta!.dentistaId);
+      consultaForm = widget.consulta!;     
+    }else{
+      consultaForm.nomeDentista="";
+      consultaForm.nomePaciente="";
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
   //Buscando lista de especialistas
   List<Especialista> especialistas = List.empty();
   Future<void> getEspecialistas() async {
@@ -51,6 +94,17 @@ class _ConsultaFormState extends State<ConsultaForm> {
     });
   }
 
+  String dropdownvalue = 'Primeira vez';
+
+  var items = [
+    'Primeira vez',
+    'Revisão',
+    'Avaliação',
+    'Tratamento',
+    'Urgência',
+    'Procedimento'
+  ];
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController pacienteController = TextEditingController();
   TextEditingController dentistaController = TextEditingController();
@@ -60,15 +114,39 @@ class _ConsultaFormState extends State<ConsultaForm> {
   TextEditingController terminoController = TextEditingController();
   TextEditingController observacaoController = TextEditingController();
 
-  late Paciente pacienteSelecionado;
-   late Especialista especialistaSelecionado;
+ 
 
-  void _submitForm() {
+  Future<bool> _submitForm() async{
+
+   bool response = false;
+
+   TimeOfDay horariFinal = widget.horaConsulta!;
+
+        int minutosAdicionais = 30;
+        int minutosTotais = horariFinal.minute + minutosAdicionais;
+        if (minutosTotais >= 60) {
+          horariFinal = TimeOfDay(hour: horariFinal.hour + 1, minute: minutosTotais % 60);
+        } else {
+          horariFinal = TimeOfDay(hour: horariFinal.hour, minute: minutosTotais);
+        }
+
     if (_formKey.currentState!.validate()) {
-      // Aqui você pode enviar os dados para o backend
-      // Utilize os controllers para acessar os valores dos campos
-      // pacienteController.text, dentistaController.text, etc.
+
+      Map<String, dynamic> dados = {
+          "id": consultaForm.id,
+          "start": Util.formatarDataHora(widget.dataConsulta!, widget.horaConsulta!),
+          "end":  Util.formatarDataHora(widget.dataConsulta!, horariFinal),
+          "valor": "0.0",
+          "tipo": tipoController.text,
+          "observacao": observacaoController.text,
+          "pacienteId": pacienteSelecionado.id,
+          "dentistaId": especialistaSelecionado.id
+        };
+       
+       response = await ConsultaService.cadastrarConsulta(dados);    
+    
     }
+    return response;
   }
 
   //Implementação do auto complete
@@ -83,154 +161,267 @@ class _ConsultaFormState extends State<ConsultaForm> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Config.primaryColor,
-        centerTitle: true,
-        title: const Text('Cadastro de Consulta'),
-      ),
-      body: pacientes.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: <Widget>[
-                    const SizedBox(height: 10,),
-                    AutocompleteWidget<Paciente>(
-                      options: pacientes,
-                      displayStringForOption: (Paciente paciente) =>
-                          paciente.nome!,
-                      onSelected: (Paciente paciente) {
-                        pacienteSelecionado = paciente;
-                      },
-                      buildListTile: (Paciente paciente) => ListTile(
-                        leading: const Icon(Icons.person),
-                        title: Text(paciente.nome!),
-                        subtitle: Text(paciente.email ?? ""),
+    return _isLoading
+            ?  Center(
+              child: LoadingAnimationWidget.staggeredDotsWave(                   
+                   color: Config.primaryColor,
+                   size: 100
+                ),
+                ) // Mostra o indicador de carregamento enquanto o login está em andamento
+            :   WillPopScope(
+                    onWillPop: () async {
+                     Get.back(result: false);
+                      return true;
+                    },
+              child: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Config.primaryColor,
+                    title: const Text("Cadastro de Consultas"),
+                    centerTitle: true,
+                  ),
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 10,
                       ),
-                      inputDecoration: InputDecoration(
-                  hintText: 'Buscar',
-                  labelText: 'Buscar',
-                  alignLabelWithHint: true,                 
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {                         
-                        });
-                      },
-                      icon: const Icon(
-                              Icons.person_add_rounded,
-                              color: Config.secundColor,
-                              size: 35,
-                            )
-                          
-                            ),
-                            ),
-                    ),
-                    const SizedBox(height: 10,),
-                     AutocompleteWidget<Especialista>(
-                      options: especialistas,
-                      displayStringForOption: (Especialista especialista) =>
-                          especialista.nome!,
-                      onSelected: (Especialista especialista) {
-                        especialistaSelecionado = especialista;
-                      },
-                      buildListTile: (Especialista especialista) => ListTile(
-                        leading: const Icon(Icons.person),
-                        title: Text(especialista.nome!),
-                        subtitle: Text(especialista.email ?? ""),
+                      AutocompleteWidget<Paciente>(
+                        options: pacientes,
+                        displayStringForOption: (Paciente paciente) =>
+                            paciente.nome!,
+                        onSelected: (Paciente paciente) {
+                          pacienteSelecionado = paciente;
+                         print(pacienteSelecionado.id);
+                          return null;
+                        },
+                        buildListTile: (Paciente paciente) => ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(paciente.nome!),
+                          subtitle: Text(paciente.email ?? ""),
+                        ),
+                        inputDecoration: InputDecoration(
+                          hintText: consultaForm.nomePaciente,
+                          labelText:'Paciente',
+                          alignLabelWithHint: true,
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => const PacienteForm());
+                                setState(() {});
+                              },
+                              icon: const Icon(
+                                Icons.person_add_rounded,
+                                color: Config.secundColor,
+                                size: 35,
+                              )),
+                        ),
                       ),
-                      inputDecoration: InputDecoration(
-                  hintText: 'Buscar',
-                  labelText: 'Buscar',
-                  alignLabelWithHint: true,                 
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {                         
-                        });
-                      },
-                      icon: const Icon(
-                              Icons.person_add_rounded,
-                              color: Config.secundColor,
-                              size: 35,
-                            )
-                          
-                            ),
-                            ),
-                    ),
-                    const SizedBox(height: 10),
-                   
-                   
-                         // Tipo
-                              const SizedBox(height: 10),
-                    TextFormField(
-                      controller: tipoController,
-                      decoration: const InputDecoration(labelText: 'Tipo'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-           
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: dataController,
-                      decoration: const InputDecoration(labelText: 'Data'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: inicioController,
-                      decoration: const InputDecoration(labelText: 'Início'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: terminoController,
-                      decoration: const InputDecoration(labelText: 'Término'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: observacaoController,
-                      decoration:
-                          const InputDecoration(labelText: 'Observação'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Config.primaryColor),
-                      onPressed: _submitForm,
-                      child: const Text('Salvar'),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AutocompleteWidget<Especialista>(
+                        options: especialistas,
+                        displayStringForOption: (Especialista especialista) =>
+                            especialista.nome!,
+                        onSelected: (Especialista especialista) {
+                          especialistaSelecionado = especialista;
+                          dentistaController.text = especialista.id.toString();
+                          return null;
+                        },
+                        buildListTile: (Especialista especialista) => ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(especialista.nome!),
+                          subtitle: Text(especialista.email ?? ""),
+                        ),
+                        inputDecoration: InputDecoration(
+                          hintText: consultaForm.nomeDentista,
+                          labelText:  'Especialista',
+                          alignLabelWithHint: true,
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const EspecialistaForm());
+                                setState(() {});
+                              },
+                              icon: const Icon(
+                                Icons.person_add_rounded,
+                                color: Config.secundColor,
+                                size: 35,
+                              )),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+            
+                      Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(),
+                            
+                          ),
+                        child:  DropdownButton(
+                            
+                            borderRadius: BorderRadius.circular(20),
+                            // Initial Value
+                            value: dropdownvalue,
+                      
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                      
+                            // Array list of items
+                            items: items.map((String items) {
+                              return DropdownMenuItem(                            
+                                value: items,
+            
+                                child: Container(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Center(
+                                    child: Text(
+                                      items,
+                                      style: const TextStyle(color: Config.secundColor),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownvalue = newValue!;
+                                tipoController.text = dropdownvalue;
+                              });
+                            },
+                          ),
+                       
+                      ),
+            
+                      // Tipo
+                      const SizedBox(height: 10),                 
+                      TextFormField(
+                        onTap:  () async {
+                          final data = await showDatePicker(
+                            context: context,
+                            initialDate: widget.dataConsulta ?? DateTime.now(),
+                            firstDate: DateTime(2018),
+                            lastDate: DateTime(2040),
+                            locale: Localizations.localeOf(context),
+                          );
+                           if (data != null) {
+                            final datapt =  DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(data );
+                            dataController.text = datapt;                 
+                             }
+                          },
+                        controller: dataController,
+                        decoration: const InputDecoration(
+                          labelText: 'Data',
+                          suffixIcon:Icon(
+                                Icons.calendar_month,
+                                color: Config.secundColor,
+                                size: 35,
+                              )
+                              ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Campo obrigatório';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: inicioController,
+                        decoration: const InputDecoration(
+                          labelText: 'Início',
+                           suffixIcon:Icon(
+                                Icons.timer_sharp,
+                                color: Config.secundColor,
+                                size: 35,
+                              )                        
+                          ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Campo obrigatório';
+                          }
+                          return null;
+                        },
+                        onTap: () async {
+                              final time = await showTimePicker(
+                                
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+            
+                              if (time != null) {
+                                String formattedHour = time.hour.toString().padLeft(2, '0');
+                                String formattedMinute = time.minute.toString().padLeft(2, '0');
+                                inicioController.text = "$formattedHour:$formattedMinute";                             
+                              }
+                            },
+                      ),
+                      const SizedBox(height: 10),                  
+                      TextFormField(
+                        controller: observacaoController,
+                        decoration:
+                            const InputDecoration(labelText: 'Observação'),                      
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Config.primaryColor),
+                        onPressed:() async{
+                           setState(() {
+                            _isLoading = true; // Inicia o indicador de carregamento
+                          });
+                          bool response = await _submitForm();
+                          if(response){
+                             setState(() {
+                            _isLoading = false; // Inicia o indicador de carregamento
+                          });
+                           ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+            
+                                    backgroundColor: Colors.greenAccent,
+                                    content: Text('Consulta cadastrada com sucesso!'),
+                                  ),
+                                );                           
+                            Get.back(result: true);
+                          }else{
+                             setState(() {
+                            _isLoading = false; 
+                          });
+                           ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+            
+                                    backgroundColor: Colors.red,
+                                    content: Text('Não foi possivél cadastrar consulta!'),
+                                  ),
+                                );
+                          }
+                        }, 
+                        child: const Text('Salvar'),
+                      ),
+                      const SizedBox(height: 10,),
+                        ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black54),
+                        onPressed:() async{
+                          Get.back(result: false);                  
+                        
+                        }, 
+                        child: const Text('Voltar'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-    );
+                ),
+            );
   }
 }

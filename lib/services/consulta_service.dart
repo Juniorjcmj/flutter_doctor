@@ -26,8 +26,9 @@ class ConsultaService {
         }
         return consultas;
       }
+    // ignore: empty_catches
     } on DioError catch (e) {
-      print(e);
+     throw ArgumentError.value(e.message);
     }
 
     return consultas;
@@ -47,11 +48,30 @@ class ConsultaService {
         return consultas;
       }
     } on DioError catch (e) {
-      print(e);
+     throw ArgumentError.value(e.message);
     }
 
     return consultas;
   }
+
+  static Future<bool> cadastrarConsulta(Map<String, dynamic> dados) async {
+   
+  try {
+    Response response = await _dio.post(
+      apiUrl,
+      data: dados,
+    );
+  
+    if (response.statusCode == 200) {
+     return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+   throw ArgumentError.value(error);
+  }
+}
+
 
   
 }

@@ -1,16 +1,18 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/utils/config.dart';
+import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../components/consulta_form.dart';
 import '../model/consulta.dart';
 import '../services/consulta_service.dart';
 import '../utils/config_events.dart';
+import '../utils/util.dart';
 
 class TableCalendarPage extends StatefulWidget {
   static const String routName = '/calendar';
@@ -30,7 +32,7 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
       setState(() {
         consultas = value;
       });
-    }).catchError((onError) =>  onError);
+    }).catchError((onError) => onError);
   }
 
   CalendarFormat _calendarFormat = CalendarFormat.week;
@@ -55,16 +57,26 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
     _selectedEvents.dispose();
     super.dispose();
   }
+  void recarregarPagina(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => const TableCalendarPage()),
+    );
+  }
 
-  List<Consulta> _getConsultasForDay(DateTime day) {  
-    
-    return consultas.where((consulta) => isSameDay(DateTime.parse(consulta.start), day)).toList();
+  List<Consulta> _getConsultasForDay(DateTime day) {
+    return consultas
+        .where((consulta) => isSameDay(DateTime.parse(consulta.start), day))
+        .toList();
   }
 
   List<Consulta> _getConsultasForRange(DateTime start, DateTime end) {
-  
-    return consultas.where((consulta) => DateTime.parse(consulta.start).isAfter(start) && DateTime.parse(consulta.end).isBefore(end)).toList();
-  } 
+    return consultas
+        .where((consulta) =>
+            DateTime.parse(consulta.start).isAfter(start) &&
+            DateTime.parse(consulta.end).isBefore(end))
+        .toList();
+  }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -99,7 +111,6 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
     }
   }
   //cadastrar com dialog
-  
 
   @override
   Widget build(BuildContext context) {
@@ -145,63 +156,105 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
               },
             ),
             const SizedBox(height: 8.0),
-             consultas.isEmpty
-            ? const Center(
-                child:  CircularProgressIndicator(),
-              )
-            : Expanded(
-              child: ValueListenableBuilder<List<Consulta>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return ListView.builder(
-                        itemCount: (20 - 8) * 2, // Calcula o número total de intervalos de 30 minutos
-                        itemBuilder: (BuildContext context, int index) {
-                            // Calcula a hora e o minuto com base no índice
-                          int hour = (index ~/ 2) + 8;
-                          int minute = (index % 2) * 30;
+            consultas.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Expanded(
+                    child: ValueListenableBuilder<List<Consulta>>(
+                      valueListenable: _selectedEvents,
+                      builder: (context, value, _) {
+                        return 
 
-                          // Formata a hora e o minuto em uma string
-                          String time = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+                        ListView.builder(
+                              itemCount: (20 - 8) * 2, // Calcula o número total de intervalos de 30 minutos
+                              itemBuilder: (BuildContext context, int index) {
+                                  // Calcula a hora e o minuto com base no índice
+                                int hour = (index ~/ 2) + 8;
+                                int minute = (index % 2) * 30;
 
+                                // Formata a hora e o minuto em uma string
+                                String time = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
 
-                        // Encontre a consulta, se houver, para este horário
-                          Consulta consulta = consultas.firstWhere((consulta) {
-                          DateTime consultaStart = DateTime.parse(consulta.start);
-                          DateTime consultaEnd = DateTime.parse(consulta.end);
+                              // Encontre a consulta, se houver, para este horário
+                                Consulta consulta = consultas.firstWhere((consulta) {
+                                DateTime consultaStart = DateTime.parse(consulta.start);
+                                DateTime consultaEnd = DateTime.parse(consulta.end);
 
-                          DateTime intervalStart = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, hour, minute);
-                          DateTime intervalEnd = intervalStart.add(const Duration(minutes: 30));
+                                DateTime intervalStart = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day, hour, minute);
+                                DateTime intervalEnd = intervalStart.add(const Duration(minutes: 30));
 
-                          return intervalStart.isBefore(consultaEnd) && intervalEnd.isAfter(consultaStart);
-                        }, orElse: () => Consulta.pacienteVazio("")); // Caso não haja consulta, criamos uma consulta com o nome do paciente vazio
+                                return intervalStart.isBefore(consultaEnd) && intervalEnd.isAfter(consultaStart);
+                              }, orElse: () => Consulta.pacienteVazio("")); // Caso não haja consulta, criamos uma consulta com o nome do paciente vazio
 
-                        return Container(
-                            decoration: BoxDecoration(
-                            border: const Border(
-                            bottom: BorderSide(width: 1, color: Colors.black12),                           
-                            ),
-                            color: consulta.nomePaciente != "" ? Colors.green[50]: Colors.transparent,
-                            
-                            ),
-                          child: ListTile(
-                            title: Text(time),
-                            trailing: consulta.nomePaciente != "" ? Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(consulta.nomePaciente, style: const TextStyle(fontSize: 14, color: Colors.black45,),),
-                                Text(consulta.nomeDentista,style: const TextStyle(fontSize: 14, color: Colors.black45),),
-                              ],
-                            ) : null,            
-                           onTap: () {
-                             showDialog(context: context, builder: (context) => ConsultaForm());
-                           },
-                          ),
-                        );
+                              return Container(
+                                  decoration: const BoxDecoration(
+                                  border: Border(
+                                  bottom: BorderSide(width: 1, color: Colors.black12),
+                                  ),
+                                 
+
+                                  ),
+                                child: ListTile(
+                                  title: consulta.nomePaciente != "" ? Row(
+                                    children: [
+                                      Text("$time  |  ", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
+                                      Column(  
+                                        
+                                        crossAxisAlignment: CrossAxisAlignment.start,                                     
+                                        children: [                                          
+                                          Row(                                                                               
+                                            children: [
+                                              SizedBox(
+                                                 width:  280,
+                                                child: Text(consulta.nomeDentista.toUpperCase(),style: const TextStyle(fontSize: 14, color: Colors.black45),overflow: TextOverflow.clip,)),
+                                            ],
+                                          ),
+                                         
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 280,
+                                                  child: Text(consulta.nomePaciente.toUpperCase(), style: const TextStyle(fontSize: 14, color: Colors.black45,),overflow: TextOverflow.clip,)),
+                                              ],
+                                            ),
+                                       
+                                          Row(
+                                            children: [
+                                               Icon(Icons.width_wide, color: Util.obterCorParaTipoDeConsulta(consulta.tipo),  size: 20),
+                                               const SizedBox(width: 7,),
+                                               Text(consulta.tipo.toUpperCase(), style: const TextStyle(fontSize: 14, color: Colors.black45,),),
+                                             
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ) : Text("$time ", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
+                                 onTap: () async{
+                                  if(consulta.id == null){
+                               
+                                 //bool response = await  showDialog(context: context, builder: (context) => ConsultaForm(dataConsulta: _selectedDay, horaConsulta:TimeOfDay(hour: hour, minute:minute)));
+                                  bool response = await  Get.to(ConsultaForm(dataConsulta: _selectedDay, horaConsulta:TimeOfDay(hour: hour, minute:minute)));
+                                  if(response){
+                                    // ignore: use_build_context_synchronously
+                                    recarregarPagina(context);
+                                  }
+                                  }else{
+                                  bool response = await   Get.to(ConsultaForm(dataConsulta: _selectedDay, horaConsulta:TimeOfDay(hour: hour, minute:minute),consulta: consulta,));
+                                       if(response){
+                                       // ignore: use_build_context_synchronously
+                                    recarregarPagina(context);
+                                  }
+                                  }
+                                 },
+                                ),
+                              );
+                            },
+                          );
                       },
-                    );
-                },
-              ),
-            ),
+                    ),
+                  ),
           ],
         ),
       ),

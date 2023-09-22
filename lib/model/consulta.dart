@@ -1,6 +1,6 @@
 
 class Consulta {
-  String? _id;
+  String? id;
   String? _start;
   String? _end;
   String? _valor;
@@ -25,7 +25,7 @@ class Consulta {
   }
 
   Consulta.cheio(
-     this._id,
+     this.id,
       this._start,
       this._end,
       this._valor,
@@ -64,8 +64,7 @@ class Consulta {
     corDentista = json["corDentista"];
     corPaciente = json["corPaciente"];
   }
-
-  String get id => _id!;
+  
   String get start => _start!;
   String get end => _end!;
   String get valor => _valor!;
@@ -84,7 +83,7 @@ class Consulta {
   String get corDentista => _corDentista!;
   String get corPaciente => _corPaciente!;
 
-  set id(String id) => _id = id;
+  
   set start(String start) => _start = start;
   set end(String end) => _end = end;
   set tipo(String tipo) => _tipo = tipo;
@@ -105,10 +104,10 @@ class Consulta {
   set corDentista(String corDentista) => _corDentista = corDentista;
   set corPaciente(String corPaciente) => _corPaciente = corPaciente;
 
-  @override
-  String toString() {
-    return "$id, $start, $end,$tipo, $valor, $confirmado,"+
-    "$ausencia, $observacao, $dataCriacao,$dataAtualizacao, $status, $formaPagamento,$pacienteId, $dentistaId, $nomeDentista,$nomePaciente, $corDentista, $corPaciente";
-  }
+  // @override
+  // String toString() {
+  //   return "$id, $start, $end,$tipo, $valor, $confirmado,"+
+  //   "$ausencia, $observacao, $dataCriacao,$dataAtualizacao, $status, $formaPagamento,$pacienteId, $dentistaId, $nomeDentista,$nomePaciente, $corDentista, $corPaciente";
+  // }
 
 }
