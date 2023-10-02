@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/model/consulta.dart';
-import 'package:flutter_doctor/screens/calendar_page.dart';
+import 'package:flutter_doctor/utils/util.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:flutter_doctor/components/especialista_form.dart';
 import 'package:flutter_doctor/components/paciente_form.dart';
+import 'package:flutter_doctor/model/consulta.dart';
 import 'package:flutter_doctor/model/paciente.dart';
 import 'package:flutter_doctor/services/paciente_service.dart';
 import 'package:flutter_doctor/utils/config.dart';
@@ -15,7 +15,6 @@ import 'package:flutter_doctor/utils/config.dart';
 import '../model/especialista.dart';
 import '../services/consulta_service.dart';
 import '../services/especialista_service.dart';
-import '../utils/util.dart';
 import 'autocomplete_widget.dart';
 
 class ConsultaForm extends StatefulWidget {
@@ -24,12 +23,12 @@ class ConsultaForm extends StatefulWidget {
   late  TimeOfDay? horaConsulta; 
   late Consulta? consulta;
 
-   ConsultaForm({
-    super.key,
+  ConsultaForm({
+    Key? key,
     this.dataConsulta,
     this.horaConsulta,
     this.consulta
-  });
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -38,7 +37,7 @@ class ConsultaForm extends StatefulWidget {
 
 class _ConsultaFormState extends State<ConsultaForm> {
 
-Consulta consultaForm = Consulta();
+ Consulta consultaForm = Consulta();
   bool _isLoading = false;
 
   Paciente pacienteSelecionado = Paciente();
@@ -49,8 +48,13 @@ Consulta consultaForm = Consulta();
     super.initState();
     getPacientes();   
     getEspecialistas();  
-    dataController.text = widget.dataConsulta != null ? DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(widget.dataConsulta!): "";
-    inicioController.text = '${widget.horaConsulta!.hour.toString().padLeft(2, '0')}:${widget.horaConsulta!.minute.toString().padLeft(2, '0')}'; 
+
+    if(widget.dataConsulta != null && widget.horaConsulta != null){
+       //dataController.text = DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(widget.dataConsulta!);
+       dataController.text =  DateFormat('dd/MM/yyyy').format(widget.dataConsulta!);
+       inicioController.text = '${widget.horaConsulta!.hour.toString().padLeft(2, '0')}:${widget.horaConsulta!.minute.toString().padLeft(2, '0')}'; 
+    }
+   
     tipoController.text = "Primeira vez";
    
     if(widget.consulta != null && widget.consulta!.id != null){
@@ -60,8 +64,8 @@ Consulta consultaForm = Consulta();
       especialistaSelecionado.id = int.parse(widget.consulta!.dentistaId);
       consultaForm = widget.consulta!;     
     }else{
-      consultaForm.nomeDentista="";
-      consultaForm.nomePaciente="";
+      consultaForm.nomeDentista="Especilista";
+      consultaForm.nomePaciente="Paciente";
     }
   }
 
@@ -118,30 +122,50 @@ Consulta consultaForm = Consulta();
 
   Future<bool> _submitForm() async{
 
-   bool response = false;
-
-   TimeOfDay horariFinal = widget.horaConsulta!;
+    bool response = false;
+   TimeOfDay horaInicial = const TimeOfDay(hour: 12, minute: 00);
+   TimeOfDay horaFinal = const TimeOfDay(hour: 12, minute: 00);
+   if(inicioController.text.isNotEmpty){
+      horaInicial =  TimeOfDay(hour: int.parse(inicioController.text.split(':')[0]), minute: int.parse(inicioController.text.split(':')[1]));
+   }else if(widget.horaConsulta != null && inicioController.text.isEmpty){
+     horaInicial = widget.horaConsulta!;
+   }             
 
         int minutosAdicionais = 30;
-        int minutosTotais = horariFinal.minute + minutosAdicionais;
+        int minutosTotais = horaInicial.minute + minutosAdicionais;
         if (minutosTotais >= 60) {
-          horariFinal = TimeOfDay(hour: horariFinal.hour + 1, minute: minutosTotais % 60);
+          horaFinal = TimeOfDay(hour: horaInicial.hour + 1, minute: minutosTotais % 60);
         } else {
-          horariFinal = TimeOfDay(hour: horariFinal.hour, minute: minutosTotais);
+          horaFinal = TimeOfDay(hour: horaInicial.hour, minute: minutosTotais);
         }
+      
+        DateTime dateInicial = DateTime(int.parse(dataController.text.split('/')[2]),
+                                    int.parse(dataController.text.split('/')[1]),
+                                    int.parse(dataController.text.split('/')[0]),
+                                    int.parse(horaInicial.hour.toString().padLeft(2, '0')),
+                                    int.parse(horaInicial.minute.toString().padLeft(2, '0'))
+                                    );
+        
+        DateTime datefinal = DateTime(int.parse(dataController.text.split('/')[2]),
+                                    int.parse(dataController.text.split('/')[1]),
+                                    int.parse(dataController.text.split('/')[0]),
+                                    int.parse(horaFinal.hour.toString().padLeft(2, '0')),
+                                    int.parse(horaFinal.minute.toString().padLeft(2, '0'))
+                                    );
 
-    if (_formKey.currentState!.validate()) {
+   
+    if (_formKey.currentState!.validate()) {     
 
       Map<String, dynamic> dados = {
           "id": consultaForm.id,
-          "start": Util.formatarDataHora(widget.dataConsulta!, widget.horaConsulta!),
-          "end":  Util.formatarDataHora(widget.dataConsulta!, horariFinal),
+          "start":  Util.formatarDataHoraUtc(dateInicial, horaInicial),
+          "end":    Util.formatarDataHoraUtc(datefinal, horaFinal),
           "valor": "0.0",
           "tipo": tipoController.text,
           "observacao": observacaoController.text,
           "pacienteId": pacienteSelecionado.id,
           "dentistaId": especialistaSelecionado.id
-        };
+        };      
        
        response = await ConsultaService.cadastrarConsulta(dados);    
     
@@ -193,8 +217,7 @@ Consulta consultaForm = Consulta();
                         displayStringForOption: (Paciente paciente) =>
                             paciente.nome!,
                         onSelected: (Paciente paciente) {
-                          pacienteSelecionado = paciente;
-                         print(pacienteSelecionado.id);
+                          pacienteSelecionado = paciente;                        
                           return null;
                         },
                         buildListTile: (Paciente paciente) => ListTile(
@@ -203,8 +226,8 @@ Consulta consultaForm = Consulta();
                           subtitle: Text(paciente.email ?? ""),
                         ),
                         inputDecoration: InputDecoration(
-                          hintText: consultaForm.nomePaciente,
-                          labelText:'Paciente',
+                          hintText: consultaForm.nomePaciente,                          
+                          labelText: consultaForm.nomePaciente,
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
                               onPressed: () {
@@ -239,7 +262,7 @@ Consulta consultaForm = Consulta();
                         ),
                         inputDecoration: InputDecoration(
                           hintText: consultaForm.nomeDentista,
-                          labelText:  'Especialista',
+                          labelText:  consultaForm.nomeDentista,
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
                               onPressed: () {
@@ -311,12 +334,12 @@ Consulta consultaForm = Consulta();
                             initialDate: widget.dataConsulta ?? DateTime.now(),
                             firstDate: DateTime(2018),
                             lastDate: DateTime(2040),
-                            locale: Localizations.localeOf(context),
+                            locale:const Locale('pt', 'BR'),
                           );
-                           if (data != null) {
-                            final datapt =  DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(data );
-                            dataController.text = datapt;                 
-                             }
+                         if (data != null) {
+                          final datapt = DateFormat('dd/MM/yyyy').format(data);
+                          dataController.text = datapt;                         
+                            }
                           },
                         controller: dataController,
                         decoration: const InputDecoration(

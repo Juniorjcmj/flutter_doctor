@@ -7,6 +7,8 @@ import 'package:flutter_doctor/services/local_storage_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../components/consulta_form.dart';
+import '../components/paciente_form.dart';
 import '../utils/config.dart';
 
 class HomePage extends StatefulWidget {
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                 Config.spaceMedium,
                 //categoria listing
                 const Text(
-                  'Categoria',
+                  'Menu Principal',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Config.spaceSmall,
@@ -95,15 +97,23 @@ class _HomePageState extends State<HomePage> {
                Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.person_add, size: 80, color: Config.secundColor),
-                      SizedBox(width: 10,),
-                      FaIcon(FontAwesomeIcons.solidCalendarPlus, size: 60, color: Config.secundColor),
-                      SizedBox(width: 10,),
-                      Icon(Icons.admin_panel_settings, size: 80,color: Config.secundColor),
-                      SizedBox(width: 10,),
-                      Icon(Icons.attach_money, size: 80,color: Config.secundColor),
-                     
+                      IconButton(
+                        onPressed: () {
+                          Get.to(()  =>  PacienteForm());
+                        },
+                      icon: Icon(Icons.person_add, size: 80, color: Config.secundColor.shade700)
+                      ),
+                      SizedBox(width: 5,),
+                      IconButton(
+                        onPressed: () {
+                          Get.to(()  => ConsultaForm());
+                        },
+                        icon: FaIcon(FontAwesomeIcons.solidCalendarPlus, size: 60, color: Config.secundColor.shade700)
+                        ),
+                                                            
                     ],
                   )
                 ],

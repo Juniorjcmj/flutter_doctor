@@ -38,9 +38,11 @@ class AutocompleteWidget<T extends Object> extends StatelessWidget {
           controller: textEditingController,
           focusNode: focusNode,
           decoration: inputDecoration,
+          
           onSubmitted: (String value) {
             onFieldSubmitted();
           },
+        
         );
       },
       optionsViewBuilder: (BuildContext context,
@@ -71,18 +73,3 @@ class AutocompleteWidget<T extends Object> extends StatelessWidget {
   }
 }
 
-//Implementação
-
-    //  AutocompleteWidget<Paciente>(
-    //                   options: pacientes,
-    //                   displayStringForOption: (Paciente paciente) =>
-    //                       paciente.nome!,
-    //                   onSelected: (Paciente paciente) {
-    //                     pacienteSelecionado = paciente;
-    //                   },
-    //                   buildListTile: (Paciente paciente) => ListTile(
-    //                     leading: const Icon(Icons.person),
-    //                     title: Text(paciente.nome!),
-    //                     subtitle: Text(paciente.email ?? ""),
-    //                   ),
-    //                 ),

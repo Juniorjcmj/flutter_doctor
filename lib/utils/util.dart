@@ -1,3 +1,5 @@
+import 'package:timezone/timezone.dart' as tz;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,6 +11,21 @@ class Util {
 
   return dataFormatada;
 }
+
+static tz.TZDateTime formatarDataHoraTz(String dataString) {
+ 
+ tz.Location location = tz.getLocation('America/Sao_Paulo');
+
+  // Faz o parsing da string para DateTime
+  tz.TZDateTime dateTime = tz.TZDateTime.parse(location, dataString);
+
+  return dateTime;
+}
+
+
+
+
+
 
 static Color obterCorParaTipoDeConsulta(String tipoDeConsulta) {
   switch (tipoDeConsulta) {
@@ -28,4 +45,19 @@ static Color obterCorParaTipoDeConsulta(String tipoDeConsulta) {
       return Colors.black; // Cor padrão para tipos desconhecidos
   }
 }
+static String formatarDataHoraUtc(DateTime data, TimeOfDay hora) {
+ 
+
+  return '${data.toString().split(' ')[0]}T${hora.hour.toString().padLeft(2, '0')}:${hora.minute.toString().padLeft(2, '0')}:00-03:00';
+}
+
+static DateTime timezoneBrasil(DateTime data) {
+  return data.toLocal();
+}
+static String converterParaISO8601(DateTime data) {
+  return DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(data);
+}
+
+
+
 }
