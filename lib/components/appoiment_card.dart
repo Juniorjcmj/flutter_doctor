@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/screens/atendimento_page.dart';
+import 'package:flutter_doctor/modulos/consulta/screens/atendimento_page.dart';
 
 import '../model/consulta.dart';
-import '../utils/config.dart';
+import '../shared/util/config.dart';
 import 'package:intl/intl.dart';
 
 class AppoimentCard extends StatefulWidget {

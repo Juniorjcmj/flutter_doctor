@@ -1,20 +1,20 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/components/especialista_form.dart';
-import 'package:flutter_doctor/components/paciente_form.dart';
+import 'package:flutter_doctor/modulos/especialista/screens/especialista_form.dart';
+import 'package:flutter_doctor/modulos/paciente/screens/paciente_form.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_doctor/main_layout.dart';
-import 'package:flutter_doctor/screens/alterar_email.dart';
-import 'package:flutter_doctor/screens/atendimento_page.dart';
-import 'package:flutter_doctor/screens/calendar_page.dart';
-import 'package:flutter_doctor/screens/descontinuado/calendar_app.dart';
-import 'package:flutter_doctor/screens/esqueci_senha_page.dart';
-import 'package:flutter_doctor/screens/login_auth.dart';
-import 'package:flutter_doctor/screens/perfil_page.dart';
-import 'package:flutter_doctor/utils/config.dart';
+import 'package:flutter_doctor/modulos/auth/screens/alterar_email.dart';
+import 'package:flutter_doctor/modulos/consulta/screens/atendimento_page.dart';
+import 'package:flutter_doctor/modulos/consulta/screens/calendar_page.dart';
+import 'package:flutter_doctor/modulos/descontinuado/calendar_app.dart';
+import 'package:flutter_doctor/modulos/auth/screens/esqueci_senha_page.dart';
+import 'package:flutter_doctor/modulos/auth/screens/login_auth.dart';
+import 'package:flutter_doctor/modulos/perfil/perfil_page.dart';
+import 'package:flutter_doctor/shared/util/config.dart';
 
 void main() {
   runApp(const MyApp());

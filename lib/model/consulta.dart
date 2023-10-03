@@ -4,7 +4,7 @@ class Consulta {
   String? _start;
   String? _end;
   String? _valor;
-  String? _tipo;
+  String? _tipo = "";
   String? _confirmado;
   String? _ausencia;
   String? _observacao;
@@ -15,8 +15,8 @@ class Consulta {
   String? _pacienteId;
   String? _dentistaId;
   String? _nomeDentista;
-  String? _nomePaciente;
-  String? _corDentista;
+  String? _nomePaciente = "";
+  String? _corDentista = "";
   String? _corPaciente;  
 
   Consulta();

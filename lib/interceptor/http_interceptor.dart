@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../services/local_storage_service.dart';
+import '../shared/service/local_storage_service.dart';
 
 class DioInterceptor {
  final Dio _dio = Dio();

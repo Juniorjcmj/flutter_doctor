@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/utils/config.dart';
+import 'package:flutter_doctor/shared/util/config.dart';
 
 class DoctorCard extends StatefulWidget {
   const DoctorCard({super.key});

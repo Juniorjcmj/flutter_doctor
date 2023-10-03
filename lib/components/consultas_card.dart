@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/model/consulta.dart';
 
-import '../utils/config.dart';
+import '../shared/util/config.dart';
 
 class ConsultasCard extends StatefulWidget {
 

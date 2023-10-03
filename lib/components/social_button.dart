@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/utils/config.dart';
+import 'package:flutter_doctor/shared/util/config.dart';
 
 class SocialButton extends StatelessWidget {
 

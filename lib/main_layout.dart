@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_doctor/screens/calendar_page.dart';
-import 'package:flutter_doctor/screens/home_page.dart';
+import 'package:flutter_doctor/modulos/consulta/screens/calendar_page.dart';
+import 'package:flutter_doctor/shared/screens/home_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainLayout extends StatefulWidget {
