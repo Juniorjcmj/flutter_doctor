@@ -233,7 +233,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (context) => const PacienteForm());
+                                    builder: (context) =>  PacienteForm());
                                 setState(() {});
                               },
                               icon: const Icon(

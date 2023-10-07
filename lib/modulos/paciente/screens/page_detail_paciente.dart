@@ -26,7 +26,7 @@ class _PageDetailPacienteState extends State<PageDetailPaciente> {
     Config().init(context);
        return Scaffold(
            appBar: AppBar(title: const Text('Detalhe Paciente'),backgroundColor: Config.primaryColor, centerTitle: true,),
-           body: Container(),
+           body: Text(widget.paciente!.nome ?? ''),
        );
   }
 }

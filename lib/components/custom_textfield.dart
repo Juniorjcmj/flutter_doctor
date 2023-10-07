@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../shared/util/config.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField<T extends Object> extends StatelessWidget {
 
   final controller;
   final String hintText;
   final bool obscureText;
+   final String? labelText;
+  
   
   final InputDecoration? decorator;
 
@@ -17,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.labelText,    
     this.decorator
   });
 
@@ -29,6 +32,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,        
         obscureText: obscureText,
         decoration: decorator ?? InputDecoration(
+          labelText: this.labelText ?? this.hintText,
           enabledBorder:const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
@@ -36,11 +40,12 @@ class CustomTextField extends StatelessWidget {
             borderSide: BorderSide(color: Colors.grey.shade300),
           ),
           fillColor: Colors.grey.shade100,
-          filled: true,
+          filled: true,  
           
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey[500])
         ),
+       
       ),
     );
   }

@@ -2,6 +2,7 @@ class Paciente {
   int? id;
   String? nome;
   String? convenio;
+  String? genero;
   String? cpf;
   int? idade;
   String? email;
@@ -39,11 +40,13 @@ class Paciente {
     dataAtualizacao = json["dataAtualizacao"];
     cor = json["cor"];
     carteirinha = json["carteirinha"];
+     genero = json["genero"];
   }
  Paciente(){}
   Paciente.cheio(
       this.id,
       this.nome,
+      this.genero,
       this.convenio,
       this.cpf,
       this.idade,

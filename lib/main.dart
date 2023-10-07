@@ -72,9 +72,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: TableCalendarPage.routName, page:() => const TableCalendarPage()),
         GetPage(name: CalendarApp.routNamd, page: () => const CalendarApp(),),
         GetPage(name: RecuperarSenha.routNamed, page: () => RecuperarSenha()),
-        GetPage(name: Perfil.routNamed, page: () =>  Perfil()),
+        GetPage(name: Perfil.routNamed, page: () =>  const Perfil()),
         GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),),
-        GetPage(name: PacienteForm.routNamed, page: ()=> const PacienteForm()) ,
+        GetPage(name: PacienteForm.routNamed, page: ()=>  PacienteForm()) ,
         GetPage(name: EspecialistaForm.routNamed, page: ()=> const EspecialistaForm())       
       ],   
       localizationsDelegates: [

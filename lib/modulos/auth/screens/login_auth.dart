@@ -120,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                         onPressed: () {
                            Get.to(RecuperarSenha());
+                         
                         },
                         child: Text(
                           'Esqueceu a senha?',
@@ -146,30 +147,19 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                                _isLoading = false; // Inicia o indicador de carregamento
                               });
-                        Get.to(const MainLayout());
+                        Get.off(const MainLayout());
                           }else{
                             setState(() {
                                _isLoading = false; // Inicia o indicador de carregamento
                               });
                             // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-
-                                  backgroundColor: Config.terciaryColor,
-                                  content: Text('Login ou senha Inválido!'),
-                                ),
-                              );
+                          Get.snackbar('Error', "Login ou senha inválido(s)", backgroundColor: Colors.red, colorText: Colors.white);
                           }
                     }else{
                       setState(() {
                                _isLoading = false; // Inicia o indicador de carregamento
                               });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Config.terciaryColor,
-                                  content: Text('Login e senha devem ser preenchidos !'),
-                                ),
-                              );
+                      Get.snackbar('Error', "Login e senha devem se preenchidos", backgroundColor: Colors.red, colorText: Colors.white);
                     }                   
                   
                   },
