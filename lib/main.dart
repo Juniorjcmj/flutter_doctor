@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/consulta/screens/consulta_form.dart';
 import 'package:flutter_doctor/modulos/especialista/screens/especialista_form.dart';
 import 'package:flutter_doctor/modulos/paciente/screens/paciente_form.dart';
+import 'package:flutter_doctor/modulos/procedimento/screens/procedimento_form.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
@@ -75,9 +76,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: RecuperarSenha.routNamed, page: () => RecuperarSenha()),
         GetPage(name: Perfil.routNamed, page: () =>  const Perfil()),
         GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),),
-        GetPage(name: PacienteForm.routNamed, page: ()=>  PacienteForm()) ,
-        GetPage(name: EspecialistaForm.routNamed, page: ()=>  EspecialistaForm())  ,
-        GetPage(name: ConsultaForm.routNamed, page: ()=>  ConsultaForm())       
+        GetPage(name: PacienteForm.routNamed, page: ()=>  PacienteForm()),
+        GetPage(name: EspecialistaForm.routNamed, page: ()=>  EspecialistaForm()),
+        GetPage(name: ConsultaForm.routNamed, page: ()=>  ConsultaForm()),
+        GetPage(name: ProcedimentoForm.routNamed, page: ()=>  ProcedimentoForm())       
       ],   
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
