@@ -10,6 +10,7 @@ import 'package:flutter_doctor/modulos/livroCaixa/screens/page_livro_caixa.dart'
 import 'package:flutter_doctor/modulos/paciente/screens/paciente_form.dart';
 import 'package:flutter_doctor/modulos/paciente/screens/page_paciente.dart';
 import 'package:flutter_doctor/modulos/perfil/perfil_page.dart';
+import 'package:flutter_doctor/modulos/procedimento/screens/page_procedimento.dart';
 import 'package:flutter_doctor/modulos/procedimento/screens/procedimento_form.dart';
 import 'package:flutter_doctor/shared/service/local_storage_service.dart';
 import 'package:flutter_svg/svg.dart';
@@ -334,7 +335,7 @@ class _HomePageState extends State<HomePage> {
                                     alignment: Alignment.center,
                                     padding: EdgeInsets.zero,
                                     onPressed: () {
-                                      Get.to(() => ProcedimentoForm(),
+                                      Get.to(() => PageProcedimento(),
                                           transition: Transition.downToUp,
                                           duration:
                                               Duration(milliseconds: 400));

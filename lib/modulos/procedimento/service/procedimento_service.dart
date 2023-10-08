@@ -34,8 +34,9 @@ class ProcedimentoService {
       final Map<String, dynamic> data = {};
   try {
     if(dados['id'] != null){
+
      response = await _dio.put(
-      apiUrl,
+      '$apiUrl/'+dados['id'].toString(),
       data: dados,
     );
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_doctor/modulos/procedimento/model/procedimento.dart';
 import 'package:flutter_doctor/modulos/procedimento/service/procedimento_service.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class ProcedimentoForm extends StatefulWidget {
 
@@ -24,9 +24,20 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
  bool _isLoading = false;
  Procedimento procedimento = Procedimento();
 
-    final _formKey = GlobalKey<FormState>();
+       @override
+  void initState() {
+    super.initState();
+    if(widget.procedimento != null){
+      _classificacaoController.text = widget.procedimento?.classificacao ?? '';
+      _convenioController.text = widget.procedimento?.convenio ?? '';
+      _descricaoController.text = widget.procedimento?.descricao ?? '';
+      _valorConvenioController.text = widget.procedimento?.valorConvenio ?? '';
+      _valorParticularController.text = widget.procedimento?.valorParticular ?? '';
+    }
+  }
 
-  // Controladores
+
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _valorConvenioController = TextEditingController();
   final TextEditingController _valorParticularController = TextEditingController();
@@ -77,7 +88,8 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
                       if (response['status']) {
                         setState(() {
                           _isLoading =
-                              false; // Inicia o indicador de carregamento
+                              false;
+                              // Inicia o indicador de carregamento
                         });
                         //ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -113,58 +125,72 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
                   ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _descricaoController,
-                decoration: const InputDecoration(labelText: 'Descrição'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _valorConvenioController,
-                decoration: const InputDecoration(labelText: 'Valor Convênio'),
-                keyboardType: TextInputType.text,
-                
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _valorParticularController,
-                decoration: const InputDecoration(labelText: 'Valor Particular'),
-                keyboardType: TextInputType.text,
-               
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _descricaoController,
+                  decoration: const InputDecoration(labelText: 'Descrição'),
                   validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },             
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _convenioController,
-                decoration: const InputDecoration(labelText: 'Convênio'),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _classificacaoController,
-                decoration: const InputDecoration(labelText: 'Classificação'),
-              ),
-              const SizedBox(height: 20),
-             
-            ],
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+               RowFormatters(
+                        controller: _valorConvenioController,
+                        label: 'Valor Convênio', 
+                        formatter: CentavosInputFormatter()),
+                const SizedBox(height: 10),
+                
+                 RowFormatters(
+                        controller: _valorParticularController,
+                        label: 'Valor Particular', 
+                        formatter: CentavosInputFormatter()),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: _convenioController,
+                  decoration: const InputDecoration(labelText: 'Convênio'),
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: _classificacaoController,
+                  decoration: const InputDecoration(labelText: 'Classificação'),
+                ),
+                const SizedBox(height: 20),
+               
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class RowFormatters extends StatelessWidget {
+  final String label;
+  final TextInputFormatter formatter;
+  final TextEditingController controller;
+
+  const RowFormatters(
+      {super.key, required this.label, required this.formatter, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(label: Text(label)),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        formatter,
+      ],
     );
   }
 }

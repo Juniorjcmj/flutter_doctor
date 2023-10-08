@@ -7,8 +7,6 @@ import 'package:flutter_doctor/modulos/paciente/service/paciente_service.dart';
 import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 // ignore: must_be_immutable
 class PageDetailPaciente extends StatefulWidget {

@@ -22,11 +22,6 @@ static tz.TZDateTime formatarDataHoraTz(String dataString) {
   return dateTime;
 }
 
-
-
-
-
-
 static Color obterCorParaTipoDeConsulta(String tipoDeConsulta) {
   switch (tipoDeConsulta) {
     case 'Primeira vez':
@@ -58,6 +53,10 @@ static String converterParaISO8601(DateTime data) {
   return DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ').format(data);
 }
 
-
+static String converterStringParaReal(String valor){
+   final formatador = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+    final valorFormatado = formatador.format(valor);
+    return valorFormatado;
+}
 
 }
