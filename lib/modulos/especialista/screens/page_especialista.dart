@@ -48,7 +48,7 @@ class _PageEspecialistaState extends State<PageEspecialista> {
             icon: const Icon(Icons.add,size: 35,),
             tooltip: 'Cadastrar Especialista',
             onPressed: () {
-              Get.to(const EspecialistaForm());
+              Get.to( EspecialistaForm());
             },
           ), 
         ],
@@ -83,8 +83,7 @@ class _PageEspecialistaState extends State<PageEspecialista> {
                                     style: const TextStyle(
                                       color: Config.secundColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.bold)),
-                               
+                                        fontWeight: FontWeight.bold)),                               
                                                             
                               ],
                             ),

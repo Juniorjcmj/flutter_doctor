@@ -274,12 +274,14 @@ class _ConsultaFormState extends State<ConsultaForm> {
                           labelText:  consultaForm.nomeDentista,
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const EspecialistaForm());
-                                setState(() {});
+                              onPressed: () async{
+                               
+                                 var response =  await Get.to( EspecialistaForm());    
+                                  Especialista result = response['especialista'] as Especialista;            
+                                  setState(() {
+                                    consultaForm.nomeDentista = result.nome as String;
+                                    especialistaSelecionado.id = result.id;
+                                  });   
                               },
                               icon: const Icon(
                                 Icons.person_add_rounded,

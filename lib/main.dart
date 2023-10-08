@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: Perfil.routNamed, page: () =>  const Perfil()),
         GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),),
         GetPage(name: PacienteForm.routNamed, page: ()=>  PacienteForm()) ,
-        GetPage(name: EspecialistaForm.routNamed, page: ()=> const EspecialistaForm())  ,
+        GetPage(name: EspecialistaForm.routNamed, page: ()=>  EspecialistaForm())  ,
         GetPage(name: ConsultaForm.routNamed, page: ()=>  ConsultaForm())       
       ],   
       localizationsDelegates: [
