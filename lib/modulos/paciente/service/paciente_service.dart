@@ -29,8 +29,9 @@ class PacienteService {
     return pacientes;
   }
 
- static Future<bool> cadastrarPaciente(Map<String, dynamic> dados) async {
+ static Future<Map<String, dynamic>> cadastrarPaciente(Map<String, dynamic> dados) async {
     Response response;
+      final Map<String, dynamic> data = {};
   try {
     if(dados['id'] != null){
      response = await _dio.put(
@@ -47,9 +48,11 @@ class PacienteService {
     
   
     if (response.statusCode == 200) {
-     return true;
+      data.addAll({'status': true, 'Paciente': Paciente.fromJson(response.data)});
+     return data;
     } else {
-      return false;
+       data.addAll({'status': false, 'Paciente': Paciente()});
+      return data;
     }
   } catch (error) {
    throw ArgumentError.value(error);
@@ -75,5 +78,21 @@ class PacienteService {
             return false;
           }
         }
+
+static Future<Paciente> findById(String id) async {
+  var paciente = Paciente();
+    try {
+      Response response = await _dio.get('$apiUrl/$id');
+
+      if (response.statusCode == 200) {     
+          paciente = Paciente.fromJson(response.data);       
+        return paciente;
+      }
+    } on DioError catch (e) {
+      log(e.message);
+    }
+
+    return paciente;
+  }
 
 }

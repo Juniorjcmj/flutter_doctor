@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
 import 'package:flutter_doctor/shared/util/util.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,8 @@ import '../../../components/autocomplete_widget.dart';
 
 class ConsultaForm extends StatefulWidget {
 
+   static const String routNamed = "/consulta-form";
+
   late DateTime? dataConsulta;
   late  TimeOfDay? horaConsulta; 
   late Consulta? consulta;
@@ -35,7 +38,7 @@ class ConsultaForm extends StatefulWidget {
   _ConsultaFormState createState() => _ConsultaFormState();
 }
 
-class _ConsultaFormState extends State<ConsultaForm> {
+class _ConsultaFormState extends State<ConsultaForm> { 
 
  Consulta consultaForm = Consulta();
   bool _isLoading = false;
@@ -230,15 +233,21 @@ class _ConsultaFormState extends State<ConsultaForm> {
                           labelText: consultaForm.nomePaciente,
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) =>  PacienteForm());
-                                setState(() {});
+                              onPressed: ()async {
+                                // showDialog(
+                                //     context: context,
+                                //     builder: (context) =>  PacienteForm());
+                                // setState(() {});
+                                 var response =  await Get.to( PacienteForm());    
+                                  Paciente result = response['Paciente'] as Paciente;            
+                                  setState(() {
+                                    consultaForm.nomePaciente = result.nome as String;
+                                    pacienteSelecionado.id = result.id;
+                                  });    
                               },
                               icon: const Icon(
                                 Icons.person_add_rounded,
-                                color: Config.secundColor,
+                                color: Config.primaryColor,
                                 size: 35,
                               )),
                         ),
@@ -274,7 +283,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                               },
                               icon: const Icon(
                                 Icons.person_add_rounded,
-                                color: Config.secundColor,
+                                color: Config.primaryColor,
                                 size: 35,
                               )),
                         ),
@@ -346,7 +355,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                           labelText: 'Data',
                           suffixIcon:Icon(
                                 Icons.calendar_month,
-                                color: Config.secundColor,
+                                color: Config.primaryColor,
                                 size: 35,
                               )
                               ),
@@ -364,7 +373,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                           labelText: 'Início',
                            suffixIcon:Icon(
                                 Icons.timer_sharp,
-                                color: Config.secundColor,
+                                color: Config.primaryColor,
                                 size: 35,
                               )                        
                           ),

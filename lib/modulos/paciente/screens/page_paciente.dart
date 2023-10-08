@@ -120,7 +120,8 @@ class _PagePacienteState extends State<PagePaciente> {
                                              IconButton(
                                         iconSize: 40,
                                         onPressed: () {
-                                          Get.to( PacienteForm(paciente: pacientes[index],));
+                                          Get.to(PageDetailPaciente(
+                                                 pacienteDetail: pacientes[index],));
                                         },
                                         icon: const FaIcon(
                                             FontAwesomeIcons.share,
@@ -134,11 +135,7 @@ class _PagePacienteState extends State<PagePaciente> {
                         ],
                       ),
                     ),
-                    onTap: () {
-                      Get.to(() => PageDetailPaciente(
-                            paciente: pacientes[index],
-                          ));
-                    }, //redirection doctor detail
+                   
                   ),
                 )
 

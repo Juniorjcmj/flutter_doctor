@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/modulos/consulta/screens/consulta_form.dart';
 import 'package:flutter_doctor/modulos/especialista/screens/especialista_form.dart';
 import 'package:flutter_doctor/modulos/paciente/screens/paciente_form.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -75,7 +76,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Perfil.routNamed, page: () =>  const Perfil()),
         GetPage(name: AlterarEmail.rounNamed, page: () => const AtendimentoPage(),),
         GetPage(name: PacienteForm.routNamed, page: ()=>  PacienteForm()) ,
-        GetPage(name: EspecialistaForm.routNamed, page: ()=> const EspecialistaForm())       
+        GetPage(name: EspecialistaForm.routNamed, page: ()=> const EspecialistaForm())  ,
+        GetPage(name: ConsultaForm.routNamed, page: ()=>  ConsultaForm())       
       ],   
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

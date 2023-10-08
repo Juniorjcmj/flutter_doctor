@@ -72,13 +72,13 @@ class _PacienteFormState extends State<PacienteForm> {
     super.initState();
   }
 
-  Future<bool> _submitForm() async{
-      bool response = false;      
-
+  Future<Map<String, dynamic>> _submitForm() async{
+        
+ if (_formKey.currentState!.validate()) {     
       Map<String, dynamic> dados = {      
           
           "nome": _nomeController.text,
-          "convenio":  _convenioController.text  ,
+          "convenio":  _convenioController.text,
           "carteirinha":_carteirinhaController.text,
           "cpf":_cpfController.text,
           "genero":"" ,
@@ -99,10 +99,13 @@ class _PacienteFormState extends State<PacienteForm> {
         if(widget.paciente != null && widget.paciente!.id != null){
           dados.addAll({"id":widget.paciente!.id});
         }       
-       response = await PacienteService.cadastrarPaciente(dados);        
- 
-      return response;
+       Map<String, dynamic> result = await PacienteService.cadastrarPaciente(dados);   
+       return result;     
+        }
+      return {};
     }
+
+
     Future<void> buscarEnderecoPorCEP(String cep) async {
         Map<String, dynamic> data  = await PacienteService.buscarEnderecoPorCEP(cep);    
 
@@ -141,177 +144,33 @@ class _PacienteFormState extends State<PacienteForm> {
         backgroundColor:Config.primaryColor ,
         title:const Text('Cadastro de Pacientes'),
         centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-           const SizedBox(height: 15,),         
-            CustomTextField(
-              controller: _nomeController,
-              hintText: 'Nome',
-              obscureText: false,
+        actions: [
+           IconButton(
+            icon: const Icon(
+              Icons.save,
+              size: 35,
             ),
-            const SizedBox(height: 15,),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Radio<String>(
-                //       value: 'masculino',
-                //       groupValue: _selectedGender,
-                //       onChanged: (value) {
-                //         setState(() {
-                //           _selectedGender = value;
-                //         });
-                //       },
-                //     ),
-                //     const Text('Masculino'),
-
-                //     Radio<String>(
-                //       value: 'feminino',
-                //       groupValue: _selectedGender,
-                //       onChanged: (value) {
-                //         setState(() {
-                //           _selectedGender = value;
-                //         });
-                //       },
-                //     ),
-                //     const Text('Feminino'),
-                //      Radio<String>(
-                //       value: 'outro',
-                //       groupValue: _selectedGender,
-                //       onChanged: (value) {
-                //         setState(() {
-                //           _selectedGender = value;
-                //         });
-                //       },
-                //     ),
-                //     const Text('Outro'),
-                //   ],
-                // ),
-                 const SizedBox(height: 15,),
-                CustomTextField(
-                  controller: _convenioController,
-                  hintText: 'Convênio',
-                  
-                  obscureText: false,
-                ),
-             const SizedBox(height: 15,),
-              CustomTextField(
-              controller: _carteirinhaController,
-              hintText: 'Carteirinha',
-
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _cpfController,
-              hintText: 'CPF',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _idadeController,
-              hintText: 'Idade',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _emailController,
-              hintText: 'Email',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _senhaController,
-              hintText: 'Senha',
-              obscureText: true,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _celularController,
-              hintText: 'Celular',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,),
-            CustomTextField(
-              controller: _whatsappController,
-              hintText: 'Whatsapp',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,), 
-             Padding(
-               padding:const EdgeInsets.symmetric(horizontal: 25.0),
-               child: TextField(
-
-                  controller: _cepController,        
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    enabledBorder:const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),                    
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
-                    fillColor: Colors.grey.shade100,
-                    filled: true,  
-                    labelText: 'CEP',
-                    hintText: 'CEP',
-                    hintStyle: TextStyle(color: Colors.grey[500])
-                  ),
-                 onChanged: (cep) {
-                  if (cep.length == 8) {
-                    buscarEnderecoPorCEP(cep);
-                  }
-                },
-                    ),
-             ),       
-             const SizedBox(height: 15,), 
-            CustomTextField(
-              controller: _ruaController,
-              hintText: 'Rua',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,), 
-            CustomTextField(
-              controller: _bairroController,
-              hintText: 'Bairro',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,), 
-            CustomTextField(
-              controller: _cidadeController,
-              hintText: 'Cidade',
-              obscureText: false,
-            ),
-             const SizedBox(height: 15,), 
-            CustomTextField(
-              controller: _ufController,
-              hintText: 'UF',
-              obscureText: false,
-            ),          
-          
-            const SizedBox(height: 20.0),
-
-             GestureDetector(
-                    onTap: ()async {
-                        setState(() {
+            tooltip: 'Cadastrar Paciente',
+            onPressed: ()async {
+                      setState(() {
                             _isLoading = true; // Inicia o indicador de carregamento
                           });
-                          bool response = await _submitForm();
-                          if(response){
+                          Map<String, dynamic> response = await _submitForm();
+                          if(response['status']){
                              setState(() {
                             _isLoading = false; // Inicia o indicador de carregamento
                           });                       
-                              // ignore: use_build_context_synchronously
+                            // ignore: use_build_context_synchronously
                                ScaffoldMessenger.of(context).showSnackBar(
                                    const SnackBar(                             
-                                    backgroundColor: Colors.greenAccent,
+                                    backgroundColor: Config.primaryColor,
                                     content: SizedBox(
-                                      height: 100,
-                                      child: Center(child: Text('Operação realizada com sucesso!', style: TextStyle(fontSize: 25),), )),
+                                      height: 40,
+                                      child: Center(child: Icon(Icons.check, size: 50, color: Colors.white,))),
                                   ),
-                                );                         
-                            Get.back(result: true);
+                                );                             
+                                           
+                            Get.back(result: response);
                           }else{
                              setState(() {
                             _isLoading = false; 
@@ -324,28 +183,153 @@ class _PacienteFormState extends State<PacienteForm> {
                                   ),
                                 );
                           }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      margin: const EdgeInsets.symmetric(horizontal: 25),
-                      decoration: BoxDecoration(
-                          color: Config.primaryColor,
-                          borderRadius: BorderRadius.circular(8)
+          
+          },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 25,),
+                Padding(
+                 padding:const EdgeInsets.symmetric(horizontal: 25.0),
+                 child: TextFormField(
+                    controller: _nomeController,    
+                    validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, insira um nome.';
+                          }
+                          return null; // Retorna null se a validação passar
+                        },                   
+                        
+                    obscureText: false,
+                    decoration: InputDecoration(
+                                enabledBorder:const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),                    
                       ),
-                      child: const Center(
-                        child: Text(
-                            'CADASTRAR',
-                            style: TextStyle(
-                                color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-
-                            ),
-                        ),),
+                      focusedBorder: OutlineInputBorder(
+                                     borderSide: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      fillColor: Colors.grey.shade100,
+                      filled: true,  
+                      labelText: 'Nome',
+                      hintText: 'Nome',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                      
                     ),
-                  )
-              
-          ],
+                  ),
+               ),
+              const SizedBox(height: 15,),
+                
+                   const SizedBox(height: 15,),
+                  CustomTextField(
+                    controller: _convenioController,
+                    hintText: 'Convênio',
+                    
+                    obscureText: false,
+                  ),
+               const SizedBox(height: 15,),
+                CustomTextField(
+                controller: _carteirinhaController,
+                hintText: 'Carteirinha',
+        
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _cpfController,
+                hintText: 'CPF',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _idadeController,
+                hintText: 'Idade',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _emailController,
+                hintText: 'Email',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _senhaController,
+                hintText: 'Senha',
+                obscureText: true,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _celularController,
+                hintText: 'Celular',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,),
+              CustomTextField(
+                controller: _whatsappController,
+                hintText: 'Whatsapp',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,), 
+               Padding(
+                 padding:const EdgeInsets.symmetric(horizontal: 25.0),
+                 child: TextField(
+        
+                    controller: _cepController,        
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      enabledBorder:const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),                    
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      fillColor: Colors.grey.shade100,
+                      filled: true,  
+                      labelText: 'CEP',
+                      hintText: 'CEP',
+                      hintStyle: TextStyle(color: Colors.grey[500])
+                    ),
+                   onChanged: (cep) {
+                    if (cep.length == 8) {
+                      buscarEnderecoPorCEP(cep);
+                    }
+                  },
+                      ),
+               ),       
+               const SizedBox(height: 15,), 
+              CustomTextField(
+                controller: _ruaController,
+                hintText: 'Rua',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,), 
+              CustomTextField(
+                controller: _bairroController,
+                hintText: 'Bairro',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,), 
+              CustomTextField(
+                controller: _cidadeController,
+                hintText: 'Cidade',
+                obscureText: false,
+              ),
+               const SizedBox(height: 15,), 
+              CustomTextField(
+                controller: _ufController,
+                hintText: 'UF',
+                obscureText: false,
+              ),          
+            
+              const SizedBox(height: 20.0),           
+                
+            ],
+          ),
         ),
       ),
               )
