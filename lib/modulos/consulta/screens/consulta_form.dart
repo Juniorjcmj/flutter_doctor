@@ -102,7 +102,6 @@ class _ConsultaFormState extends State<ConsultaForm> {
   }
 
   String dropdownvalue = 'Primeira vez';
-
   var items = [
     'Primeira vez',
     'Revisão',
