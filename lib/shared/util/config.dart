@@ -50,7 +50,7 @@ class Config {
   );
 
  // static const primaryColor = Colors.greenAccent;
-  static const primaryColor = Colors.teal;
+  static const primaryColor = Color(0xFF00bf9a);
   static const secundColor = Colors.grey;
   static const terciaryColor = Colors.amber;
 }

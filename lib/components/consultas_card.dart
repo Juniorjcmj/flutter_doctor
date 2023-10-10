@@ -44,7 +44,7 @@ class _ConsultasCardState extends State<ConsultasCard> {
               child: Icon(
                 Icons.calendar_month_rounded,
                 size: Config.widtSize * 0.20,
-                color: Config.primaryColor.shade700,
+                color: Config.primaryColor,
                 ),
             ),
              Flexible(child: Padding(

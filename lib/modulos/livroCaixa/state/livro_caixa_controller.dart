@@ -15,9 +15,15 @@ class LivroCaixaController extends GetxController {
     classificacao: '',    
   ).obs;
 
+  var list = [].obs;
+
   // Método para atualizar o estado da entidade LivroCaixa
   void atualizarLivroCaixa(LivroCaixa novoLivroCaixa) {
     livroCaixa.value = novoLivroCaixa;
+  }
+
+  void atualizarLista(List<LivroCaixa> lista){
+     list.value = lista;
   }
   
   // Adicione outros métodos e lógica de gerenciamento de estado aqui conforme necessário

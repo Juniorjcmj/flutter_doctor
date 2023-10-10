@@ -91,9 +91,9 @@ void initState() {
             title:  Text(widget.tipo?.toString() ?? '' ),
             backgroundColor: Config.primaryColor,
             actions: [
-              IconButton(onPressed: () {
+              TextButton(onPressed: () {
                 
-              }, icon: const Icon(Icons.save, size: 35,))
+              }, child: const Text("Salvar", style: TextStyle(color: Colors.white, fontSize: 16),))
             ],
             ),
            body:  SingleChildScrollView(
@@ -102,25 +102,39 @@ void initState() {
                   child: Form(
                      key: _formKey,
                     child: Column(
-                      children: [
-                          TextFormField(
+                      children: [                         
+                        TextFormField(
                           controller: _descricaoController,
-                          decoration: const InputDecoration(labelText: 'Descrição'),
-                          validator: (value) {
+                            textCapitalization: TextCapitalization.words,
+                            decoration: const InputDecoration(
+                              border: UnderlineInputBorder(),                              
+                              icon: Icon(Icons.sort),
+                              hintText: '',
+                              labelText: 'Descrição *',
+                            ),
+                            validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Campo obrigatório';
                             }
                             return null;
-                          },
-                        ),
-                      const SizedBox(height: 10),
+                            },
+                           
+                          ),
+                     
+                      const SizedBox(height:  25),
                       RowFormatters(
+                        decoration: const InputDecoration(
+                          labelText: 'Valor*', 
+                          icon: Icon(Icons.paid_outlined), 
+                          border:  UnderlineInputBorder(),                         
+                          
+                          ),
                         controller: _valorController,
                         label: 'Valor', 
                         formatter: CentavosInputFormatter()
                         ),
 
-                                const SizedBox(height: 10),                 
+                                const SizedBox(height:  25),                 
                       TextFormField(
                         onTap:  () async {
                           final data = await showDatePicker(
@@ -137,10 +151,9 @@ void initState() {
                           },
                         controller: _dataController,
                         decoration: const InputDecoration(
-                          labelText: 'Data',
-                          suffixIcon:Icon(
-                                Icons.calendar_month,
-                                color: Config.primaryColor,
+                          labelText: 'Data*',
+                          icon:Icon(
+                                Icons.calendar_month,                                
                                 size: 35,
                               )
                               ),
@@ -151,98 +164,111 @@ void initState() {
                           return null;
                         },
                       ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height:  25),
             
-                      Container(
-                        height: 60,
-                        width: Config.widtSize * 0.9,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(),
-                            
-                          ),
-                        child:  DropdownButton(
-                            
-                            borderRadius: BorderRadius.circular(20),
-                            // Initial Value
-                            value: dropdownvalue,
-                      
-                            // Down Arrow Icon
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                      
-                            // Array list of items
-                            items: items.map((String items) {
-                              return DropdownMenuItem(                            
-                                value: items,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          
+                          const Icon(Icons.payment, size: 40, color:  Colors.black38,),
+                          Container(
+                            height: 60,
+                            width: Config.widtSize * 0.8,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),                         
+                                
+                              ),
+                            child:  DropdownButton(
+                                
+                                borderRadius: BorderRadius.circular(20),
+                                // Initial Value
+                                value: dropdownvalue,
+                          
+                                // Down Arrow Icon
+                                icon: const Expanded(child: Icon(Icons.keyboard_arrow_down)),
+                                
+                                // Array list of items
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(                            
+                                    value: items,
             
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Center(
-                                    child: Text(
-                                      items,
-                                      style: const TextStyle(color: Config.secundColor),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Center(
+                                        child: Text(
+                                          items,
+                                          style: const TextStyle(color: Config.secundColor),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                                _formaPagamentoController.text = dropdownvalue;
-                              });
-                            },
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue = newValue!;
+                                    _formaPagamentoController.text = dropdownvalue;
+                                  });
+                                },
+                              ),
+                           
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 25,),
+                      
+                        Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          
+                          const Icon(Icons.table_view, size: 40, color:  Colors.black38,),
+                            Container(
+                            height: 60,
+                            width: Config.widtSize * 0.8,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                               
+                                
+                              ),
+                            child: DropdownButton(
+                                
+                                borderRadius: BorderRadius.circular(20),
+                                // Initial Value
+                                value: dropdownvalueClassificacao,
+                      
+                                // Down Arrow Icon
+                                icon: const Expanded(child: Icon(Icons.keyboard_arrow_down)),
+                      
+                                // Array list of items
+                                items: itemsClassificacao.map((String items) {
+                                  return DropdownMenuItem(                            
+                                    value: items,
+            
+                                    child: Container(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Center(
+                                        child: Text(
+                                          items,
+                                          style: const TextStyle(color: Config.secundColor),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalueClassificacao = newValue!;
+                                    _classificacaoController.text = dropdownvalueClassificacao;
+                                  });
+                                },
+                              ),
                        
                       ),
-                      const SizedBox(height: 10,),
-                      
-                        Container(
-                        height: 60,
-                        width: Config.widtSize * 0.9,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(),
-                            
-                          ),
-                        child: DropdownButton(
-                            
-                            borderRadius: BorderRadius.circular(20),
-                            // Initial Value
-                            value: dropdownvalueClassificacao,
-                      
-                            // Down Arrow Icon
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                      
-                            // Array list of items
-                            items: itemsClassificacao.map((String items) {
-                              return DropdownMenuItem(                            
-                                value: items,
-            
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Center(
-                                    child: Text(
-                                      items,
-                                      style: const TextStyle(color: Config.secundColor),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalueClassificacao = newValue!;
-                                _classificacaoController.text = dropdownvalueClassificacao;
-                              });
-                            },
-                          ),
-                       
-                      ),
+                          ],
+                        ),
                       
                       
                       ],
@@ -259,15 +285,18 @@ class RowFormatters extends StatelessWidget {
   final String label;
   final TextInputFormatter formatter;
   final TextEditingController controller;
+  final InputDecoration decoration;
 
   const RowFormatters(
-      {super.key, required this.label, required this.formatter, required this.controller});
+      {super.key, required this.label, required this.formatter, required this.controller, required this.decoration});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      decoration: InputDecoration(label: Text(label)),
+      decoration: decoration,
+      textCapitalization: TextCapitalization.words,
+      
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         formatter,

@@ -36,6 +36,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Fluter Doctor Demo',
       theme: ThemeData(  
+      iconTheme: const IconThemeData(
+          color: Color(0xFF00bf9a), // Cor personalizada
+        ),
+      
         // ignore: prefer_const_constructors
         datePickerTheme:  DatePickerThemeData(
           backgroundColor: Colors.white,         
@@ -46,25 +50,25 @@ class MyApp extends StatelessWidget {
         // Peso da fonte do AM/PM
       ),    
        inputDecorationTheme: const InputDecorationTheme(
-        focusColor: Config.primaryColor,
-        border: Config.outlineBorder,
-        focusedBorder: Config.fucusBorder,
-        errorBorder: Config.errorBorder,
-        enabledBorder: Config.outlineBorder,
+           focusColor: Config.primaryColor,
+         border: InputBorder.none,
+      //   focusedBorder: Config.fucusBorder,
+      //   errorBorder: Config.errorBorder,
+      //   enabledBorder: Config.outlineBorder,
         floatingLabelStyle: TextStyle(color: Config.primaryColor),
-        prefixIconColor: Colors.black38,
+      //   prefixIconColor: Colors.black38,
         
-       ),
-       scaffoldBackgroundColor: Colors.white,
-       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Config.primaryColor,
-        selectedItemColor: Colors.white,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        unselectedItemColor: Colors.grey.shade700,
-        elevation: 10,
-        type: BottomNavigationBarType.fixed
-        )
+      //  ),
+      //  scaffoldBackgroundColor: Colors.white,
+      //  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      //   backgroundColor: Config.primaryColor,
+      //   selectedItemColor: Colors.white,
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: false,
+      //   unselectedItemColor: Colors.grey.shade700,
+      //   elevation: 10,
+      //   type: BottomNavigationBarType.fixed
+         )
       ),
       initialRoute: '/',
       getPages: [
