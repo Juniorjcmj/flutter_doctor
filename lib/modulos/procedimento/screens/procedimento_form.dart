@@ -134,7 +134,7 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
               children: [
                 TextFormField(
                   controller: _descricaoController,
-                  decoration: const InputDecoration(labelText: 'Descrição'),
+                  decoration: const InputDecoration(labelText: 'Descrição', border:  UnderlineInputBorder(),),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Campo obrigatório';
@@ -156,12 +156,12 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _convenioController,
-                  decoration: const InputDecoration(labelText: 'Convênio'),
+                  decoration: const InputDecoration(labelText: 'Convênio', border:  UnderlineInputBorder(),),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _classificacaoController,
-                  decoration: const InputDecoration(labelText: 'Classificação'),
+                  decoration: const InputDecoration(labelText: 'Classificação', border:  UnderlineInputBorder(),),
                 ),
                 const SizedBox(height: 20),
                
@@ -186,7 +186,7 @@ class RowFormatters extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      decoration: InputDecoration(label: Text(label)),
+      decoration: InputDecoration(label: Text(label), border: const UnderlineInputBorder(),),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         formatter,
