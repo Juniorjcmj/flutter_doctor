@@ -152,6 +152,7 @@ void initState() {
                         controller: _dataController,
                         decoration: const InputDecoration(
                           labelText: 'Data*',
+                          border:  UnderlineInputBorder(),
                           icon:Icon(
                                 Icons.calendar_month,                                
                                 size: 35,
