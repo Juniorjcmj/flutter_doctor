@@ -230,6 +230,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                         inputDecoration: InputDecoration(
                           hintText: consultaForm.nomePaciente,                          
                           labelText: consultaForm.nomePaciente,
+                           border: const UnderlineInputBorder(),
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
                               onPressed: ()async {
@@ -271,6 +272,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                         inputDecoration: InputDecoration(
                           hintText: consultaForm.nomeDentista,
                           labelText:  consultaForm.nomeDentista,
+                           border: const UnderlineInputBorder(),
                           alignLabelWithHint: true,
                           suffixIcon: IconButton(
                               onPressed: () async{
@@ -291,13 +293,9 @@ class _ConsultaFormState extends State<ConsultaForm> {
                       ),
                       const SizedBox(height: 10),
             
-                      Container(
+                      SizedBox(
                         height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(),
-                            
-                          ),
+                        
                         child:  DropdownButton(
                             
                             borderRadius: BorderRadius.circular(20),
@@ -305,19 +303,20 @@ class _ConsultaFormState extends State<ConsultaForm> {
                             value: dropdownvalue,
                       
                             // Down Arrow Icon
-                            icon: const Icon(Icons.keyboard_arrow_down),
+                            icon: const Expanded(child: Icon(Icons.keyboard_arrow_down)),
                       
                             // Array list of items
                             items: items.map((String items) {
                               return DropdownMenuItem(                            
-                                value: items,
+                                value: items,                        
             
                                 child: Container(
-                                  padding: const EdgeInsets.all(15),
+                                  padding: const EdgeInsets.all(0),                                
+                                   
                                   child: Center(
                                     child: Text(
                                       items,
-                                      style: const TextStyle(color: Config.secundColor),
+                                      style: const TextStyle(color: Colors.black54),
                                     ),
                                   ),
                                 ),
@@ -353,6 +352,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                           },
                         controller: dataController,
                         decoration: const InputDecoration(
+                           border: UnderlineInputBorder(),
                           labelText: 'Data',
                           suffixIcon:Icon(
                                 Icons.calendar_month,
@@ -371,6 +371,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
                       TextFormField(
                         controller: inicioController,
                         decoration: const InputDecoration(
+                           border: UnderlineInputBorder(),
                           labelText: 'Início',
                            suffixIcon:Icon(
                                 Icons.timer_sharp,
@@ -402,7 +403,10 @@ class _ConsultaFormState extends State<ConsultaForm> {
                       TextFormField(
                         controller: observacaoController,
                         decoration:
-                            const InputDecoration(labelText: 'Observação'),                      
+                            const InputDecoration(
+                               border: UnderlineInputBorder(),
+                              labelText: 'Observação'
+                              ),                      
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
