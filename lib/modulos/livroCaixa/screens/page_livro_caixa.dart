@@ -1,4 +1,6 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/modulos/contaCorrente/scrrens/form_conta_corrente.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/page_despesas.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/page_geral.dart';
@@ -105,6 +107,7 @@ void initState() {
               child: Text('Despesas'),
             )
           ]),
+          
         ),
         body: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -127,7 +130,9 @@ void initState() {
           },
           child: const Icon(Icons.add),
         ),
-      ),
+        
+),
+      
     );
   }
 }
@@ -252,6 +257,8 @@ void _exibirBottomSheet() {
               ],
             ),
             onTap: () {
+
+              Get.to(CadastroContaCorrente());
               // Adicione a lógica para cadastrar despesa aqui
               // Fecha o BottomSheet
             },

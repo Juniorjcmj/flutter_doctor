@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 30),
                 SvgPicture.asset(
-                  'assets/login2.svg',
+                  'assets/login3.svg',
                   width: 200,
                 ),
                 const SizedBox(height: 50),
@@ -64,13 +64,15 @@ class _LoginPageState extends State<LoginPage> {
                 //username textField
                 CustomTextField(
                   controller: usernameController,
+                  
                   hintText: 'Usuário',
                   obscureText: false,
                   decorator: const InputDecoration(
+                    border: UnderlineInputBorder(),
                     hintText: 'Usuário',
                     labelText: 'Usuário',
                     alignLabelWithHint: true,
-                    prefixIcon: Icon(Icons.lock_person_outlined),
+                    prefixIcon: Icon(Icons.person_2_outlined),
                     prefixIconColor: Config.primaryColor,
                     suffixIcon: Icon(
                       Icons.person_2_outlined,
@@ -86,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
 
                   hintText: 'Senha',
                   obscureText: obscurePass,
-                  decorator: InputDecoration(                    
+                  decorator: InputDecoration(         
+                    border: const UnderlineInputBorder(),           
                     hintText: 'Password',
                     labelText: 'Password',
                     alignLabelWithHint: true,

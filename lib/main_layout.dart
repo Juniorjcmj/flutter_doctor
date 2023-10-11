@@ -21,7 +21,8 @@ class _MainLayoutState extends State<MainLayout> {
 
    @override
    Widget build(BuildContext context) {
-       return Scaffold(          
+       return 
+       Scaffold(          
            body: PageView(
             controller: _page,
             onPageChanged: ((value) {
@@ -36,6 +37,7 @@ class _MainLayoutState extends State<MainLayout> {
             ],            
            ),
            bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             currentIndex: currentPage,
             onTap:(page){
               setState(() {

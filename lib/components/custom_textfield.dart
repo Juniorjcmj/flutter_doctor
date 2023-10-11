@@ -29,7 +29,8 @@ class CustomTextField<T extends Object> extends StatelessWidget {
     return Padding(
       padding:const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
-        controller: controller,        
+        controller: controller,  
+        textCapitalization: TextCapitalization.words,      
         obscureText: obscureText,
         decoration: decorator ?? InputDecoration(
           labelText: this.labelText ?? this.hintText,

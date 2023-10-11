@@ -34,7 +34,7 @@ class RecuperarSenha extends StatelessWidget {
                children: [
                  const SizedBox(height: 30),
                  SvgPicture.asset(
-                   'assets/enviar_mail.svg',
+                   'assets/forgot_password.svg',
                    width: 200,
                   
                  ),
