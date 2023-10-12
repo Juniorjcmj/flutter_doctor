@@ -1,8 +1,10 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_doctor/components/row_formatters.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/model/livro_caixa.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/service/livro_caixa_service.dart';
+import 'package:flutter_doctor/modulos/procedimento/screens/procedimento_form.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:intl/intl.dart';
 
@@ -123,7 +125,7 @@ void initState() {
                      
                       const SizedBox(height:  25),
                       RowFormatters(
-                        decoration: const InputDecoration(
+                          decoration: const InputDecoration(
                           labelText: 'Valor*', 
                           icon: Icon(Icons.paid_outlined), 
                           border:  UnderlineInputBorder(),                         
@@ -282,26 +284,3 @@ void initState() {
 }
 
 
-class RowFormatters extends StatelessWidget {
-  final String label;
-  final TextInputFormatter formatter;
-  final TextEditingController controller;
-  final InputDecoration decoration;
-
-  const RowFormatters(
-      {super.key, required this.label, required this.formatter, required this.controller, required this.decoration});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: decoration,
-      textCapitalization: TextCapitalization.words,
-      
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        formatter,
-      ],
-    );
-  }
-}

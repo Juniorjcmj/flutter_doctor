@@ -9,7 +9,6 @@ import 'package:flutter_doctor/modulos/livroCaixa/service/livro_caixa_service.da
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:intl/intl.dart';
 
 class PageLivroCaixa extends StatefulWidget {
@@ -258,7 +257,7 @@ void _exibirBottomSheet() {
             ),
             onTap: () {
 
-              Get.to(CadastroContaCorrente());
+              Get.to(CadastroContaCorrente(tipo: "Cadastrar",));
               // Adicione a lógica para cadastrar despesa aqui
               // Fecha o BottomSheet
             },

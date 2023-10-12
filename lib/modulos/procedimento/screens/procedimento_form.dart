@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_doctor/components/row_formatters.dart';
 import 'package:flutter_doctor/modulos/procedimento/model/procedimento.dart';
 import 'package:flutter_doctor/modulos/procedimento/service/procedimento_service.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
@@ -144,12 +145,24 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
                 ),
                 const SizedBox(height: 10),
                RowFormatters(
+                decoration: const InputDecoration(
+                          labelText: 'Valor*', 
+                          icon: Icon(Icons.paid_outlined), 
+                          border:  UnderlineInputBorder(),                         
+                          
+                          ),
                         controller: _valorConvenioController,
                         label: 'Valor Convênio', 
                         formatter: CentavosInputFormatter()),
                 const SizedBox(height: 10),
                 
                  RowFormatters(
+                  decoration: const InputDecoration(
+                          labelText: 'Valor*', 
+                          icon: Icon(Icons.paid_outlined), 
+                          border:  UnderlineInputBorder(),                         
+                          
+                          ),
                         controller: _valorParticularController,
                         label: 'Valor Particular', 
                         formatter: CentavosInputFormatter()),
@@ -174,23 +187,3 @@ class _ProcedimentoFormState extends State<ProcedimentoForm> {
   }
 }
 
-class RowFormatters extends StatelessWidget {
-  final String label;
-  final TextInputFormatter formatter;
-  final TextEditingController controller;
-
-  const RowFormatters(
-      {super.key, required this.label, required this.formatter, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(label: Text(label), border: const UnderlineInputBorder(),),
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        formatter,
-      ],
-    );
-  }
-}

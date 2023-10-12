@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_doctor/interceptor/http_interceptor.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class ServiceContaCorrente {
    static String apiUrl = '${Config.apiUrl!}/api/v1/api-conta-corrente';
@@ -47,6 +48,7 @@ class ServiceContaCorrente {
     
   
     if (response.statusCode == 200) {
+      //var contaCorrente  = {'id': response.data['id'],'banco': response.data['banco'], 'saldo': response.data['saldo']};
       data.addAll({'status': true, 'conta': ContaCorrente.fromJson(response.data)});
      return data;
     } else {

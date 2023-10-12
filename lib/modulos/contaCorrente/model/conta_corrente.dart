@@ -3,14 +3,14 @@
 class ContaCorrente {
   late String? id;
   late String? banco;
-  late double? saldo;
+  late dynamic saldo;
 
  ContaCorrente();
 
- ContaCorrente.fromJson(Map<dynamic, String> map){
+ ContaCorrente.fromJson(Map<String, dynamic> map){
 
-  id = map['id'];
+  id = map['id'].toString();
   banco = map['banco'];
-  saldo = double.parse( map['saldo'] as String);
+  saldo = map['saldo']; 
  }
 }
