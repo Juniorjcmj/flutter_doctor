@@ -19,6 +19,13 @@ class LivroCaixaController extends GetxController {
   var list = [].obs;
   var listConta = <ContaCorrente>[].obs;
 
+  var receita = 0.0.obs;
+  var despesa = 0.0.obs;
+  double get saldo => receita.value - despesa.value;
+
+  var fixa = 0.0.obs;
+  var variavel = 0.0.obs;
+
   // Método para atualizar o estado da entidade LivroCaixa
   void atualizarLivroCaixa(LivroCaixa novoLivroCaixa) {
     livroCaixa.value = novoLivroCaixa;
@@ -38,6 +45,28 @@ class LivroCaixaController extends GetxController {
   void removerConta(int index) {
     listConta.removeAt(index);
     update(); // Atualiza a UI
+  }
+   void adicionarReceita(double valor) {
+    receita.value += valor;
+  }
+
+  void adicionarDespesa(double valor) {
+    despesa.value += valor;
+  }
+
+    void zerarValores() {
+    receita.value = 0.0;
+    despesa.value = 0.0;
+    fixa.value = 0.0;
+    variavel.value = 0.0;
+  }
+
+    void adicionarFixa(double valor) {
+    fixa.value += valor;
+  }
+
+  void adicionarVariavel(double valor) {
+    variavel.value += valor;
   }
   
   // Adicione outros métodos e lógica de gerenciamento de estado aqui conforme necessário

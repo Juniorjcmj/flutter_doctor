@@ -53,10 +53,9 @@ class _PageGeralState extends State<PageGeral> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 40),
+          padding: const EdgeInsets.only(left: 0, right: 0, top: 5),
           child: Column(
-            children: [
-              buildContaList(),
+            children: [              
               Card(
                 elevation: 5,
                 child: Container(
@@ -68,11 +67,11 @@ class _PageGeralState extends State<PageGeral> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Row(
                             children: [
                               Text('Visão Geral',
-                                  style: TextStyle(fontSize: 16)),
+                                  style: TextStyle(fontSize: 18)),
                             ],
                           ),
                         ),
@@ -114,12 +113,12 @@ class _PageGeralState extends State<PageGeral> {
                                   ),
                                 ],
                               ),
-                              const Text(
-                                "15.000,00",
+                              Obx(() => Text(
+                                UtilBrasilFields.obterReal(controller.receita.value),
                                 textAlign: TextAlign.end,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15, color: Colors.black54),
-                              )
+                              ))
                             ],
                           ),
                         ),
@@ -161,12 +160,12 @@ class _PageGeralState extends State<PageGeral> {
                                   ),
                                 ],
                               ),
-                              const Text(
-                                "-15.000,00",
+                              Obx(() => Text(
+                                UtilBrasilFields.obterReal(controller.despesa.value),
                                 textAlign: TextAlign.end,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15, color: Colors.black54),
-                              )
+                              ))
                             ],
                           ),
                         ),
@@ -208,24 +207,26 @@ class _PageGeralState extends State<PageGeral> {
                                   ),
                                 ],
                               ),
-                              const Text(
-                                "00.000,00",
+                               Obx(() =>Text(
+                                 UtilBrasilFields.obterReal(controller.saldo),
                                 textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black54),
-                              )
+                                style: controller.saldo > 0 ? const TextStyle(
+                                    fontSize: 15, color: Colors.blue) : const TextStyle(
+                                    fontSize: 15, color: Colors.red),
+                              ))
                             ],
                           ),
                         ),
                       ],
                     )),
               ),
+              buildContaList(),
               const SizedBox(
                 height: 30,
               ),
               Card(
                 elevation: 5,
-                child: Container(
+                child:  Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     width: Config.widtSize * 0.98,
@@ -235,12 +236,12 @@ class _PageGeralState extends State<PageGeral> {
                       children: [
                         const Text("Despesa por Categoria"),
                         const SizedBox(height: 20),
-                        EasyPieChart(
+                       EasyPieChart(
                           size: 120,
                           pieType: PieType.fill,
                           children: [
-                            PieData(value: 30, color: Colors.black12),
-                            PieData(value: 50, color: Colors.grey),
+                             PieData(value: 55 , color: Colors.black12),
+                             PieData(value: 40 , color: Colors.grey),
                           ],
                         ),
                         const Row(
@@ -267,8 +268,10 @@ class _PageGeralState extends State<PageGeral> {
                           ],
                         )
                       ],
-                    )),
-              ),
+                    ),
+                    )
+                ),
+              
             ],
           ),
         ),
@@ -299,6 +302,7 @@ class _PageGeralState extends State<PageGeral> {
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                const Icon(Icons.account_balance_sharp, size: 30,),
                                 Text(
                                     '${controller.listConta.value[index].banco}'),
                                 Row(

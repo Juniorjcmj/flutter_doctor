@@ -36,17 +36,10 @@ void initState() {
   DateTime primeiroDiaDoMes = DateTime(DateTime.now().year, numeroDoMes, 1);
   DateTime ultimoDiaDoMes = DateTime(DateTime.now().year, numeroDoMes + 1, 0);
 
-var obj = {
-  "descricao": "",
-  "origem": "",
-  "status": true,
-  "formaPagamento": "",
-  "classificacao": "",
-  "tipoMovimentacao": "",
-  "dataInicio": DateFormat('dd/MM/yyyy HH:mm:ss').format(primeiroDiaDoMes.toLocal()),
-  "dataFim": DateFormat('dd/MM/yyyy HH:mm:ss').format(ultimoDiaDoMes.toLocal()),
-  "idContaCorrente": ""
-};
+    var obj = {
+       "dataInicio": DateFormat('dd/MM/yyyy HH:mm:ss').format(primeiroDiaDoMes.toLocal()),
+       "dataFim": DateFormat('dd/MM/yyyy HH:mm:ss').format(ultimoDiaDoMes.toLocal()),  
+    };
     await LivroCaixaService.filtroAvancado(obj).then((value) {      
       listController.atualizarLista(value);              
     }).catchError((onError) {

@@ -2,11 +2,15 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/model/livro_caixa.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import '../../../interceptor/http_interceptor.dart';
 
 class LivroCaixaService {
-  static String apiUrl = '${Config.apiUrl!}/api/v1/api-livroCaixa';
+  static String apiUrl = '${Config.apiUrl!}/api/v1/api-livro-caixa';
+  static final LivroCaixaController livroController = Get.put(LivroCaixaController()); 
 
   static final Dio _dio = DioInterceptor().dioInstance;
 
@@ -86,19 +90,35 @@ class LivroCaixaService {
 
   static Future<List<LivroCaixa>> filtroAvancado(
       Map<String, dynamic> dados) async {
+
+   livroController.zerarValores();
+
     List<LivroCaixa> livroCaixas = [];
     Response response;
 
     try {
       response = await _dio.post(
-        '$apiUrl/filtro',
+        '$apiUrl/filtro-periodo',
         data: dados,
       );
 
       if (response.statusCode == 200) {
         List data = response.data;
         for (dynamic registro in data) {
-          livroCaixas.add(LivroCaixa.fromMap(registro));
+          LivroCaixa livro = LivroCaixa.fromMap(registro);
+          livroCaixas.add(livro);
+
+          if(livro.tipoMovimentacao == "RECEITA"){
+            livroController.adicionarReceita(livro.valor!);
+          }else{
+             livroController.adicionarDespesa(livro.valor!);
+             if(livro.classificacao == "FIXA"){
+              livroController.adicionarFixa(livro.valor!);
+             }else{
+              livroController.adicionarVariavel(livro.valor!);
+             }
+
+          }
         }
       }
       return livroCaixas;
