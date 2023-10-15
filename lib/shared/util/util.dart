@@ -59,4 +59,10 @@ static String converterStringParaReal(String valor){
     return valorFormatado;
 }
 
+static String converterFormatoData(String data) {
+  List<String> partes = data.split('/');
+  return '${partes[2]}-${partes[1]}-${partes[0]}';
+}
+
+
 }

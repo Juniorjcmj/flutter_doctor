@@ -1,3 +1,5 @@
+import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
+
 class LivroCaixa {
   dynamic id;
   String? descricao;
@@ -8,6 +10,7 @@ class LivroCaixa {
   String? formaPagamento;
   String? tipoMovimentacao;
   String? classificacao;
+  String? idContacorrente;
 
 
   LivroCaixa({
@@ -20,10 +23,12 @@ class LivroCaixa {
      this.formaPagamento,
      this.tipoMovimentacao,
      this.classificacao,
+     this.idContacorrente
     
   });
 
   factory LivroCaixa.fromMap(Map<String, dynamic> map) {
+    
     return LivroCaixa(
       id: map['id'],
       descricao: map['descricao'],
@@ -33,7 +38,8 @@ class LivroCaixa {
       dtTransacao: map['dtTransacao'],
       formaPagamento: map['formaPagamento'],
       tipoMovimentacao: map['tipoMovimentacao'],
-      classificacao: map['classificacao'],
+      classificacao: map['classificacao'],     
+      idContacorrente: map['idContacorrente'],
      
     );
   }

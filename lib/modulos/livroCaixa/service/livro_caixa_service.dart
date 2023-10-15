@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/model/livro_caixa.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
@@ -15,6 +16,7 @@ class LivroCaixaService {
   static final Dio _dio = DioInterceptor().dioInstance;
 
   static Future<List<LivroCaixa>> getLivroCaixas() async {
+    // ignore: non_constant_identifier_names
     List<LivroCaixa> LivroCaixas = [];
     try {
       Response response = await _dio.get(apiUrl);
@@ -40,7 +42,7 @@ class LivroCaixaService {
     try {
       if (dados['id'] != null) {
         response = await _dio.put(
-          '$apiUrl/'+dados['id'].toString(),
+          '$apiUrl/${dados['id']}',
           data: dados,
         );
       } else {
@@ -52,14 +54,32 @@ class LivroCaixaService {
 
       if (response.statusCode == 200) {
         data.addAll(
-            {'status': true, 'livroCaixa': LivroCaixa.fromMap(response.data)});
+         {'status': true, 'livroCaixa': LivroCaixa.fromMap(response.data)});
+
+         if(response.data['tipoMovimentacao'] == 'RECEITA'){
+          livroController.adicionarReceita(response.data['valor']);
+         }else{
+          livroController.adicionarDespesa(response.data['valor']);
+         }
+       
+         livroController.listConta.value.asMap().forEach((index, conta) {
+
+        if (conta.id == response.data['idContacorrente']) {         
+          conta.saldo = response.data['saldo'];
+          livroController.atualizarConta(index, conta);
+        }
+      });
+         
+
+
         return data;
       } else {
         data.addAll({'status': false, 'livroCaixa': LivroCaixa()});
         return data;
       }
     } catch (error) {
-      throw ArgumentError.value(error);
+       data.addAll({'status': false, 'livroCaixa': LivroCaixa()});
+       return data;
     }
   }
 

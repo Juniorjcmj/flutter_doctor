@@ -29,6 +29,7 @@ int index = 0;
 void initState() {   
     super.initState();
     index = DateTime.now().month;   
+    getOperacoes(index);
   }
 
   Future<void> getOperacoes(int numeroDoMes) async {
@@ -184,9 +185,12 @@ void _exibirBottomSheet() {
                 ),
               ],
             ),
-            onTap: () {
+            onTap: ()async {
               // Adicione a lógica para cadastrar despesa aqui
-              Get.to(LivroCaixaForm(tipo: "Receita",)); // Fecha o BottomSheet
+             bool result = await Get.to(LivroCaixaForm(tipo: "Receita",));                 
+                    if(result){
+                      Get.snackbar("Receita", "Cadastrada com sucesso!");
+                    } // Fecha o BottomSheet
             },
           ),
           const SizedBox(height: 20,),
@@ -199,7 +203,12 @@ void _exibirBottomSheet() {
                     borderRadius: BorderRadius.circular(50), // Opcional: Adiciona bordas arredondadas
                      ),
                   child: IconButton(
-                    onPressed: () { Get.to(LivroCaixaForm(tipo: "Despesa",));},
+                    onPressed: ()async {
+                    bool result =  await Get.to(LivroCaixaForm(tipo: "Despesa",));   
+                    if(result){
+                      Get.snackbar("Despesa", "Cadastrada com sucesso!");
+                    }                 
+                    },
                     icon: const Icon(
                       Icons.remove,
                       size: 30,

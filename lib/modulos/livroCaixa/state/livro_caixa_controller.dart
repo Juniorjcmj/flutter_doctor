@@ -53,7 +53,6 @@ class LivroCaixaController extends GetxController {
   void adicionarDespesa(double valor) {
     despesa.value += valor;
   }
-
     void zerarValores() {
     receita.value = 0.0;
     despesa.value = 0.0;
