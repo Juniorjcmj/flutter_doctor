@@ -5,6 +5,7 @@ import 'package:flutter_doctor/components/row_formatters.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/service/service_conta_corrente.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/modulos/procedimento/screens/procedimento_form.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,8 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
   bool _isLoading = false;
 
   final ContaCorrenteController controller = Get.put(ContaCorrenteController());
+
+  final LivroCaixaController livroController = Get.put(LivroCaixaController());
 
   final _formKey = GlobalKey<FormState>(); 
 
@@ -50,6 +53,9 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
   //  }
    // return {};
   }
+
+  
+
 
   @override
   void initState() {
@@ -95,7 +101,9 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
                           ))),
                     ),
                   );
-
+                  if(widget.tipo == "Cadastrar"){
+                  livroController.listConta.add(response['conta'] as ContaCorrente);
+                  }
                   Get.back(result: response);
                 } else {
                   setState(() {
@@ -152,6 +160,7 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
                 ],
               ),
             ),
+          
     );
   }
 }

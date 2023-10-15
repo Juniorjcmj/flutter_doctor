@@ -6,7 +6,7 @@ import 'package:flutter_doctor/shared/util/config.dart';
 import '../../../interceptor/http_interceptor.dart';
 
 class LivroCaixaService {
-  static String apiUrl = '${Config.apiUrl!}/api/v1/api-LivroCaixa';
+  static String apiUrl = '${Config.apiUrl!}/api/v1/api-livroCaixa';
 
   static final Dio _dio = DioInterceptor().dioInstance;
 

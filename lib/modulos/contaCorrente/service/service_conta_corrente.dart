@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_doctor/interceptor/http_interceptor.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
-import 'package:moment_dart/moment_dart.dart';
 
 class ServiceContaCorrente {
    static String apiUrl = '${Config.apiUrl!}/api/v1/api-conta-corrente';
@@ -63,7 +62,7 @@ class ServiceContaCorrente {
  static  Future<bool> deletar(String id) async {    
 
           Response response = await _dio.delete('$apiUrl/$id');
-          if (response.statusCode == 200) {           
+          if (response.statusCode == 200 || response.statusCode == 204) {           
                return true;          
           } else {
             return false;

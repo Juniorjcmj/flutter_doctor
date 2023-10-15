@@ -31,8 +31,23 @@ void initState() {
     index = DateTime.now().month;   
   }
 
-  Future<void> getEspecialistas() async {
-    await LivroCaixaService.filtroAvancado({}).then((value) {      
+  Future<void> getOperacoes(int numeroDoMes) async {
+
+  DateTime primeiroDiaDoMes = DateTime(DateTime.now().year, numeroDoMes, 1);
+  DateTime ultimoDiaDoMes = DateTime(DateTime.now().year, numeroDoMes + 1, 0);
+
+var obj = {
+  "descricao": "",
+  "origem": "",
+  "status": true,
+  "formaPagamento": "",
+  "classificacao": "",
+  "tipoMovimentacao": "",
+  "dataInicio": DateFormat('dd/MM/yyyy HH:mm:ss').format(primeiroDiaDoMes.toLocal()),
+  "dataFim": DateFormat('dd/MM/yyyy HH:mm:ss').format(ultimoDiaDoMes.toLocal()),
+  "idContaCorrente": ""
+};
+    await LivroCaixaService.filtroAvancado(obj).then((value) {      
       listController.atualizarLista(value);              
     }).catchError((onError) {
       return;
@@ -63,7 +78,7 @@ void initState() {
               setState(() {
                 if(index > 1){
                  index--;               
-                 getEspecialistas();
+                 getOperacoes(index);
                 }           
                 
               });
@@ -74,8 +89,7 @@ void initState() {
                setState(() {
                 if(index < 12){
                  index++;
-
-                 getEspecialistas();
+                 getOperacoes(index);
                 }           
                 
               });
