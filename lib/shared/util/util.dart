@@ -64,5 +64,10 @@ static String converterFormatoData(String data) {
   return '${partes[2]}-${partes[1]}-${partes[0]}';
 }
 
+static String converterFormatoDataApiLivro(String data) {
+  List<String> partes = data.split('-');
+  return '${partes[2]}-${partes[1]}-${partes[0]}';
+}
+
 
 }

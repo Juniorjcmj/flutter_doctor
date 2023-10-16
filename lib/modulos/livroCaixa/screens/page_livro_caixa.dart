@@ -1,10 +1,7 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/scrrens/form_conta_corrente.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
-import 'package:flutter_doctor/modulos/livroCaixa/screens/page_despesas.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/page_geral.dart';
-import 'package:flutter_doctor/modulos/livroCaixa/screens/page_receita.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/service/livro_caixa_service.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
@@ -49,86 +46,54 @@ void initState() {
   }
 
     String obterNomeDoMes(int numeroDoMes) {
-     DateTime primeiroDiaDoMes = DateTime(DateTime.now().year, numeroDoMes, 1);     
-     return  DateFormat('MMMM','pt-BR').format(primeiroDiaDoMes).toUpperCase();
+     DateTime primeiroDiaDoMes = DateTime(DateTime.now().year, numeroDoMes, 1);    
+     String mes =   DateFormat('MMMM','pt-BR').format(primeiroDiaDoMes).toUpperCase();
+     listController.atualizarMes(mes);
+     return mes;
     }
 
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-    return DefaultTabController(
-      initialIndex: 1,
-      length: 3,
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           
           backgroundColor: Config.primaryColor,
           elevation: 5,
           toolbarHeight: 120,
-         title:  Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+         title:  Padding(
+           padding: const EdgeInsets.only(right:55),
+           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(onPressed: () {
+                setState(() {
+                  if(index > 1){
+                   index--;               
+                   getOperacoes(index);
+                  }           
+                  
+                });
+              }, icon: const Icon(Icons.chevron_left)),
+                  Text(obterNomeDoMes(index), style: const TextStyle(fontSize: 15),),
+         
             IconButton(onPressed: () {
-              setState(() {
-                if(index > 1){
-                 index--;               
-                 getOperacoes(index);
-                }           
-                
-              });
-            }, icon: const Icon(Icons.chevron_left)),
-              Center(child:  Text(obterNomeDoMes(index), style: const TextStyle(fontSize: 15),)),
-
-          IconButton(onPressed: () {
-               setState(() {
-                if(index < 12){
-                 index++;
-                 getOperacoes(index);
-                }           
-                
-              });
-            }, icon: const Icon(Icons.chevron_right)),
-         ]) ,
-         centerTitle: true,
-
-          bottom: const TabBar(tabs: [
-            Tab(
-              icon: Icon(
-                Icons.account_balance,
-                size: 35,
-              ),
-              child: Text('Geral'),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.add_circle_rounded,
-                size: 35,
-              ),
-              child: Text('Receitas'),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.remove_circle_rounded,
-                size: 35,
-              ),
-              child: Text('Despesas'),
-            )
-          ]),
+                 setState(() {
+                  if(index < 12){
+                   index++;
+                   getOperacoes(index);
+                  }           
+                  
+                });
+              }, icon: const Icon(Icons.chevron_right)),
+           ]),
+         ) ,
+         centerTitle: true,         
           
         ),
         body: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: TabBarView(children: [
-            Center(
-              child: PageGeral(),
-            ),
-            Center(
-              child: PageReceita(),
-            ),
-            Center(
-              child: PageDespesas(),
-            ),
-          ]),
+          child:  PageGeral()
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Config.primaryColor,
@@ -137,10 +102,10 @@ void initState() {
           },
           child: const Icon(Icons.add),
         ),
-        
-),
+    
+);
       
-    );
+    
   }
 }
 

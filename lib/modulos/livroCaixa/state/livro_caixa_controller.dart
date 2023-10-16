@@ -26,6 +26,12 @@ class LivroCaixaController extends GetxController {
   var fixa = 0.0.obs;
   var variavel = 0.0.obs;
 
+  var mes = 'mes'.obs;
+
+  void atualizarMes(String valor){
+    mes.value = valor;
+  }
+
   // Método para atualizar o estado da entidade LivroCaixa
   void atualizarLivroCaixa(LivroCaixa novoLivroCaixa) {
     livroCaixa.value = novoLivroCaixa;

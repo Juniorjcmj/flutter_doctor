@@ -120,7 +120,7 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.tipo?.toString() ?? ''),
-        backgroundColor: Config.primaryColor,
+        backgroundColor: widget.tipo == 'Receita'? Colors.green : Colors.red,
         actions: [
           TextButton(
               onPressed: ()async {

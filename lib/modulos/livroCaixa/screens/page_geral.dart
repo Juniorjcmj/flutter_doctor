@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/scrrens/form_conta_corrente.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/service/service_conta_corrente.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/screens/page_despesas.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/screens/page_receita.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:easy_pie_chart/easy_pie_chart.dart';
@@ -41,7 +43,7 @@ class _PageGeralState extends State<PageGeral> {
 
   Future<bool> _submitDelete(ContaCorrente conta, int index) async {
     bool result = await ServiceContaCorrente.deletar(conta.id as String);
-    if(result){
+    if (result) {
       controller.removerConta(index);
     }
     return result;
@@ -55,7 +57,7 @@ class _PageGeralState extends State<PageGeral> {
         child: Padding(
           padding: const EdgeInsets.only(left: 0, right: 0, top: 5),
           child: Column(
-            children: [              
+            children: [
               Card(
                 elevation: 5,
                 child: Container(
@@ -82,43 +84,49 @@ class _PageGeralState extends State<PageGeral> {
                             children: [
                               Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: Colors
-                                              .green, // Cor de fundo desejada
-                                          borderRadius: BorderRadius.circular(
-                                              50), // Opcional: Adiciona bordas arredondadas
-                                        ),
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.add,
-                                            size: 20,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(()=> const PageReceita());
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors
+                                                .green, // Cor de fundo desejada
+                                            borderRadius: BorderRadius.circular(
+                                                50), // Opcional: Adiciona bordas arredondadas
                                           ),
-                                          color: Colors.white,
+                                          child: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.add,
+                                              size: 20,
+                                            ),
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      const Text(
-                                        'Receita',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54),
-                                      ),
-                                    ],
+                                        const SizedBox(width: 10),
+                                        const Text(
+                                          'Receita',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black54),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                               Obx(() => Text(
-                                UtilBrasilFields.obterReal(controller.receita.value),
-                                textAlign: TextAlign.end,
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.black54),
-                              ))
+                                    UtilBrasilFields.obterReal(
+                                        controller.receita.value),
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.black54),
+                                  ))
                             ],
                           ),
                         ),
@@ -129,43 +137,49 @@ class _PageGeralState extends State<PageGeral> {
                             children: [
                               Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: Colors
-                                              .red, // Cor de fundo desejada
-                                          borderRadius: BorderRadius.circular(
-                                              50), // Opcional: Adiciona bordas arredondadas
-                                        ),
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.remove,
-                                            size: 20,
+                                  GestureDetector(
+                                     onTap: () {
+                                      Get.to(()=> const PageDespesas());
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors
+                                                .red, // Cor de fundo desejada
+                                            borderRadius: BorderRadius.circular(
+                                                50), // Opcional: Adiciona bordas arredondadas
                                           ),
-                                          color: Colors.white,
+                                          child: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                            ),
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      const Text(
-                                        'Despesa',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54),
-                                      ),
-                                    ],
+                                        const SizedBox(width: 10),
+                                        const Text(
+                                          'Despesa',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black54),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                               Obx(() => Text(
-                                UtilBrasilFields.obterReal(controller.despesa.value),
-                                textAlign: TextAlign.end,
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.black54),
-                              ))
+                                    UtilBrasilFields.obterReal(
+                                        controller.despesa.value),
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.black54),
+                                  ))
                             ],
                           ),
                         ),
@@ -207,13 +221,16 @@ class _PageGeralState extends State<PageGeral> {
                                   ),
                                 ],
                               ),
-                               Obx(() =>Text(
-                                 UtilBrasilFields.obterReal(controller.saldo),
-                                textAlign: TextAlign.end,
-                                style: controller.saldo > 0 ? const TextStyle(
-                                    fontSize: 15, color: Colors.blue) : const TextStyle(
-                                    fontSize: 15, color: Colors.red),
-                              ))
+                              Obx(() => Text(
+                                    UtilBrasilFields.obterReal(
+                                        controller.saldo),
+                                    textAlign: TextAlign.end,
+                                    style: controller.saldo > 0
+                                        ? const TextStyle(
+                                            fontSize: 15, color: Colors.blue)
+                                        : const TextStyle(
+                                            fontSize: 15, color: Colors.red),
+                                  ))
                             ],
                           ),
                         ),
@@ -225,8 +242,8 @@ class _PageGeralState extends State<PageGeral> {
                 height: 30,
               ),
               Card(
-                elevation: 5,
-                child:  Container(
+                  elevation: 5,
+                  child: Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     width: Config.widtSize * 0.98,
@@ -236,12 +253,12 @@ class _PageGeralState extends State<PageGeral> {
                       children: [
                         const Text("Despesa por Categoria"),
                         const SizedBox(height: 20),
-                       EasyPieChart(
+                        EasyPieChart(
                           size: 120,
                           pieType: PieType.fill,
                           children: [
-                             PieData(value: 55 , color: Colors.black12),
-                             PieData(value: 40 , color: Colors.grey),
+                            PieData(value: 55, color: Colors.black12),
+                            PieData(value: 40, color: Colors.grey),
                           ],
                         ),
                         const Row(
@@ -269,9 +286,7 @@ class _PageGeralState extends State<PageGeral> {
                         )
                       ],
                     ),
-                    )
-                ),
-              
+                  )),
             ],
           ),
         ),
@@ -302,7 +317,10 @@ class _PageGeralState extends State<PageGeral> {
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(Icons.account_balance_sharp, size: 30,),
+                                const Icon(
+                                  Icons.account_balance_sharp,
+                                  size: 30,
+                                ),
                                 Text(
                                     '${controller.listConta.value[index].banco}'),
                                 Row(
@@ -323,13 +341,15 @@ class _PageGeralState extends State<PageGeral> {
                                               index, result);
 
                                           Get.snackbar("",
-                                              "Dados Atualizados com sucesso!", backgroundColor: Colors.green, colorText: Colors.white);
+                                              "Dados Atualizados com sucesso!",
+                                              backgroundColor: Colors.green,
+                                              colorText: Colors.white);
                                         },
                                         icon: const Icon(
                                           Icons.edit,
                                           color: Config.primaryColor,
                                         )),
-                                   IconButton(
+                                    IconButton(
                                         onPressed: () async {
                                           showDialog(
                                             context: Get.context!,
@@ -351,32 +371,52 @@ class _PageGeralState extends State<PageGeral> {
                                                     child:
                                                         const Text('Confirmar'),
                                                     onPressed: () async {
-                                                    Get.back();
-                                                    if(controller.listConta.value.length == 1){
-                                                         Get.snackbar(
-                                                          "Atenção","Você não pode excluir a sua única conta, crie outra e depois exclua essa novamente!",
-                                                          backgroundColor: Colors.amber,
-                                                           colorText: Colors.white,
-                                                           duration: const Duration(seconds: 8)
-                                                           
-                                                           );
-                                                    }else{
-                                                       var  response = await _submitDelete(controller.listConta.value[index], index);
-                                                      if (response) {                                                        
-                                                       Get.snackbar("Pronto","Conta Arquivada com sucesso!",backgroundColor: Colors.green, colorText: Colors.white);
-                                                      }else{
-                                                      Get.snackbar("Atenção","Error!",backgroundColor: Colors.red, colorText: Colors.white);
-
+                                                      Get.back();
+                                                      if (controller.listConta
+                                                              .value.length ==
+                                                          1) {
+                                                        Get.snackbar("Atenção",
+                                                            "Você não pode excluir a sua única conta, crie outra e depois exclua essa novamente!",
+                                                            backgroundColor:
+                                                                Colors.amber,
+                                                            colorText:
+                                                                Colors.white,
+                                                            duration:
+                                                                const Duration(
+                                                                    seconds:
+                                                                        8));
+                                                      } else {
+                                                        var response =
+                                                            await _submitDelete(
+                                                                controller
+                                                                    .listConta
+                                                                    .value[index],
+                                                                index);
+                                                        if (response) {
+                                                          Get.snackbar("Pronto",
+                                                              "Conta Arquivada com sucesso!",
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                              colorText:
+                                                                  Colors.white);
+                                                        } else {
+                                                          Get.snackbar(
+                                                              "Atenção",
+                                                              "Error!",
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              colorText:
+                                                                  Colors.white);
+                                                        }
                                                       }
-                                                    } 
-                                                  
-                                                     // Fecha o AlertDialog
+
+                                                      // Fecha o AlertDialog
                                                     },
                                                   ),
                                                 ],
                                               );
                                             },
-                                          );                                          
+                                          );
                                         },
                                         icon: const Icon(
                                           Icons.delete_outline,
@@ -395,5 +435,4 @@ class _PageGeralState extends State<PageGeral> {
               ),
             ));
   }
-
 }

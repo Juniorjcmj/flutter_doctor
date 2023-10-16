@@ -11,6 +11,7 @@ class LivroCaixa {
   String? tipoMovimentacao;
   String? classificacao;
   String? idContacorrente;
+  String? banco;
 
 
   LivroCaixa({
@@ -23,7 +24,8 @@ class LivroCaixa {
      this.formaPagamento,
      this.tipoMovimentacao,
      this.classificacao,
-     this.idContacorrente
+     this.idContacorrente,
+     this.banco
     
   });
 
@@ -40,6 +42,7 @@ class LivroCaixa {
       tipoMovimentacao: map['tipoMovimentacao'],
       classificacao: map['classificacao'],     
       idContacorrente: map['idContacorrente'],
+      banco: map['banco'],
      
     );
   }
