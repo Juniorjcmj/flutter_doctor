@@ -28,6 +28,8 @@ class LivroCaixaController extends GetxController {
 
   var mes = 'mes'.obs;
 
+   var listaReceitas = [].obs;
+
   void atualizarMes(String valor){
     mes.value = valor;
   }
@@ -39,6 +41,10 @@ class LivroCaixaController extends GetxController {
 
   void atualizarLista(List<LivroCaixa> lista){
      list.value = lista;
+    listaReceitas.value = list.value
+        .where((livro) => livro.tipoMovimentacao == 'RECEITA')
+        .toList();
+      update();
   }
 
   void atualizarListaContaCorrente(List<ContaCorrente> lista){

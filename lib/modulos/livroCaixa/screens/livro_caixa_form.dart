@@ -103,8 +103,13 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
     getContas();
     if (widget.livroCaixa != null) {
       _descricaoController.text = widget.livroCaixa?.descricao ?? '';
-      _valorController.text = widget.livroCaixa?.valor.toString() ?? '';
+      _valorController.text =  UtilBrasilFields.obterReal(widget.livroCaixa?.valor as double,decimal: 2).replaceAll(RegExp(r'[a-zA-Z\$]'), '')  ?? '';
+      
       _dataController.text = widget.livroCaixa?.dtTransacao.toString()?? '';
+      if( _dataController.text.contains('-')){
+        var picotado = _dataController.text.split('-');
+         _dataController.text = "${picotado[2]}/${picotado[1]}/${picotado[0]}";
+      }
       _classificacaoController.text = widget.livroCaixa?.classificacao ?? '';
       _tipoMovimentacaoController.text =
           widget.livroCaixa?.tipoMovimentacao ?? '';
@@ -154,7 +159,11 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
               children: [
                 TextFormField(
                   controller: _descricaoController,
-                  textCapitalization: TextCapitalization.words,
+                 
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                     RealInputFormatter(),
+                  ],
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     icon: Icon(Icons.sort),

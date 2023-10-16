@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/model/livro_caixa.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
+import 'package:flutter_doctor/shared/state/splash_controller.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
@@ -12,10 +14,12 @@ import '../../../interceptor/http_interceptor.dart';
 class LivroCaixaService {
   static String apiUrl = '${Config.apiUrl!}/api/v1/api-livro-caixa';
   static final LivroCaixaController livroController = Get.put(LivroCaixaController()); 
+  static final SplashController loaderController = Get.put(SplashController());
 
   static final Dio _dio = DioInterceptor().dioInstance;
 
   static Future<List<LivroCaixa>> getLivroCaixas() async {
+    loaderController.isLoader.value = true;
     // ignore: non_constant_identifier_names
     List<LivroCaixa> LivroCaixas = [];
     try {
@@ -26,12 +30,14 @@ class LivroCaixaService {
         for (dynamic registro in data) {
           LivroCaixas.add(LivroCaixa.fromMap(registro));
         }
+        loaderController.isLoader.value = false;
         return LivroCaixas;
       }
     } on DioError catch (e) {
+      loaderController.isLoader.value = false;
       log(e.message);
     }
-
+   loaderController.isLoader.value = false;
     return LivroCaixas;
   }
 
@@ -110,7 +116,7 @@ class LivroCaixaService {
 
   static Future<List<LivroCaixa>> filtroAvancado(
       Map<String, dynamic> dados) async {
-
+   loaderController.atualizarLoader(true);
    livroController.zerarValores();
 
     List<LivroCaixa> livroCaixas = [];
@@ -123,6 +129,7 @@ class LivroCaixaService {
       );
 
       if (response.statusCode == 200) {
+         loaderController.atualizarLoader(false);
         List data = response.data;
         for (dynamic registro in data) {
           LivroCaixa livro = LivroCaixa.fromMap(registro);
@@ -141,6 +148,8 @@ class LivroCaixaService {
           }
         }
       }
+      loaderController.atualizarLoader(false);
+      livroController.list.value = livroCaixas;
       return livroCaixas;
     } on DioError catch (e) {
       log(e.message);
