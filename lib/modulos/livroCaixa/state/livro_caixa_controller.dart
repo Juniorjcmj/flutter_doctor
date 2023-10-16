@@ -29,9 +29,11 @@ class LivroCaixaController extends GetxController {
   var mes = 'mes'.obs;
 
    var listaReceitas = [].obs;
+    var listaDespesas = [].obs;
 
   void atualizarMes(String valor){
     mes.value = valor;
+    update();
   }
 
   // Método para atualizar o estado da entidade LivroCaixa
@@ -44,6 +46,10 @@ class LivroCaixaController extends GetxController {
     listaReceitas.value = list.value
         .where((livro) => livro.tipoMovimentacao == 'RECEITA')
         .toList();
+    listaDespesas.value = list.value
+        .where((livro) => livro.tipoMovimentacao == 'DESPESA')
+        .toList();
+
       update();
   }
 

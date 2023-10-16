@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/scrrens/form_conta_corrente.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/screens/components/appbar_filter.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/page_geral.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/service/livro_caixa_service.dart';
@@ -61,32 +62,9 @@ void initState() {
           backgroundColor: Config.primaryColor,
           elevation: 5,
           toolbarHeight: 120,
-         title:  Padding(
-           padding: const EdgeInsets.only(right:55),
-           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(onPressed: () {
-                setState(() {
-                  if(index > 1){
-                   index--;               
-                   getOperacoes(index);
-                  }           
-                  
-                });
-              }, icon: const Icon(Icons.chevron_left)),
-                  Text(obterNomeDoMes(index), style: const TextStyle(fontSize: 15),),
-         
-            IconButton(onPressed: () {
-                 setState(() {
-                  if(index < 12){
-                   index++;
-                   getOperacoes(index);
-                  }           
-                  
-                });
-              }, icon: const Icon(Icons.chevron_right)),
-           ]),
+         title:  const Padding(
+           padding: EdgeInsets.only(right:55),
+           child: AppbarFilter()
          ) ,
          centerTitle: true,         
           

@@ -22,7 +22,7 @@ class PageReceita extends StatefulWidget {
 
 class _PageReceitaState extends State<PageReceita> {
   final LivroCaixaController controller = Get.put(LivroCaixaController());
- static final SplashController loaderController = Get.put(SplashController());
+  final SplashController loaderController = Get.put(SplashController());
   
   @override
   void initState() {  

@@ -302,128 +302,128 @@ class _PageGeralState extends State<PageGeral> {
         : Obx(() => SingleChildScrollView(
               child: Card(
                 elevation: 5,
-                child: Column(
-                  children: [
-                    const ListTile(
-                      title: Center(child: Text('Contas Corrente')),
-                    ),
-                    SizedBox(
-                      width: Config.widtSize * 0.98,
-                      height: Config.height / 5,
-                      child: ListView.builder(
-                        itemCount: controller.listConta.value.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Icon(
-                                  Icons.account_balance_sharp,
-                                  size: 30,
-                                ),
-                                Text(
-                                    '${controller.listConta.value[index].banco}'),
-                                Row(
+                    child: Column(
+                      children: [
+                        const ListTile(
+                          title: Center(child: Text('Contas Corrente')),
+                        ),
+                        SizedBox(
+                          width: Config.widtSize * 0.98,
+                          height: Config.height / 5,
+                          child: ListView.builder(
+                            itemCount: controller.listConta.value.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(UtilBrasilFields.obterReal(controller
-                                        .listConta.value[index].saldo)),
-                                    IconButton(
-                                        onPressed: () async {
-                                          var conta = await Get.to(
-                                              CadastroContaCorrente(
-                                            tipo: "Editar",
-                                            contaCorrente: controller
-                                                .listConta.value[index],
-                                          ));
-                                          ContaCorrente result =
-                                              conta['conta'] as ContaCorrente;
-                                          controller.atualizarConta(
-                                              index, result);
+                                    const Icon(
+                                      Icons.account_balance_sharp,
+                                      size: 15,
+                                    ),
+                                    Text(
+                                        '${controller.listConta.value[index].banco}', style: const TextStyle(fontSize: 14)),
+                                    Row(
+                                      children: [
+                                        Text(UtilBrasilFields.obterReal(controller
+                                            .listConta.value[index].saldo), style: const TextStyle(fontSize: 12),),
+                                        IconButton(
+                                            onPressed: () async {
+                                              var conta = await Get.to(
+                                                  CadastroContaCorrente(
+                                                tipo: "Editar",
+                                                contaCorrente: controller
+                                                    .listConta.value[index],
+                                              ));
+                                              ContaCorrente result =
+                                                  conta['conta'] as ContaCorrente;
+                                              controller.atualizarConta(
+                                                  index, result);
 
-                                          Get.snackbar("",
-                                              "Dados Atualizados com sucesso!",
-                                              backgroundColor: Colors.green,
-                                              colorText: Colors.white);
-                                        },
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Config.primaryColor,
-                                        )),
-                                    IconButton(
-                                        onPressed: () async {
-                                          showDialog(
-                                            context: Get.context!,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                    'Confirmar Exclusão'),
-                                                content: const Text(
-                                                    'Tem certeza que deseja excluir esta conta?'),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Cancelar'),
-                                                    onPressed: () {
-                                                      Get.back(); // Fecha o AlertDialog
-                                                    },
-                                                  ),
-                                                  TextButton(
-                                                    child:
-                                                        const Text('Confirmar'),
-                                                    onPressed: () async {
-                                                      Get.back();
-                                                      if (controller.listConta
-                                                              .value.length ==
-                                                          1) {
-                                                        Get.snackbar("Atenção",
-                                                            "Você não pode excluir a sua única conta, crie outra e depois exclua essa novamente!",
-                                                            backgroundColor:
-                                                                Colors.amber,
-                                                            colorText:
-                                                                Colors.white,
-                                                            duration:
-                                                                const Duration(
-                                                                    seconds:
-                                                                        8));
-                                                      } else {
-                                                        var response =
-                                                            await _submitDelete(
-                                                                controller
-                                                                    .listConta
-                                                                    .value[index],
-                                                                index);
-                                                        if (response) {
-                                                          Get.snackbar("Pronto",
-                                                              "Conta Arquivada com sucesso!",
-                                                              backgroundColor:
-                                                                  Colors.green,
-                                                              colorText:
-                                                                  Colors.white);
-                                                        } else {
-                                                          Get.snackbar(
-                                                              "Atenção",
-                                                              "Error!",
-                                                              backgroundColor:
-                                                                  Colors.red,
-                                                              colorText:
-                                                                  Colors.white);
-                                                        }
-                                                      }
+                                              Get.snackbar("",
+                                                  "Dados Atualizados com sucesso!",
+                                                  backgroundColor: Colors.green,
+                                                  colorText: Colors.white);
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Config.primaryColor,size: 20,
+                                            )),
+                                        IconButton(
+                                            onPressed: () async {
+                                              showDialog(
+                                                context: Get.context!,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'Confirmar Exclusão'),
+                                                    content: const Text(
+                                                        'Tem certeza que deseja excluir esta conta?'),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child:
+                                                            const Text('Cancelar'),
+                                                        onPressed: () {
+                                                          Get.back(); // Fecha o AlertDialog
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child:
+                                                            const Text('Confirmar'),
+                                                        onPressed: () async {
+                                                          Get.back();
+                                                          if (controller.listConta
+                                                                  .value.length ==
+                                                              1) {
+                                                            Get.snackbar("Atenção",
+                                                                "Você não pode excluir a sua única conta, crie outra e depois exclua essa novamente!",
+                                                                backgroundColor:
+                                                                    Colors.amber,
+                                                                colorText:
+                                                                    Colors.white,
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            8));
+                                                          } else {
+                                                            var response =
+                                                                await _submitDelete(
+                                                                    controller
+                                                                        .listConta
+                                                                        .value[index],
+                                                                    index);
+                                                            if (response) {
+                                                              Get.snackbar("Pronto",
+                                                                  "Conta Arquivada com sucesso!",
+                                                                  backgroundColor:
+                                                                      Colors.green,
+                                                                  colorText:
+                                                                      Colors.white);
+                                                            } else {
+                                                              Get.snackbar(
+                                                                  "Atenção",
+                                                                  "Error!",
+                                                                  backgroundColor:
+                                                                      Colors.red,
+                                                                  colorText:
+                                                                      Colors.white);
+                                                            }
+                                                          }
 
-                                                      // Fecha o AlertDialog
-                                                    },
-                                                  ),
-                                                ],
+                                                          // Fecha o AlertDialog
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
                                               );
                                             },
-                                          );
-                                        },
-                                        icon: const Icon(
-                                          Icons.delete_outline,
-                                          color: Colors.red,
-                                        ))
-                                  ],
-                                ),
+                                            icon: const Icon(
+                                              Icons.delete_outline,
+                                              color: Colors.red,
+                                            ))
+                                      ],
+                                    ),
                               ],
                             ),
                           );
