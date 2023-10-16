@@ -131,6 +131,13 @@ class _PageReceitaState extends State<PageReceita> {
           
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
+          onPressed: () {
+           Get.to(()=> LivroCaixaForm(tipo: 'Receita',)) ;
+          },
+          child: const Icon(Icons.add),
+        ),
         
     );
   }

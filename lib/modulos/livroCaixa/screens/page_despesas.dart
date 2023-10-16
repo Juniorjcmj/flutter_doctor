@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
@@ -126,7 +128,13 @@ class _PageDespesasState extends State<PageDespesas> {
           
         ),
       ),
-        
+         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.red,
+          onPressed: () {
+           Get.to(()=> LivroCaixaForm(tipo: 'Despesa',)) ;
+          },
+          child: const Icon(Icons.add),
+        ),
     );
   }
 
