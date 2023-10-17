@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_doctor/modulos/auth/screens/alterar_email.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
 
@@ -40,6 +42,39 @@ class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 300,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: ClipPath(
+          clipper: OvalBottomBorderClipper(),
+          child: Container(
+            height: 400,
+            width: Config.widtSize,
+            color: Config.primaryColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  _nome,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+
+                const SizedBox(height: 45,),
+              
+                     const CircleAvatar(
+                    radius: 80,
+                    backgroundImage:  NetworkImage('https://thumbs.dreamstime.com/b/smiling-medical-doctor-woman-stethoscope-isolated-over-white-background-35552912.jpg'),
+                  ),            
+                  
+                ],
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -49,21 +84,11 @@ class _PerfilState extends State<Perfil> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30),
-                  const CircleAvatar(
-                    radius: 80,
-                    backgroundImage:  NetworkImage('https://thumbs.dreamstime.com/b/smiling-medical-doctor-woman-stethoscope-isolated-over-white-background-35552912.jpg'),
-                  ),
+                 
                   const SizedBox(height: 25),
 
                   //Bem vindo novamente ao Sistema!
-                  Text(
-                    _nome,
-                    style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 16
-                    ),
-                  ),
+                 
                   const SizedBox(height: 25),
 
                   //Texto com o email
@@ -93,7 +118,7 @@ class _PerfilState extends State<Perfil> {
                   //Botão para alterar o email
                   TextButton(
                     onPressed: (){                     
-                      Get.to(AlterarSenha());
+                      Get.to(const AlterarEmail());
                     },
                     child: Text(
                       'Alterar email',
