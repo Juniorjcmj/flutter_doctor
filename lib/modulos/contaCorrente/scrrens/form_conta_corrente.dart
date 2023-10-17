@@ -1,12 +1,9 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_doctor/components/row_formatters.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/service/service_conta_corrente.dart';
-import 'package:flutter_doctor/modulos/livroCaixa/screens/livro_caixa_form.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/state/livro_caixa_controller.dart';
-import 'package:flutter_doctor/modulos/procedimento/screens/procedimento_form.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 import 'package:get/get.dart';
 
@@ -84,23 +81,10 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
                 if (response['status']) {
                   setState(() {
                     _isLoading = false;
-                    // Inicia o indicador de carregamento
+                   
                   });
                   //ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      dismissDirection: DismissDirection.startToEnd,
-                      backgroundColor: Config.primaryColor,
-                      content: SizedBox(
-                          height: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.check,
-                            size: 50,
-                            color: Colors.white,
-                          ))),
-                    ),
-                  );
+                  
                   if(widget.tipo == "Cadastrar"){
                   livroController.listConta.add(response['conta'] as ContaCorrente);
                   }

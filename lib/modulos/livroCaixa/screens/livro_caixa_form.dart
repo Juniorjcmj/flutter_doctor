@@ -158,12 +158,8 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _descricaoController,
+                  controller: _descricaoController,   
                  
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                     RealInputFormatter(),
-                  ],
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     icon: Icon(Icons.sort),

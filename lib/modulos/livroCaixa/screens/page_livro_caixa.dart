@@ -104,7 +104,12 @@ void _exibirBottomSheet() {
                     borderRadius: BorderRadius.circular(50), // Opcional: Adiciona bordas arredondadas
                      ),
                   child: IconButton(
-                    onPressed: () { Get.to(LivroCaixaForm(tipo: "Receita",)); },
+                    onPressed: () async{
+                       bool result = await Get.to(LivroCaixaForm(tipo: "Receita",));                 
+                    if(result){
+                      Get.snackbar("Receita", "Cadastrada com sucesso!",backgroundColor: Colors.green, colorText: Colors.white);
+                    } 
+                        },
                     icon: const Icon(
                       Icons.add,
                       size: 30,
@@ -132,7 +137,7 @@ void _exibirBottomSheet() {
               // Adicione a lógica para cadastrar despesa aqui
              bool result = await Get.to(LivroCaixaForm(tipo: "Receita",));                 
                     if(result){
-                      Get.snackbar("Receita", "Cadastrada com sucesso!");
+                      Get.snackbar("Receita", "Cadastrada com sucesso!",backgroundColor: Colors.green, colorText: Colors.white);
                     } // Fecha o BottomSheet
             },
           ),
@@ -149,7 +154,7 @@ void _exibirBottomSheet() {
                     onPressed: ()async {
                     bool result =  await Get.to(LivroCaixaForm(tipo: "Despesa",));   
                     if(result){
-                      Get.snackbar("Despesa", "Cadastrada com sucesso!");
+                      Get.snackbar("Despesa", "Cadastrada com sucesso!", backgroundColor: Colors.green, colorText: Colors.white);
                     }                 
                     },
                     icon: const Icon(
@@ -175,9 +180,12 @@ void _exibirBottomSheet() {
                 ),
               ],
             ),
-            onTap: () {
+            onTap: ()async {
               // Adicione a lógica para cadastrar despesa aqui
-              Get.to(LivroCaixaForm(tipo: "Despesa",));// Fecha o BottomSheet
+              bool result = await  Get.to(LivroCaixaForm(tipo: "Despesa",));// Fecha o BottomSheet
+               if(result){
+                      Get.snackbar("Despesa ", "Cadastrada com sucesso!", backgroundColor: Colors.green, colorText: Colors.white);
+                    }  
             },
           ),
           const SizedBox(height: 20,),
@@ -214,9 +222,12 @@ void _exibirBottomSheet() {
                 ),
               ],
             ),
-            onTap: () {
+            onTap: ()async {
 
-              Get.to(CadastroContaCorrente(tipo: "Cadastrar",));
+           var result =  await Get.to(CadastroContaCorrente(tipo: "Cadastrar",));
+            if(result){
+                      Get.snackbar("Banco ", "Cadastrado com sucesso!", backgroundColor: Colors.green, colorText: Colors.white);
+                    }  
               // Adicione a lógica para cadastrar despesa aqui
               // Fecha o BottomSheet
             },

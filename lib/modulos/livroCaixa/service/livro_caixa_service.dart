@@ -45,11 +45,12 @@ class LivroCaixaService {
       Map<String, dynamic> dados) async {
     Response response;
     final Map<String, dynamic> data = {};
-    int id = dados['id'];
+   
     try {
       if (dados['id'] != null) {
         response = await _dio.put(
-          '$apiUrl/$id',
+          // ignore: prefer_interpolation_to_compose_strings
+          '$apiUrl/'+dados['id'],
           data: dados,
         );
       } else {

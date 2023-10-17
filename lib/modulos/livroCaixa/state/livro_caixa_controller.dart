@@ -21,6 +21,8 @@ class LivroCaixaController extends GetxController {
 
   var receita = 0.0.obs;
   var despesa = 0.0.obs;
+ 
+
   double get saldo => receita.value - despesa.value;
 
   var fixa = 0.0.obs;
@@ -28,7 +30,7 @@ class LivroCaixaController extends GetxController {
 
   var mes = 'mes'.obs;
 
-   var listaReceitas = [].obs;
+    var listaReceitas = [].obs;
     var listaDespesas = [].obs;
 
   void atualizarMes(String valor){
@@ -80,10 +82,12 @@ class LivroCaixaController extends GetxController {
 
     void adicionarFixa(double valor) {
     fixa.value += valor;
+    update();
   }
 
   void adicionarVariavel(double valor) {
     variavel.value += valor;
+    update();
   }
   
   // Adicione outros métodos e lógica de gerenciamento de estado aqui conforme necessário
