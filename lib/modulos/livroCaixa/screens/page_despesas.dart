@@ -65,9 +65,7 @@ class _PageDespesasState extends State<PageDespesas> {
         ),
         centerTitle: true,
       ),
-      body:  SingleChildScrollView(
-        child:   Obx(() => Card(
-          
+      body:  Obx(() => Card(          
           child: loaderController.isLoader.value ?  Center(
               child: LoadingAnimationWidget.staggeredDotsWave(                   
                    color: Colors.red,
@@ -78,83 +76,86 @@ class _PageDespesasState extends State<PageDespesas> {
               const ListTile(
                 title: Center(child: Text('Detalhamento')),
               ),
-              Container(
-                width: Get.width,
-                height: Get.height * 0.7,
-                child: ListView.builder(
-                  itemCount: controller.listaDespesas.value.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: GestureDetector(
-                        onTap: () => Get.to(() => LivroCaixaForm(
-                              tipo: "Despesa",
-                              livroCaixa: controller.listaDespesas[index],
-                            )),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.black12, width: 1.0),
+              Expanded(
+                child: Container(
+                  width: Get.width,
+                  height: Get.height*0.7,
+                  child: ListView.builder(
+                     shrinkWrap: true,
+                    itemCount: controller.listaDespesas.value.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: GestureDetector(
+                          onTap: () => Get.to(() => LivroCaixaForm(
+                                tipo: "Despesa",
+                                livroCaixa: controller.listaDespesas[index],
+                              )),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom:
+                                    BorderSide(color: Colors.black12, width: 1.0),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${controller.listaDespesas[index].banco}',
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.black38),
+                                    ),
+                                    Text(
+                                        '${controller.listaDespesas[index].descricao}',
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.black54)),
+                                    Text(
+                                        '${controller.listaDespesas[index].formaPagamento}',
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.black38)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                            Util.converterFormatoDataApiLivro(
+                                                controller.listaDespesas[index]
+                                                    .dtTransacao),
+                                            style: const TextStyle(
+                                                fontSize: 9,
+                                                color: Colors.black45)),
+                                        Text(
+                                            UtilBrasilFields.obterReal(controller
+                                                .listaDespesas[index].valor),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black54)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${controller.listaDespesas[index].banco}',
-                                    style: const TextStyle(
-                                        fontSize: 12, color: Colors.black38),
-                                  ),
-                                  Text(
-                                      '${controller.listaDespesas[index].descricao}',
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.black54)),
-                                  Text(
-                                      '${controller.listaDespesas[index].formaPagamento}',
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Colors.black38)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                          Util.converterFormatoDataApiLivro(
-                                              controller.listaDespesas[index]
-                                                  .dtTransacao),
-                                          style: const TextStyle(
-                                              fontSize: 9,
-                                              color: Colors.black45)),
-                                      Text(
-                                          UtilBrasilFields.obterReal(controller
-                                              .listaDespesas[index].valor),
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black54)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
-      ),
+     
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {

@@ -6,6 +6,7 @@ class Config {
   static double? screenWidth;
   static double? screenHeight;
   static String? apiUrl = 'https://api-sec-virtual-production.up.railway.app';
+  //static String? apiUrl = 'http://localhost:8080';
 
 
   void init(BuildContext context){

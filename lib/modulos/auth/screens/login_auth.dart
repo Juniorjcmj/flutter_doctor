@@ -39,8 +39,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ) // Mostra o indicador de carregamento enquanto o login está em andamento
             :  SafeArea(
+              
           child: SingleChildScrollView(
         child: Container(
+          
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Center(

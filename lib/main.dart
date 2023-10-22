@@ -32,10 +32,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Fluter Doctor Demo',
       theme: ThemeData(  
+      
       iconTheme: const IconThemeData(
           color: Color(0xFF00bf9a), // Cor personalizada
         ),

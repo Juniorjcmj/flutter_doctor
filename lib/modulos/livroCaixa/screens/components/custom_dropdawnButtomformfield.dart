@@ -7,6 +7,7 @@ class CumstomDropDownFieldForm extends StatefulWidget {
   final List<String> items;
   final ValueChanged<String> onChanged;
   final Widget prefixIcon;
+   late Widget? sufixIcon;
   final String labelText;
 
   // ignore: use_key_in_widget_constructors
@@ -14,7 +15,8 @@ class CumstomDropDownFieldForm extends StatefulWidget {
     required this.items,
     required this.onChanged,
     required this.prefixIcon,
-    required this.labelText
+    required this.labelText,
+    this.sufixIcon
   }) : selected= items.isNotEmpty ? items[0] : '';
 
    String selected;
@@ -50,6 +52,7 @@ class _CumstomDropDownFieldFormState extends State<CumstomDropDownFieldForm> {
                   border: const UnderlineInputBorder(),
                   labelText: widget.labelText,
                   prefixIcon: widget.prefixIcon,
+                  suffixIcon: widget.sufixIcon 
                  ),             
               
     );

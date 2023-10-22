@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_doctor/modulos/livroCaixa/screens/components/custom_dropdawnButtomformfield.dart';
 import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
 import 'package:flutter_doctor/shared/util/util.dart';
 import 'package:get/get.dart';
@@ -293,46 +294,11 @@ class _ConsultaFormState extends State<ConsultaForm> {
                       ),
                       const SizedBox(height: 10),
             
-                      SizedBox(
-                        height: 60,
+                     
                         
-                        child:  DropdownButton(
-                            
-                            borderRadius: BorderRadius.circular(20),
-                            // Initial Value
-                            value: dropdownvalue,
-                      
-                            // Down Arrow Icon
-                            icon: const Expanded(child: Icon(Icons.keyboard_arrow_down)),
-                      
-                            // Array list of items
-                            items: items.map((String items) {
-                              return DropdownMenuItem(                            
-                                value: items,                        
-            
-                                child: Container(
-                                  padding: const EdgeInsets.all(0),                                
-                                   
-                                  child: Center(
-                                    child: Text(
-                                      items,
-                                      style: const TextStyle(color: Colors.black54),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                                tipoController.text = dropdownvalue;
-                              });
-                            },
-                          ),
                        
-                      ),
+                       
+                     _dropformapagamento(),
             
                       // Tipo
                       const SizedBox(height: 10),                 
@@ -460,5 +426,22 @@ class _ConsultaFormState extends State<ConsultaForm> {
               ),
                 ),
             );
+  }
+
+
+
+   _dropformapagamento() {
+     return CumstomDropDownFieldForm(
+      items: items,
+      labelText: "Selecione Tipo Consulta*",
+      prefixIcon:  const Icon( Icons.toc, size: 25,color: Colors.blue,),
+      onChanged: (value) {       
+        setState(() {
+             dropdownvalue = value;
+             tipoController.text = dropdownvalue;
+             });
+      },
+      );
+  
   }
 }

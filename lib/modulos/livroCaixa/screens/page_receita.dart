@@ -70,8 +70,7 @@ class _PageReceitaState extends State<PageReceita> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child:   Obx(() => Card(
+      body: Obx(() => Card(
           
           child: loaderController.isLoader.value ?  Center(
               child: LoadingAnimationWidget.staggeredDotsWave(                   
@@ -79,87 +78,91 @@ class _PageReceitaState extends State<PageReceita> {
                    size: 100
                 ),
                 ) : Column(
+                  mainAxisSize: MainAxisSize.max,
             children: [
               const ListTile(
                 title: Center(child: Text('Detalhamento')),
               ),
-              Container(
-                width: Get.width,
-                height: Get.height * 0.7,
-                child: ListView.builder(
-                  itemCount: controller.listaReceitas.value.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: GestureDetector(
-                        onTap: () => Get.to(() => LivroCaixaForm(
-                              tipo: "Receita",
-                              livroCaixa: controller.listaReceitas[index],
-                            )),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.black12, width: 1.0),
+              Expanded(
+                child: Container(
+                  width: Get.width,
+                  
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.listaReceitas.value.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: GestureDetector(
+                          onTap: () => Get.to(() => LivroCaixaForm(
+                                tipo: "Receita",
+                                livroCaixa: controller.listaReceitas[index],
+                              )),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom:
+                                    BorderSide(color: Colors.black12, width: 1.0),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${controller.listaReceitas.value[index].banco}',
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.black38),
+                                    ),
+                                    Text(
+                                        '${controller.listaReceitas.value[index].descricao}',
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.black54)),
+                                    Text(
+                                        '${controller.listaReceitas.value[index].formaPagamento}',
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.black38)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                            Util.converterFormatoDataApiLivro(
+                                                controller.listaReceitas
+                                                    .value[index].dtTransacao),
+                                            style: const TextStyle(
+                                                fontSize: 9,
+                                                color: Colors.black45)),
+                                        Text(
+                                            UtilBrasilFields.obterReal(
+                                                controller.listaReceitas.value[index].valor),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black54)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${controller.listaReceitas.value[index].banco}',
-                                    style: const TextStyle(
-                                        fontSize: 12, color: Colors.black38),
-                                  ),
-                                  Text(
-                                      '${controller.listaReceitas.value[index].descricao}',
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.black54)),
-                                  Text(
-                                      '${controller.listaReceitas.value[index].formaPagamento}',
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Colors.black38)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                          Util.converterFormatoDataApiLivro(
-                                              controller.listaReceitas
-                                                  .value[index].dtTransacao),
-                                          style: const TextStyle(
-                                              fontSize: 9,
-                                              color: Colors.black45)),
-                                      Text(
-                                          UtilBrasilFields.obterReal(
-                                              controller.listaReceitas.value[index].valor),
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black54)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
           ),
         )
         ),
-      ),
+      
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
         onPressed: () {

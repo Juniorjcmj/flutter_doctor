@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
