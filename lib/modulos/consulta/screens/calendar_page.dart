@@ -206,139 +206,22 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
                                 consultasNoMesmoHorario.length == 1
                                     ? consultasNoMesmoHorario[0]
                                     : Consulta();
-                            if (consultasNoMesmoHorario.length > 1) {                             
-                                return Column(                       
-                                
-                                  children: [
-                                    for (var consultaIndex in consultasNoMesmoHorario)
-                                    Container(                                     
-                                      decoration:  BoxDecoration(    
-                                         color: bool.parse(consultaIndex.confirmado) ? const Color.fromARGB(255, 233, 244, 234): Colors.transparent,                                   
-                                        border: const Border(
-                                          bottom: BorderSide(
-                                              width: 1, color: Colors.black12),
-                                        ),
-                                      ),
-                                      child: ListTile(
-                                        title: consultaIndex.nomePaciente != ""
-                                            ? Row(
-                                                children: [
-                                                  Text(
-                                                    "$time  |  ",
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          SizedBox(
-                                                              width: 280,
-                                                              child: Text(
-                                                                consultaIndex
-                                                                    .nomeDentista
-                                                                    .toUpperCase(),
-                                                                style: const TextStyle(
-                                                                    fontSize: 14,
-                                                                    color: Colors
-                                                                        .black45),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                              )),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          SizedBox(
-                                                              width: 280,
-                                                              child: Text(
-                                                                consultaIndex
-                                                                    .nomePaciente
-                                                                    .toUpperCase(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black45,
-                                                                ),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                              )),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Icon(Icons.width_wide,
-                                                              color: Util
-                                                                  .obterCorParaTipoDeConsulta(
-                                                                      consultaIndex
-                                                                          .tipo),
-                                                              size: 20),
-                                                          const SizedBox(
-                                                            width: 7,
-                                                          ),
-                                                          Text(
-                                                            consultaIndex.tipo
-                                                                .toUpperCase(),
-                                                            style: const TextStyle(
-                                                              fontSize: 14,
-                                                              color: Colors.black45,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            : Text(
-                                                "$time ",
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w700),
-                                              ),
-                                        onTap: () async {
-                                          if (consultaIndex.id == null) {
-                                            //bool response = await  showDialog(context: context, builder: (context) => ConsultaForm(dataConsulta: _selectedDay, horaConsulta:TimeOfDay(hour: hour, minute:minute)));
-                                            bool response = await Get.to(
-                                                ConsultaForm(
-                                                    dataConsulta: _selectedDay,
-                                                    horaConsulta: TimeOfDay(
-                                                        hour: hour,
-                                                        minute: minute)));
-                                            if (response) {
-                                              // ignore: use_build_context_synchronously
-                                              recarregarPagina(context);
-                                            }
-                                          } else {
-                                            bool response =
-                                                await Get.to(ConsultaForm(
-                                              dataConsulta: _selectedDay,
-                                              horaConsulta: TimeOfDay(
-                                                  hour: hour, minute: minute),
-                                              consulta: consultaIndex,
-                                            ));
-                                            if (response) {
-                                              // ignore: use_build_context_synchronously
-                                              recarregarPagina(context);
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              
+                            if (consultasNoMesmoHorario.length > 1) {
+                              return Column(
+                                children: [
+                                  for (var consultaIndex
+                                      in consultasNoMesmoHorario)
+                                    _customContainer(consultaIndex, time, hour, minute, context),
+                                ],
+                              );
                             } else {
                               return Container(
-                                decoration: const BoxDecoration(
-                                  border: Border(
+                                decoration:  BoxDecoration(
+                                  color:  consultasNoMesmoHorario.isNotEmpty
+                                                ? const Color.fromARGB(
+                                                    255, 233, 244, 234)
+                                                : Colors.transparent,
+                                  border: const Border(
                                     bottom: BorderSide(
                                         width: 1, color: Colors.black12),
                                   ),
@@ -461,5 +344,139 @@ class _TableCalendarPageState extends State<TableCalendarPage> {
         ),
       ),
     );
+  }
+
+  Container _customContainer(Consulta consultaIndex, String time, int hour, int minute, BuildContext context) {
+    return Container(
+                                    decoration: BoxDecoration(
+                                      color:
+                                          bool.parse(consultaIndex.confirmado)
+                                              ? const Color.fromARGB(
+                                                  255, 233, 244, 234)
+                                              : Colors.transparent,
+                                      border: const Border(
+                                        bottom: BorderSide(
+                                            width: 1, color: Colors.black12),
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      title: consultaIndex.nomePaciente != ""
+                                          ? Row(
+                                              children: [
+                                                Text(
+                                                  "$time  |  ",
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700,),
+                                                ),
+                                               
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                            width: 280,
+                                                            child: Text(
+                                                              consultaIndex
+                                                                  .nomeDentista
+                                                                  .toUpperCase(),
+                                                              style: const TextStyle(
+                                                                  fontSize:
+                                                                      14,
+                                                                  color: Colors
+                                                                      .black45),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                            width: 280,
+                                                            child: Text(
+                                                              consultaIndex
+                                                                  .nomePaciente
+                                                                  .toUpperCase(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black45,
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(Icons.width_wide,
+                                                            color: Util
+                                                                .obterCorParaTipoDeConsulta(
+                                                                    consultaIndex
+                                                                        .tipo),
+                                                            size: 20),
+                                                        const SizedBox(
+                                                          width: 7,
+                                                        ),
+                                                        Text(
+                                                          consultaIndex.tipo
+                                                              .toUpperCase(),
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors
+                                                                .black45,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          : Text(
+                                              "$time ",
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight:
+                                                      FontWeight.w700),
+                                            ),
+                                      onTap: () async {
+                                        if (consultaIndex.id == null) {
+                                          //bool response = await  showDialog(context: context, builder: (context) => ConsultaForm(dataConsulta: _selectedDay, horaConsulta:TimeOfDay(hour: hour, minute:minute)));
+                                          bool response = await Get.to(
+                                              ConsultaForm(
+                                                  dataConsulta: _selectedDay,
+                                                  horaConsulta: TimeOfDay(
+                                                      hour: hour,
+                                                      minute: minute)));
+                                          if (response) {
+                                            // ignore: use_build_context_synchronously
+                                            recarregarPagina(context);
+                                          }
+                                        } else {
+                                          bool response =
+                                              await Get.to(ConsultaForm(
+                                            dataConsulta: _selectedDay,
+                                            horaConsulta: TimeOfDay(
+                                                hour: hour, minute: minute),
+                                            consulta: consultaIndex,
+                                          ));
+                                          if (response) {
+                                            // ignore: use_build_context_synchronously
+                                            recarregarPagina(context);
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  );
   }
 }
