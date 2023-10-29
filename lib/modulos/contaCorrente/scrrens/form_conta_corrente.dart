@@ -97,7 +97,7 @@ class _CadastroContaCorrenteState extends State<CadastroContaCorrente> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       backgroundColor: Colors.red,
-                      content: Text('Não foi possivél cadastrar Paciente!'),
+                      content: Text('Não foi possivél cadastrar !'),
                     ),
                   );
                 }

@@ -4,11 +4,18 @@ import 'package:flutter_doctor/interceptor/http_interceptor.dart';
 import 'package:flutter_doctor/modulos/contaCorrente/model/conta_corrente.dart';
 import 'package:flutter_doctor/shared/util/config.dart';
 
+/// Esta classe fornece métodos para interagir com a API de backend para gerenciar contas bancárias.
 class ServiceContaCorrente {
+
+    /// A URL base do ponto de extremidade da API para gerenciamento de contas.
    static String apiUrl = '${Config.apiUrl!}/api/v1/api-conta-corrente';
 
+  /// Uma instância do Dio com interceptadores adicionados para fazer requisições HTTP.
   static final Dio _dio = DioInterceptor().dioInstance;
 
+
+ /// Obtém uma lista de contas bancárias.
+  /// Retorna uma lista de objetos [ContaCorrente].
   static Future<List<ContaCorrente>> getContas() async {
     List<ContaCorrente> contas = [];
     try {
@@ -28,6 +35,8 @@ class ServiceContaCorrente {
     return contas;
   }
 
+ /// Registra uma nova conta bancária ou atualiza uma existente.
+  /// Retorna um mapa contendo o status e o objeto [ContaCorrente] criado/atualizado.
  static Future<Map<String, dynamic>> cadastrar(Map<String, dynamic> dados) async {
     Response response;
       final Map<String, dynamic> data = {};
@@ -58,7 +67,8 @@ class ServiceContaCorrente {
    throw ArgumentError.value(error);
   }
 }
-
+ /// Exclui uma conta bancária com base no seu ID.
+  /// Retorna `true` se a exclusão foi bem-sucedida, caso contrário, `false`.
  static  Future<bool> deletar(String id) async {    
 
           Response response = await _dio.delete('$apiUrl/$id');
@@ -68,7 +78,8 @@ class ServiceContaCorrente {
             return false;
           }
         }
-
+/// Obtém uma conta bancária pelo seu ID.
+  /// Retorna o objeto [ContaCorrente] com o ID especificado.
 static Future<ContaCorrente> findById(String id) async {
   var contaCorrente = ContaCorrente();
     try {

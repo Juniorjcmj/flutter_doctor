@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/paciente/model/paciente.dart';
 import 'package:flutter_doctor/modulos/paciente/service/paciente_service.dart';
+import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -23,6 +24,9 @@ class PacienteForm extends StatefulWidget {
 }
 
 class _PacienteFormState extends State<PacienteForm> {
+
+  PacienteController controller = Get.put(PacienteController());
+
   bool _isLoading = false;
   Paciente pacienteForm = Paciente();
   String? _selectedGender;
@@ -93,14 +97,14 @@ class _PacienteFormState extends State<PacienteForm> {
         dados.addAll({"id": widget.paciente!.id});
       }
       Map<String, dynamic> result =
-          await PacienteService.cadastrarPaciente(dados);
+          await controller.cadastrarPaciente(dados);
       return result;
     }
     return {};
   }
 
   Future<void> buscarEnderecoPorCEP(String cep) async {
-    Map<String, dynamic> data = await PacienteService.buscarEnderecoPorCEP(cep);
+    Map<String, dynamic> data = await controller.buscarEnderecoPorCEP(cep);
 
     if (data['erro'] == null) {
       setState(() {

@@ -46,7 +46,7 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
     if (_formKey.currentState!.validate()) {
       Map<String, dynamic> dados = {
         "descricao": _descricaoController.text,
-        "valor": _valorController.text,
+        "valor": substituirVirgulaPorPonto(_valorController.text),
         "dtTransacao": Util.converterFormatoData(_dataController.text),
         "classificacao": widget.tipo == "Receita" ? "NA" : _classificacaoController.text,
         "tipoMovimentacao": widget.tipo.toUpperCase(),
@@ -57,7 +57,7 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
       };
 
       if (widget.livroCaixa != null && widget.livroCaixa!.id != null) {
-        dados.addAll({"id": widget.livroCaixa!.id});
+        dados.addAll({"id": widget.livroCaixa!.id.toString()});
       }
       Map<String, dynamic> result =
           await LivroCaixaService.cadastrarLivroCaixa(dados);
@@ -96,6 +96,17 @@ class _LivroCaixaFormState extends State<LivroCaixaForm> {
       return;
     });
   }
+  String substituirVirgulaPorPonto(String valor) {
+  // Verifica se o valor contém vírgula e não contém ponto
+  if (valor.contains(",") && !valor.contains(".")) {
+    // Substitui a vírgula por ponto
+    return valor.replaceAll(",", ".");
+  } else {
+    // O valor está correto, não é necessário fazer alterações
+    return valor;
+  }
+}
+
 
   @override
   void initState() {

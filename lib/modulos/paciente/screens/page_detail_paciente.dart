@@ -48,7 +48,9 @@ final PacienteController pacienteController = Get.put(PacienteController());
             onPressed: ()async {
            var response =  await Get.to( PacienteForm(paciente: pacienteController.paciente.value));    
            Paciente result = response['Paciente'] as Paciente;            
-           pacienteController.atualizarPaciente(result);             
+           pacienteController.atualizarPaciente(result);  
+           
+                      
            Get.snackbar("", "Dados Atualizados com sucesso!"); 
                          },
           ),
@@ -161,7 +163,7 @@ final PacienteController pacienteController = Get.put(PacienteController());
 
               // Se o usuário confirmou a exclusão, proceda com a deleção
               if (confirmado == true) {
-              bool result =  await PacienteService.deletar(pacienteController.paciente.value.id.toString());
+              bool result =  await pacienteController.deletar(pacienteController.paciente.value.id.toString());
               if(result){
                 Get.snackbar("OK", "Paciente Excluido com sucesso!",backgroundColor: Config.primaryColor, colorText: Colors.white,  icon: const Icon(Icons.check, color: Colors.white, size: 45,));
               }else{

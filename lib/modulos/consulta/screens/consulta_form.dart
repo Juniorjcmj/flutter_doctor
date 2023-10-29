@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously, must_be_immutable, unused_field
 import 'package:flutter/material.dart';
 import 'package:flutter_doctor/modulos/livroCaixa/screens/components/custom_dropdawnButtomformfield.dart';
 import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
@@ -38,6 +38,7 @@ class ConsultaForm extends StatefulWidget {
 
 class _ConsultaFormState extends State<ConsultaForm> {
   ConsultaService service = Get.put(ConsultaService());
+  final PacienteController _pacienteController = Get.put(PacienteController());
   final SplashController _splashController = Get.put(SplashController());
 
   Consulta consultaForm = Consulta();
@@ -96,7 +97,7 @@ class _ConsultaFormState extends State<ConsultaForm> {
   //Buscando lista de pacientes
   List<Paciente> pacientes = List.empty();
   Future<void> getPacientes() async {
-    await PacienteService.getPacientes().then((value) {
+    await _pacienteController.pacientsList().then((value) {
       setState(() {
         pacientes = value;
       });

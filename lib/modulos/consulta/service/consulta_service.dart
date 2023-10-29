@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_doctor/modulos/consulta/state/consulta_controller.dart';
+import 'package:flutter_doctor/modulos/paciente/state/paciente_controller.dart';
 import 'package:get/instance_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,6 +13,7 @@ import '../../../interceptor/http_interceptor.dart';
 class ConsultaService {
 
  static ConsultaController _controller = Get.put(ConsultaController());
+ PacienteController _pacienteController = Get.put(PacienteController());
 
   /// URL base da API para consultas.
   static String apiUrl = '${Config.apiUrl!}/api/v1/api-consulta';
@@ -95,7 +97,7 @@ class ConsultaService {
   ///
   /// [consulta] é a consulta para a qual a mensagem será enviada.
   void enviarMensagemWhatsapp(Consulta consulta) async {
-    var paciente = await PacienteService.findById(consulta.pacienteId);
+    var paciente = await _pacienteController.findById(consulta.pacienteId);
     final mensagemPadrao =
         'Olá ${paciente.nome}!\nGostaria de confirmar sua consulta na data  ${extractDate(consulta.start)} ás ${extractTime(consulta.start)}. ';
     final url =
